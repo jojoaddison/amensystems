@@ -1,4 +1,5 @@
 package io.jojoaddison.web.rest;
+
 import io.jojoaddison.config.Constants;
 import io.jojoaddison.AmensystemApp;
 import io.jojoaddison.domain.Authority;
@@ -13,6 +14,7 @@ import io.jojoaddison.web.rest.vm.KeyAndPasswordVM;
 import io.jojoaddison.web.rest.vm.ManagedUserVM;
 import io.jojoaddison.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,10 +29,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.time.Instant;
 import java.time.LocalDate;
+
 import java.util.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Matchers.anyObject;
@@ -80,9 +83,9 @@ public class AccountResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(anyObject());
-
         AccountResource accountResource =
             new AccountResource(userRepository, userService, mockMailService);
+
         AccountResource accountUserMockResource =
             new AccountResource(userRepository, mockUserService, mockMailService);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)

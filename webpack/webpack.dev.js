@@ -32,7 +32,10 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
             ],
             target: 'ws://127.0.0.1:8080',
             ws: true
-        }]
+        }],
+        watchOptions: {
+            ignored: /node_modules/
+        }
     },
     entry: {
         polyfills: './src/main/webapp/app/polyfills',

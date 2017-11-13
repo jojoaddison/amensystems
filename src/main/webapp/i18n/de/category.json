@@ -1,0 +1,25 @@
+{
+    "amensystemApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Category erstellen",
+                "createOrEditLabel": "Category erstellen oder bearbeiten"
+            },
+            "created": "Category erstellt mit ID {{ param }}",
+            "updated": "Category aktualisiert mit ID {{ param }}",
+            "deleted": "Category gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Category {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "photo": "Photo",
+            "thumbnail": "Thumbnail",
+            "link": "Link"
+        }
+    }
+}

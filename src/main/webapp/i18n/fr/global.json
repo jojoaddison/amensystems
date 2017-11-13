@@ -6,7 +6,10 @@
             "home": "Accueil",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Entités",
+                "main": "Dashboard",
+                "slide": "Slide directeur",
+                "news": "News directeur",
+                "category": "Category directeur",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -82,7 +85,7 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev":"Développement"
+            "dev": "Développement"
         },
         "item-count": "Affichage {{first}} - {{second}} de {{total}} items."
     },

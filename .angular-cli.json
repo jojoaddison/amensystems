@@ -9,7 +9,18 @@
         "assets": [
             "content",
             "i18n",
-            "favicon.ico"
+            "favicon.ico",
+            "favicon-16x16.ico",
+            "favicon-32x32.ico",
+            "favicon-150x150.ico",
+            "android-chrome-192x192.png",
+            "android-chrome-512x512.png",
+            "apple-touch-icon-precomposed.png",
+            "apple-touch-icon.png",
+            "mstile-150x150.png",
+            "safari-pinned-tab.svg",
+            "browserconfig.xml",
+            "manifest.json"
         ],
         "index": "index.html",
         "main": "app/app.main.ts",
@@ -39,21 +50,21 @@
     "defaults": {
         "styleExt": "css",
         "prefixInterfaces": false,
-        "component" : {
-            "inlineStyle" : true,
+        "component": {
+            "inlineStyle": true,
             "inlineTemplate": false,
             "spec": false
         },
-        "directive" : {
+        "directive": {
             "spec": false
         },
-        "guard" : {
+        "guard": {
             "spec": false
         },
-        "pipe" : {
+        "pipe": {
             "spec": false
         },
-        "service" : {
+        "service": {
             "spec": false
         }
     },

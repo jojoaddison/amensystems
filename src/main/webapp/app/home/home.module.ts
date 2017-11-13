@@ -7,7 +7,7 @@ import { HOME_ROUTE, HomeComponent } from './';
 
 @NgModule({
     imports: [
-        AmensystemSharedModule,
+    AmensystemSharedModule,
         RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
     ],
     declarations: [

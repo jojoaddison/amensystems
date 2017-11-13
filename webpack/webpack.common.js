@@ -33,9 +33,9 @@ module.exports = (options) => {
                     options: {
                         minimize: true,
                         caseSensitive: true,
-                        removeAttributeQuotes:false,
-                        minifyJS:false,
-                        minifyCSS:false
+                        removeAttributeQuotes: false,
+                        minifyJS: false,
+                        minifyCSS: false
                     },
                     exclude: ['./src/main/webapp/index.html']
                 },
@@ -93,7 +93,13 @@ module.exports = (options) => {
                 { from: './node_modules/swagger-ui/dist/swagger-ui.min.js', to: 'swagger-ui/dist/swagger-ui.min.js' },
                 { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
                 { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
+                { from: './src/main/webapp/favicon.ico', to: 'favicon-16x16.png' },
+                { from: './src/main/webapp/favicon.ico', to: 'favicon-32x32.png' },
+                { from: './src/main/webapp/favicon.ico', to: 'android-chrome-192x192.png' },
+                { from: './src/main/webapp/favicon.ico', to: 'android-chrome-512x512.png' },
                 { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
+                { from: './src/main/webapp/content/slides', to: 'content/slides' },
+                { from: './src/main/webapp/content/uikit', to: 'content/uikit' },
                 // { from: './src/main/webapp/sw.js', to: 'sw.js' },
                 // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
                 { from: './src/main/webapp/robots.txt', to: 'robots.txt' }

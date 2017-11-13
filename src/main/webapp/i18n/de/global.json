@@ -6,7 +6,10 @@
             "home": "Startseite",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Entitäten",
+                "main": "Dashboard",
+                "slide": "Slides verwalten",
+                "news": "News verwalten",
+                "category": "Category verwalten",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -79,10 +82,10 @@
             }
         },
         "field": {
-            "id" : "ID"
+            "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
         "item-count": "Ergebnis {{first}} - {{second}} von {{total}} Elemente."
     },

@@ -1,14 +1,17 @@
 /* ==========================================================================
 Navbar
 ========================================================================== */
+
 .navbar-version {
     font-size: 10px;
     color: #ccc
 }
 
 .jh-navbar {
-    background-color: #353d47;
+    background-color: #547737;
     padding: .2em 1em;
+    height: 75px;
+    z-index: 100;
 }
 
 .jh-navbar .profile-image {
@@ -18,8 +21,10 @@ Navbar
     border-radius: 50%;
 }
 
-.jh-navbar .dropdown-item.active, .jh-navbar .dropdown-item.active:focus, .jh-navbar .dropdown-item.active:hover {
-    background-color: #353d47;
+.jh-navbar .dropdown-item.active,
+.jh-navbar .dropdown-item.active:focus,
+.jh-navbar .dropdown-item.active:hover {
+    background-color: #547737;
 }
 
 .jh-navbar .dropdown-toggle::after {
@@ -65,23 +70,33 @@ Navbar
     vertical-align: middle;
 }
 
+
 /* ==========================================================================
 Logo styles
 ========================================================================== */
+
 .navbar-brand.logo {
     padding: 5px 15px;
 }
 
+.logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 96px;
+    width: auto;
+}
+
 .logo .logo-img {
-    height: 45px;
+    height: 100px;
     display: inline-block;
     vertical-align: middle;
-    width: 70px;
+    width: 300px;
 }
 
 .logo-img {
     height: 100%;
-    background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
+    background: url("../../../content/img/logo.png") no-repeat center center;
     background-size: contain;
-    width: 100%;
+    width: auto;
 }
