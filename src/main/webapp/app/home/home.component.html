@@ -1,7 +1,8 @@
 <header class="mt-1">
     <ngb-carousel>
         <ng-template ngbSlide>
-            <div class="carousel-item active full-width" style="background-image: url('/content/slides/shop/slide-1.JPG')">
+            <div class="carousel-item active full-width"
+                 style="background-image: url('/content/slides/shop/slide-1.JPG')">
                 <div class="carousel-caption d-none d-md-block">
                 </div>
             </div>
@@ -32,6 +33,19 @@
         </ng-template>
     </ngb-carousel>
 </header>
+<!--
+<header class="mt-1">
+    <ngb-carousel>
+        <ng-template ngSlide  *ngFor="let slide of slides ;trackBy: trackSlideId">
+            <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo"  alt="slide image" />
+            <div class="carousel-caption">
+                <h3>First slide label</h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+</header>
+-->
 <!-- HAMPER -->
 <section class="mt-1">
     <div class="bg-hamper">
@@ -42,6 +56,7 @@
             <div class="col-md-6">
                 <span class="mt-2 campaign">
                                 </span>
+
                 <h3 class="font-cond-b  lts-sm">
                     Send your recipies to office@amen-supermarket.at<br> Or drop it at the counter with your next visit.
                 </h3>
@@ -62,6 +77,7 @@
         <!-- Title -->
         <div class="section-title auto-invert line-b align-center">
             <h2 class="font-cond-b fg-text-d lts-sm">A Variety of Food &amp; Drinks</h2>
+
             <p class="font-cond-l fg-text lts-sm ">
                 Fresh harvested, neatly packaged and made just for you.
             </p>
@@ -69,117 +85,28 @@
         <!-- /Title -->
 
         <!-- Tabled Row -->
-        <div class="row row-table">
+        <div class="row">
             <!-- Col -->
-            <div class="col-sm-3 v-middle" >
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 v-middle"
+                 *ngFor="let cat of categories ;trackBy: trackCategoryId ">
                 <!-- Feature -->
                 <div class="hfeature align-center mgb-60">
                     <div class="media-cell">
-                        <img src="../../content/slides/main/beans.jpg" class="icon-round icon-outline-thick product-cell" />
+                        <img [src]="'data:' + cat.photoContentType + ';base64,' + cat.photo" alt="cat.name"
+                             class="icon-round icon-outline-thick product-cell"/>
                     </div>
                     <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">Beans</h4>
-                        <p class="font-cond-l fs-90 fg-text">
-                            Beans are a super healthy, versatile and affordable food.<br>High in antioxidants, fiber, protein, B vitamins, iron, magnesium, potassium, copper and zinc.
-                        </p>
-                    </div>
-                </div>
-                <!-- /Feature -->
-                </div>
-        </div>
-        <!-- Tabled Row -->
-        <div class="row row-table">
-            <!-- Col -->
-            <div class="col-sm-3 v-middle">
-                <!-- Feature -->
-                <div class="hfeature align-center mgb-60">
-                    <div class="media-cell">
-                        <img src="../../content/slides/main/beans.jpg" class="icon-round icon-outline-thick product-cell" />
-                    </div>
-                    <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">Beans</h4>
-                        <p class="font-cond-l fs-90 fg-text">
-                            Beans are a super healthy, versatile and affordable food.<br>High in antioxidants, fiber, protein, B vitamins, iron, magnesium, potassium, copper and zinc.
-                        </p>
-                    </div>
-                </div>
-                <!-- /Feature -->
-                <!-- Feature -->
-                <div class="hfeature align-center mgb-60">
-                    <div class="media-cell">
-                        <img src="../../content/slides/main/cereals.jpg" class="icon-round icon-outline-thick product-cell" />
-                    </div>
-                    <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">Cereals</h4>
-                        <p class="font-cond-l fs-90 fg-text">
-                            Belonging to the complex carbohydrates food group, cereals are rich sources of minerals, vitamins, carbohydrates, oils, proteins, and fats.
-                        </p>
-                    </div>
-                </div>
-                <!-- /Feature -->
-                <!-- Feature -->
-                <div class="hfeature align-center mgb-60">
-                    <div class="media-cell">
-                        <img src="../../content/slides/main/grains.jpg" class="icon-round icon-outline-thick product-cell" />
-                    </div>
-                    <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">Grains</h4>
-                        <p class="font-cond-l fs-90 fg-text">
-                            Dietary fiber from whole grains, as part of an overall healthy diet, helps reduce blood cholesterol levels and may lower risk of heart disease.
-                        </p>
-                    </div>
-                </div>
-                <!-- /Feature -->
-            </div>
-            <!-- /Col -->
+                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">{{ cat.name }} </h4>
 
-            <!-- Col -->
-            <div class="col-sm-3 v-middle">
-                <!-- Feature -->
-                <div class="hfeature align-center mgb-60">
-                    <div class="media-cell">
-                        <img src="../../content/slides/main/fishes.jpg" class="icon-round icon-outline-thick product-cell" />
-                    </div>
-                    <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">Fish</h4>
                         <p class="font-cond-l fs-90 fg-text">
-                            It is loaded with important nutrients, such as protein and vitamin D. Fish is also the world's best source of omega-3 fatty acids, which are incredibly important for your body and brain.
-                        </p>
-                    </div>
-                </div>
-                <!-- /Feature -->
-                <!-- Feature -->
-                <div class="hfeature align-center mgb-60">
-                    <div class="media-cell">
-                        <img src="../../content/slides/main/leaves.jpg" class="icon-round icon-outline-thick product-cell" />
-                    </div>
-                    <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">Plant leaves</h4>
-                        <p class="font-cond-l fs-90 fg-text">
-                            Bitter leaf (Vernonia amygdalina), a bitter plant whose leaves, extracts, stems and barks are used for culinary,medicinal and curative purposes.
-                            <br> Vitamins: A, C, E, B1 B2.
-                        </p>
-                    </div>
-                </div>
-                <!-- /Feature -->
-                <!-- Feature -->
-                <div class="hfeature align-center mgb-60">
-                    <div class="media-cell">
-                        <img src="../../content/slides/main/drinks.jpg" class="icon-round icon-outline-thick product-cell" />
-                    </div>
-                    <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">Beverages</h4>
-                        <p class="font-cond-l fs-90 fg-text">
-                            A variety of teas like moringa, hibiscus, rooibos etc...<br> Coffee, Fruit juices like mango, guava, pineapple, blackcurrant.
-                            <br>Assorted alcoholics like Guiness, Gulder, Star, Harp etc...
+                            {{ cat.description }}
                         </p>
                     </div>
                 </div>
                 <!-- /Feature -->
             </div>
-            <!-- /Col -->
         </div>
-        <!-- /Row -->
+
     </div>
     <!-- /Container -->
 </div>

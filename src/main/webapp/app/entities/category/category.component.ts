@@ -13,7 +13,7 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
 
-currentAccount: any;
+    currentAccount: any;
     categories: Category[];
     error: any;
     success: any;

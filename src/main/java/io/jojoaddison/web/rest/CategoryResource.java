@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Category.
@@ -95,6 +97,19 @@ public class CategoryResource {
         Page<Category> page = categoryService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/categories");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /categories : get all the categories.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of categories in body
+     */
+    @GetMapping("/categories/list")
+    @Timed
+    public ResponseEntity<List<String>> getCategories() {
+        log.debug("REST request to get list of Categories");
+        List<String> categories = categoryService.findAll().stream().map(Category::getName).collect(Collectors.toList());
+        return new ResponseEntity<>(categories, null, HttpStatus.OK);
     }
 
     /**

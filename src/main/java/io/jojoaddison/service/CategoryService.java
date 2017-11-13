@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * Service Implementation for managing Category.
@@ -34,6 +36,15 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    /**
+     *  Get all the categories.
+     *
+     *  @return the list of entities
+     */
+    public List<Category> findAll() {
+        log.debug("Request to get list of Categories");
+        return categoryRepository.findAll();
+    }
     /**
      *  Get all the categories.
      *

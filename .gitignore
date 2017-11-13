@@ -3,7 +3,10 @@
 ######################
 /target/www/**
 /src/test/javascript/coverage/
-
+/webapp
+/slides
+/src-bak
+/data
 ######################
 # Node
 ######################

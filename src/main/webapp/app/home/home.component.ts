@@ -11,6 +11,9 @@ import { Slide } from '../entities/slide/slide.model';
 import { SlideService } from '../entities/slide/slide.service';
 import { ITEMS_PER_PAGE, ResponseWrapper } from '../shared';
 
+import { Category } from '../entities/category/category.model';
+import { CategoryService } from '../entities/category/category.service';
+
 @Component({
     selector: 'jhi-home',
     templateUrl: './home.component.html',
@@ -29,8 +32,10 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     public slides: Slide[];
+    public categories: Category[];
 
     constructor(
+        private categoryService: CategoryService,
         private slideService: SlideService,
         private principal: Principal,
         private jhiAlertService: JhiAlertService,
@@ -67,23 +72,45 @@ export class HomeComponent implements OnInit {
         this.modalRef = this.loginModalService.open();
     }
 
-    trackId(index: number, item: Slide) {
+    trackSlideId(index: number, item: Slide) {
+        return item.id;
+    }
+
+    trackCategoryId(index: number, item: Category) {
         return item.id;
     }
 
     loadAll() {
-        this.slideService.query().subscribe(
+        this.loadSlides();
+        this.loadCategories();
+    }
+
+    private loadCategories(){
+        this.categoryService.query({}).subscribe(
+            (res: ResponseWrapper) => {
+                this.categories = res.json;
+                this.createCategories();
+            }
+        );
+    }
+
+    private createCategories(){
+        console.log(this.categories);
+    }
+
+    private loadSlides() {
+        this.slideService.query({}).subscribe(
             (res: ResponseWrapper) => {
                 this.slides = res.json;
-                this.loadSlides();
-                console.log(this.slides);
+                this.createSlides();
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
 
-    private loadSlides() {
-        if ( this.slides.length < 1 ) {
+    private createSlides(){
+        console.log(this.slides);
+        if ( this.slides && this.slides.length < 0 ) {
             for ( let i = 1; i < 6; i++ ) {
                 this.slides.push( {
                     id: i.toString(),

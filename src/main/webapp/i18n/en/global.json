@@ -10,6 +10,7 @@
                 "slide": "Slide Management",
                 "news": "News Management",
                 "category": "Category Management",
+                "product": "Product Management",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

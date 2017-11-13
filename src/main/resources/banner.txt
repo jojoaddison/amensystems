@@ -1,10 +1,12 @@
 
-  ${AnsiColor.GREEN}      ██╗${AnsiColor.RED} ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ████████║    ██║    ███████╔╝ ╚█████╗     ██║    ██████╗   ███████╔╝
-  ${AnsiColor.GREEN}██╗   ██║${AnsiColor.RED} ██╔═══██║    ██║    ██╔════╝   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║
-  ${AnsiColor.GREEN}╚██████╔╝${AnsiColor.RED} ██║   ██║ ████████╗ ██║       ██████╔╝    ██║    ████████╗ ██║  ╚██╗
-  ${AnsiColor.GREEN} ╚═════╝ ${AnsiColor.RED} ╚═╝   ╚═╝ ╚═══════╝ ╚═╝       ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝
+${AnsiColor.GREEN} █████╗ ███╗   ███╗███████╗███╗   ██╗    ${AnsiColor.RED}███████╗██╗   ██╗██████╗ ███████╗██████╗ ███╗   ███╗ █████╗ ██████╗ ██╗  ██╗███████╗████████╗
+${AnsiColor.GREEN}██╔══██╗████╗ ████║██╔════╝████╗  ██║    ${AnsiColor.RED}██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔══██╗██║ ██╔╝██╔════╝╚══██╔══╝
+${AnsiColor.GREEN}███████║██╔████╔██║█████╗  ██╔██╗ ██║    ${AnsiColor.RED}███████╗██║   ██║██████╔╝█████╗  ██████╔╝██╔████╔██║███████║██████╔╝█████╔╝ █████╗     ██║
+${AnsiColor.GREEN}██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║    ${AnsiColor.RED}╚════██║██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██╔══██╗██╔═██╗ ██╔══╝     ██║
+${AnsiColor.GREEN}██║  ██║██║ ╚═╝ ██║███████╗██║ ╚████║    ${AnsiColor.RED}███████║╚██████╔╝██║     ███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██║██║  ██╗███████╗   ██║
+${AnsiColor.GREEN}╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝    ${AnsiColor.RED}╚══════╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝
 
-${AnsiColor.BRIGHT_BLUE}:: JHipster 🤓  :: Running Spring Boot ${spring-boot.version} ::
-:: http://www.jhipster.tech ::${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_BLUE}:: AmenSupermarketSystems 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: http://www.amensupermarket.at ::${AnsiColor.DEFAULT}
+:: http://www.gahano.at
+:: http://www.jojoaddison.net

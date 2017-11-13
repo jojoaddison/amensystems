@@ -100,7 +100,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/slides").permitAll()
             .antMatchers("/api/news").permitAll()
             .antMatchers("/api/products").permitAll()
-            .antMatchers("/api/category").permitAll()
+            .antMatchers("/api/categories", String.valueOf(HttpMethod.GET)).permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()

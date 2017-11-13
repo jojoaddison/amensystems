@@ -10,6 +10,7 @@
                 "slide": "Slides verwalten",
                 "news": "News verwalten",
                 "category": "Category verwalten",
+                "product": "Product verwalten",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
