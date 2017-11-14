@@ -126,6 +126,21 @@ public class CategoryResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
     }
 
+
+    /**
+     * GET  /categories/by-name/:name : get the "name" category.
+     *
+     * @param name the name of the category to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the category, or with status 404 (Not Found)
+     */
+    @GetMapping("/categories/by-name/{name}")
+    @Timed
+    public ResponseEntity<Category> getCategoryByName(@PathVariable String name) {
+        log.debug("REST request to get Category by Name: {}", name);
+        Category category = categoryService.findByName(name);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
+    }
+
     /**
      * DELETE  /categories/:id : delete the "id" category.
      *

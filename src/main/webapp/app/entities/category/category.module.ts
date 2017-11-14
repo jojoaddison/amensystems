@@ -14,6 +14,7 @@ import {
     categoryRoute,
     categoryPopupRoute,
     CategoryResolvePagingParams,
+    CategoryViewComponent,
     TinyEditorComponent
 } from './';
 
@@ -34,7 +35,8 @@ const ENTITY_STATES = [
         CategoryDeleteDialogComponent,
         CategoryPopupComponent,
         CategoryDeletePopupComponent,
-        TinyEditorComponent
+        TinyEditorComponent,
+        CategoryViewComponent
     ],
     entryComponents: [
         CategoryComponent,
@@ -42,7 +44,7 @@ const ENTITY_STATES = [
         CategoryPopupComponent,
         CategoryDeleteDialogComponent,
         CategoryDeletePopupComponent,
-        TinyEditorComponent
+        CategoryViewComponent
     ],
     providers: [
         CategoryService,

@@ -29,8 +29,23 @@ export class CategoryService {
         });
     }
 
+    list(): Observable<string[]> {
+        const url = this.resourceUrl + '/list';
+        return this.http.get(url)
+            .map((res: Response) => {
+                return res.json();
+            });
+    }
+
     find(id: string): Observable<Category> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
+        });
+    }
+
+    findByName(name: string): Observable<Category> {
+        return this.http.get(`${this.resourceUrl}/by-name/${name}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });

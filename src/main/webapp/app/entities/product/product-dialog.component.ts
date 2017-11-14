@@ -10,6 +10,8 @@ import { Product } from './product.model';
 import { ProductPopupService } from './product-popup.service';
 import { ProductService } from './product.service';
 
+import { CategoryService } from '../category/category.service';
+
 @Component({
     selector: 'jhi-product-dialog',
     templateUrl: './product-dialog.component.html'
@@ -18,6 +20,7 @@ export class ProductDialogComponent implements OnInit {
 
     product: Product;
     isSaving: boolean;
+    categories: string[];
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -25,12 +28,31 @@ export class ProductDialogComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private productService: ProductService,
         private elementRef: ElementRef,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private categoryService: CategoryService
     ) {
+        this.categories = [];
     }
 
     ngOnInit() {
+        this.loadCategories();
         this.isSaving = false;
+    }
+
+    loadCategories(){
+        this.categoryService.list().subscribe((res: any) => {
+            this.createCategories(res);
+        }, function(err){
+            this.onError(err);
+        })
+    }
+
+    private createCategories(data: any){
+        if(data && Array.isArray(data)){
+            for(let i in data){
+                this.categories.push(data[i]);
+            }
+        }
     }
 
     byteSize(field) {

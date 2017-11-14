@@ -76,4 +76,8 @@ public class CategoryService {
         log.debug("Request to delete Category : {}", id);
         categoryRepository.delete(id);
     }
+
+    public Category findByName(String name) {
+        return categoryRepository.findByName(name);
+    }
 }

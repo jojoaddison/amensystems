@@ -92,8 +92,10 @@
                 <!-- Feature -->
                 <div class="hfeature align-center mgb-60">
                     <div class="media-cell">
+                        <a [routerLink]="['category-view', cat.name]">
                         <img [src]="'data:' + cat.photoContentType + ';base64,' + cat.photo" alt="cat.name"
-                             class="icon-round icon-outline-thick product-cell"/>
+                             class="icon-round icon-outline-thick product-cell" />
+                        </a>
                     </div>
                     <div class="text-cell">
                         <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">{{ cat.name }} </h4>

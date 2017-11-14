@@ -5,6 +5,7 @@ import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { CategoryComponent } from './category.component';
+import { CategoryViewComponent } from './category-view.component';
 import { CategoryDetailComponent } from './category-detail.component';
 import { CategoryPopupComponent } from './category-dialog.component';
 import { CategoryDeletePopupComponent } from './category-delete-dialog.component';
@@ -37,7 +38,18 @@ export const categoryRoute: Routes = [
             pageTitle: 'amensystemApp.category.home.title'
         },
         canActivate: [UserRouteAccessService]
-    }, {
+    },
+    {
+        path: 'category-view/:name',
+        component: CategoryViewComponent,
+        resolve: {
+            'pagingParams': CategoryResolvePagingParams
+        },
+        data: {
+            pageTitle: 'amensystemApp.category.home.title'
+        }
+    },
+    {
         path: 'category/:id',
         component: CategoryDetailComponent,
         data: {
