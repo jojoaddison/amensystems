@@ -34,8 +34,8 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit, OnDestroy
         this.products = [];
     }
 
-    ngAfterViewInit(){
-        if(this.category){
+    ngAfterViewInit() {
+        if (this.category) {
             this.loadProduct(this.category.name);
         }
     }
@@ -47,7 +47,7 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit, OnDestroy
         );
     }
 
-    private createProductList(data: any , headers: any){
+    private createProductList(data: any , headers: any) {
         console.log(data);
         for (let i = 0; i < data.length; i++) {
             this.products.push(data[i]);
@@ -56,7 +56,7 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit, OnDestroy
         console.log(this.products);
     }
 
-    private productLoadError(error){
+    private productLoadError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
 

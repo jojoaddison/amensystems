@@ -59,6 +59,7 @@ form {
     color: black;
 }
 
+
 /* other generic styles */
 
 .jh-card {
@@ -329,7 +330,7 @@ Social Buttons
 ngb-carousel {
     width: 100%;
     margin: auto;
-    height: 60vh;
+    height: 90vh;
     min-height: 300px;
 }
 
@@ -365,7 +366,7 @@ ngb-carousel {
 }
 
 .carousel-item {
-    height: 60vh;
+    height: 90vh;
     min-height: 300px;
     background: no-repeat center center scroll;
     -webkit-background-size: cover;
@@ -379,8 +380,6 @@ ngb-carousel {
     z-index: -1;
     position: absolute;
 }
-
-
 
 
 /* jhipster-needle-css-add-main JHipster will add new css style */

@@ -11,6 +11,7 @@
                 "news": "News Management",
                 "category": "Category Management",
                 "product": "Product Management",
+                "digitalAsset": "Digital Asset",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

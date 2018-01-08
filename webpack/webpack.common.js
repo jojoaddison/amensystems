@@ -99,6 +99,8 @@ module.exports = (options) => {
                 { from: './src/main/webapp/favicon.ico', to: 'android-chrome-512x512.png' },
                 { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
                 { from: './src/main/webapp/content/slides', to: 'content/slides' },
+                { from: './src/main/webapp/content/pictures', to: 'content/pictures' },
+                { from: './src/main/webapp/content/videos', to: 'content/videos' },
                 { from: './src/main/webapp/content/uikit', to: 'content/uikit' },
                 // { from: './src/main/webapp/sw.js', to: 'sw.js' },
                 // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array

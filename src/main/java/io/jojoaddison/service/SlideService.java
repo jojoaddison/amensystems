@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import io.jojoaddison.service.util.Tools;
+import org.springframework.core.env.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,57 +34,75 @@ public class SlideService {
 
 	private final SlideRepository slideRepository;
 	private final GridFsTemplate gridFsTemplate;
+    private final Environment environment;
+    private final String ROOT_DIR = "content-directory";
+    private final String SLIDES_DIR = "slides";
 
-	public SlideService(SlideRepository slideRepository, GridFsTemplate gridFsTemplate) {
+	public SlideService(SlideRepository slideRepository, GridFsTemplate gridFsTemplate, Environment environment) {
 		this.slideRepository = slideRepository;
 		this.gridFsTemplate = gridFsTemplate;
+        this.environment = environment;
 	}
 
 	/**
 	 * Save a Slide.
 	 *
-	 * @param Slide
+	 * @param slide
 	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	public Slide save(Slide slide) {
 		log.debug("Request to save slide : {}", slide);
 		try {
-		ByteArrayInputStream is = new ByteArrayInputStream(slide.getPhoto());
-		slide.setPhoto(null);
-		slide = slideRepository.save(slide);
+            byte [] photo = slide.getPhoto();
+            ByteArrayInputStream is = new ByteArrayInputStream(photo);
+            slide = slideRepository.save(slide);
+            slide = createFile(slide);
 
-		Optional<GridFSDBFile> slideFile = findFileByMetadata("slideId", slide.getId());
-
-		if (!slideFile.isPresent()) {
-			Map<String, String> data = new HashMap<>();
-			data.put("title", slide.getTitle());
-			data.put("slideId", slide.getId());
-			gridFsTemplate.store(is, slide.getPhotoFile(), slide.getPhotoContentType(), data);
-		}
-		is.close();
+            Optional<GridFSDBFile> slideFile = findFileByMetadata("slideId", slide.getId());
+            if (!slideFile.isPresent()) {
+                Map<String, String> data = new HashMap<>();
+                data.put("title", slide.getTitle());
+                data.put("slideId", slide.getId());
+                gridFsTemplate.store(is, slide.getPhotoFile(), slide.getPhotoContentType(), data);
+            }
+            is.close();
 		}catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
 		return slide;
 	}
 
+    private Slide createFile(Slide slide){
+        try{
+            String fileExt = slide.getPhotoContentType().split("/")[1];
+            String root = environment.getProperty(ROOT_DIR);
+            String directory = root.concat(Tools.getSeparator()).concat(SLIDES_DIR);
+            String filename = ("slide_").concat(slide.getId()).concat(".").concat(fileExt);
+            String path = directory.concat(Tools.getSeparator()).concat(filename);
+            Tools.createFile(path, slide.getPhoto());
+            String url = ("content").concat(Tools.getSeparator()).concat(SLIDES_DIR).concat(Tools.getSeparator()).concat(filename);
+            slide.setUrl(url);
+            slide.setPhoto(null);
+            slide = slideRepository.save(slide);
+        }catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return slide;
+    }
+
 	public Slide update(Slide slide) {
 		log.debug("Request to save slide : {}", slide);
-		slide = slideRepository.save(slide);
-
 		Optional<GridFSDBFile> slideFile = findFileByMetadata("slideId", slide.getId());
-
 		if (slideFile.isPresent()) {
 			gridFsTemplate.delete(getQueryByMetadata("slideId", slide.getId()));
 		}
-
 		Map<String, String> data = new HashMap<>();
 		data.put("title", slide.getTitle());
 		data.put("slideId", slide.getId());
 		gridFsTemplate.store(new ByteArrayInputStream(slide.getPhoto()), slide.getPhotoFile(),
 				slide.getPhotoContentType(), data);
-
+        slide = createFile(slide);
 		return slide;
 	}
 

@@ -49,6 +49,11 @@ Navbar
     padding: 10px;
 }
 
+.collapse.show {
+    background-color: #547737;
+    border: solid 1px white;
+}
+
 .jh-navbar .jh-navbar-toggler:hover {
     color: #fff;
 }

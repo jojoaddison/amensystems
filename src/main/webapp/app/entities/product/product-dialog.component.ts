@@ -39,7 +39,7 @@ export class ProductDialogComponent implements OnInit {
         this.isSaving = false;
     }
 
-    loadCategories(){
+    loadCategories() {
         this.categoryService.list().subscribe((res: any) => {
             this.createCategories(res);
         }, function(err){
@@ -47,9 +47,10 @@ export class ProductDialogComponent implements OnInit {
         })
     }
 
-    private createCategories(data: any){
-        if(data && Array.isArray(data)){
-            for(let i in data){
+    private createCategories(data: any) {
+        if (data && Array.isArray(data)) {
+            // tslint:disable-next-line:forin
+            for (const i in data) {
                 this.categories.push(data[i]);
             }
         }

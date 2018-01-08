@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
         this.loadCategories();
     }
 
-    private loadCategories(){
+    private loadCategories() {
         this.categoryService.query({}).subscribe(
             (res: ResponseWrapper) => {
                 this.categories = res.json;
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    private createCategories(){
+    private createCategories() {
         console.log(this.categories);
     }
 
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    private createSlides(){
+    private createSlides() {
         console.log(this.slides);
         if ( this.slides && this.slides.length < 0 ) {
             for ( let i = 1; i < 6; i++ ) {

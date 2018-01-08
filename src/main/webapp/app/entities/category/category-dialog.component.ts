@@ -138,7 +138,7 @@ export class TinyEditorComponent implements AfterViewInit, OnDestroy {
             selector: '#' + this.elementId,
             plugins: ['link', 'table'],
             skin_url: 'content/skins/lightgray',
-            setup: ( editor => {
+            setup: ( (editor) => {
                 this.editor = editor;
                 editor.on('keyup change', () => {
                     const content = editor.getContent();

@@ -11,6 +11,7 @@
                 "news": "News verwalten",
                 "category": "Category verwalten",
                 "product": "Product verwalten",
+                "digitalAsset": "Digital Asset",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

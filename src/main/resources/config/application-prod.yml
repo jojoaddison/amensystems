@@ -107,3 +107,5 @@ jhipster:
 # ===================================================================
 
 application:
+
+content-directory: /var/www/vhosts/amen-supermarket.at/httpdocs/content

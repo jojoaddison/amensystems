@@ -2,22 +2,34 @@
     <p>&nbsp;</p>
     <h2>
         <span jhiTranslate="amensystemApp.slide.home.title">Slides</span>
-        <button class="btn btn-primary float-right jh-create-entity create-slide" [routerLink]="['/', { outlets: { popup: ['slide-new'] } }]">
-            <span class="fa fa-plus"></span>
+
+    </h2>
+
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 float-right">
+            <button class="btn btn-primary float-right jh-create-entity create-slide" [routerLink]="['/', { outlets: { popup: ['slide-new'] } }]">
+                <span class="fa fa-plus"></span>
             <span  jhiTranslate="amensystemApp.slide.home.createLabel">
             Create new Slide
             </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <div class="row">
+            </button>
+            <button class="btn btn-success float-right " (click)="createSlideShow()" >
+                <span class="fa fa-plus"></span>
+                Create Slideshow
+            </span>
+            </button>
+        </div>
     </div>
+    <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="slides">
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <!--
                     <th><span jhiTranslate="amensystemApp.slide.url">Url</span></th>
+                    -->
                     <th><span jhiTranslate="amensystemApp.slide.title">Title</span></th>
                     <th><span jhiTranslate="amensystemApp.slide.description">Description</span></th>
                     <th><span jhiTranslate="amensystemApp.slide.photo">Photo</span></th>
@@ -29,16 +41,26 @@
             </thead>
             <tbody>
                 <tr *ngFor="let slide of slides ;trackBy: trackId" [routerLink]="['../slide', slide.id ]">
-                    <!-- <td><a [routerLink]="['../slide', slide.id ]">{{slide.id}}</a></td> -->
+                    <!--
+                    <td><a [routerLink]="['../slide', slide.id ]">{{slide.id}}</a></td>
                     <td>{{slide.url}}</td>
+                    -->
                     <td>{{slide.title}}</td>
                     <td>{{slide.description}}</td>
+                    <td>
+                        <img [src]="slide.url" style="max-height: 60px;" alt="slide image" />
+                        <!--
+                        <span *ngIf="slide.url">{{slide.photoContentType}}, {{byteSize(slide.photo)}}</span>
+                        -->
+                    </td>
+                    <!--
                     <td>
                         <a *ngIf="slide.photo" (click)="openFile(slide.photoContentType, slide.photo)">
                             <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo" style="max-height: 30px;" alt="slide image" />
                         </a>
                         <span *ngIf="slide.photo">{{slide.photoContentType}}, {{byteSize(slide.photo)}}</span>
                     </td>
+                    -->
                     <td>{{slide.createdDate | date:'medium'}}</td>
                     <td>{{slide.lastModified | date:'medium'}}</td>
                     <td>{{slide.lastModifiedBy}}</td>

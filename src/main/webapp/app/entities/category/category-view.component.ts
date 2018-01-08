@@ -34,11 +34,11 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
         this.products = [];
     }
 
-    nextCategory(){
+    nextCategory() {
 
     }
 
-    previousCategory(){
+    previousCategory() {
 
     }
 
@@ -49,7 +49,7 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
         );
     }
 
-    private createProductList(data: any , headers: any){
+    private createProductList(data: any , headers: any) {
         console.log(data);
         for (let i = 0; i < data.length; i++) {
             this.products.push(data[i]);
@@ -58,7 +58,7 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
         console.log(this.products);
     }
 
-    private productLoadError(error){
+    private productLoadError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
 

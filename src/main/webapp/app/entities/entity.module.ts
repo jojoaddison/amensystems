@@ -4,6 +4,7 @@ import { AmensystemSlideModule } from './slide/slide.module';
 import { AmensystemNewsModule } from './news/news.module';
 import { AmensystemCategoryModule } from './category/category.module';
 import { AmensystemProductModule } from './product/product.module';
+import { AmensystemDigitalAssetModule } from './digital-asset/digital-asset.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -12,6 +13,7 @@ import { AmensystemProductModule } from './product/product.module';
         AmensystemNewsModule,
         AmensystemCategoryModule,
         AmensystemProductModule,
+        AmensystemDigitalAssetModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

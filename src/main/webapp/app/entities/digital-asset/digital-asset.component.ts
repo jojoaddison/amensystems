@@ -1,24 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
-import { Slide } from './slide.model';
-import { SlideService } from './slide.service';
+import { DigitalAsset } from './digital-asset.model';
+import { DigitalAssetService } from './digital-asset.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 
 @Component({
-    selector: 'jhi-slide',
-    templateUrl: './slide.component.html'
+    selector: 'jhi-digital-asset',
+    templateUrl: './digital-asset.component.html'
 })
-export class SlideComponent implements OnInit, OnDestroy {
-    slides: Slide[];
+export class DigitalAssetComponent implements OnInit, OnDestroy {
+digitalAssets: DigitalAsset[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
     constructor(
-        private slideService: SlideService,
+        private digitalAssetService: DigitalAssetService,
         private jhiAlertService: JhiAlertService,
         private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
@@ -27,9 +26,9 @@ export class SlideComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.slideService.query().subscribe(
+        this.digitalAssetService.query().subscribe(
             (res: ResponseWrapper) => {
-                this.slides = res.json;
+                this.digitalAssets = res.json;
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -39,14 +38,14 @@ export class SlideComponent implements OnInit, OnDestroy {
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
-        this.registerChangeInSlides();
+        this.registerChangeInDigitalAssets();
     }
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: Slide) {
+    trackId(index: number, item: DigitalAsset) {
         return item.id;
     }
 
@@ -57,14 +56,11 @@ export class SlideComponent implements OnInit, OnDestroy {
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
     }
-    registerChangeInSlides() {
-        this.eventSubscriber = this.eventManager.subscribe('slideListModification', (response) => this.loadAll());
+    registerChangeInDigitalAssets() {
+        this.eventSubscriber = this.eventManager.subscribe('digitalAssetListModification', (response) => this.loadAll());
     }
 
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
-    }
-    createSlideShow() {
-        console.log('create-slide-show');
     }
 }

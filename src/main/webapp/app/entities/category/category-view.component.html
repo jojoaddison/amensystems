@@ -1,42 +1,28 @@
-
 <!-- Start #cloths -->
 <div id="category" class="container-fluid bg-white" *ngIf="category">
     <!-- Container -->
     <div class="container container-main auto-invert pady-block-lg">
         <!-- Title -->
         <div class="section-title auto-invert line-b align-center">
-            <h2 class="font-cond-b fg-text-d lts-sm" >{{ category.name }}</h2>
-            <p class="font-cond-l lts-sm fg-text" >
+            <h2 class="font-cond-b fg-text-d lts-sm">{{ category.name }}</h2>
+            <p class="font-cond-l lts-sm fg-text">
                 {{ category.description }}
             </p>
         </div>
         <!-- /Title -->
-        <!-- Row -->
-        <div class="row pady-15-all-xs" >
-            <!-- Col -->
-            <div class="col-sm-4" *ngFor="let product of products ;trackBy: trackId">
-                <div class="vcard pad-40 align-center bd-all bdc-green bdw-3">
-                    <h2 class="font-cond-b case-u fg-text-d" >{{product.name}}</h2>
-                    <ul class="vlinks mgb-30 pady-10-all fg-text ruled-list auto-invert">
-                        <li ><img [src]="'data:' + product.photoContentType + ';base64,' + product.photo" style="max-height: 200px;" alt="product image"/></li>
-                    </ul>
-                    <h4 class="font-cond-b fg-text-d fs-350" *ngIf="product.price">&euro;{{product.price}}<span *ngIf="product.quantity">/{{product.quantity}}</span></h4>
-                    <!--
-                    <ul class="vlinks mgb-30 pady-10-all fg-text ruled-list auto-invert">
-                        <li ><img [src]="'data:' + product.photoContentType + ';base64,' + product.photo" style="max-height: 90px;" alt="product image"/></li>
-                        <li >PSD to HTML Conversion</li>
-                        <li >Custom Wordpress Theming</li>
-                        <li >Website Deployment</li>
-                    </ul>
-                    <a href="#" class="btn btn-default case-u btn-cta font-cond-l auto-invert"  data-editor="field" data-field="href[Button Url]; html[Button Text]">choose plan</a>
-                    -->
+        <div class="card-group">
+            <div class="card align-center bd-all bdc-green bdw-3 mt-1" *ngFor="let product of products ;trackBy: trackId">
+                <div class="card-header">
+                    <h4 class="card-title font-cond-b case-u fg-text-d">{{product.name}}</h4>
+                </div>
+                <div class="card-body">
+                    <img [src]="'data:' + product.photoContentType + ';base64,' + product.photo" class="card-img" alt="product.name" />
+                </div>
+                <div class="card-footer">
+                    <h4 class="text-muted" *ngIf="product.price">&euro;{{product.price}}<span *ngIf="product.quantity">/{{product.quantity}}</span></h4>
                 </div>
             </div>
-            <!-- /Col -->
-
         </div>
-        <!-- /Row -->
     </div>
     <!-- /Container -->
 </div>
-

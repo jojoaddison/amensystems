@@ -64,3 +64,7 @@ only screen and ( min-resolution: 2dppx) {
 .product-cell {
     max-width: 150px;
 }
+
+.carousel-item.active {
+    background-size: cover;
+}
