@@ -12,6 +12,7 @@
                 "category": "Category directeur",
                 "product": "Product directeur",
                 "digitalAsset": "Digital Asset",
+                "slideShow": "Slide Show",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
