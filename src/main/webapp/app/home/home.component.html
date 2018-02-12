@@ -1,4 +1,17 @@
 <header class="mt-1">
+
+    <ngb-carousel *ngIf="slides && slides.length > 0">
+        <ng-template ngbSlide *ngFor="let slide of slides ;trackBy: trackSlideId">
+            <div class="carousel-item active full-width" [style.backgroundImage]="'url(' + slide.url + ')'">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+
+</header>
+<!--
+
     <ngb-carousel>
         <ng-template ngbSlide>
             <div class="carousel-item active full-width"
@@ -32,8 +45,7 @@
             </div>
         </ng-template>
     </ngb-carousel>
-</header>
-<!--
+    
 <header class="mt-1">
     <ngb-carousel>
         <ng-template ngSlide  *ngFor="let slide of slides ;trackBy: trackSlideId">
@@ -89,14 +101,12 @@
         <!-- Tabled Row -->
         <div class="row">
             <!-- Col -->
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 v-middle"
-                 *ngFor="let cat of categories ;trackBy: trackCategoryId ">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 v-middle" *ngFor="let cat of categories ;trackBy: trackCategoryId ">
                 <!-- Feature -->
                 <div class="hfeature align-center mgb-60">
                     <div class="media-cell">
                         <a [routerLink]="['category-view', cat.name]">
-                        <img [src]="'data:' + cat.photoContentType + ';base64,' + cat.photo" alt="cat.name"
-                             class="icon-round icon-outline-thick product-cell" />
+                            <img [src]="'data:' + cat.photoContentType + ';base64,' + cat.photo" alt="cat.name" class="icon-round icon-outline-thick product-cell" />
                         </a>
                     </div>
                     <div class="text-cell">

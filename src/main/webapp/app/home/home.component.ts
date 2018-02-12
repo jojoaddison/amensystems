@@ -13,6 +13,8 @@ import { ITEMS_PER_PAGE, ResponseWrapper } from '../shared';
 
 import { Category } from '../entities/category/category.model';
 import { CategoryService } from '../entities/category/category.service';
+import { LocalStorage } from 'ng2-webstorage';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'jhi-home',
@@ -31,8 +33,8 @@ import { CategoryService } from '../entities/category/category.service';
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
-    public slides: Slide[];
-    public categories: Category[];
+    @LocalStorage() slides: Slide[];
+    @LocalStorage() categories: Category[];
 
     constructor(
         private categoryService: CategoryService,
@@ -41,7 +43,8 @@ export class HomeComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
-        private sliderConfig: NgbCarouselConfig
+        private sliderConfig: NgbCarouselConfig,
+        private sanitizer: DomSanitizer
     ) {
        sliderConfig.interval = 5000;
        sliderConfig.wrap = true;
@@ -81,8 +84,15 @@ export class HomeComponent implements OnInit {
     }
 
     loadAll() {
+        // tslint:disable-next-line:no-console
+        console.info('loading...');
+        if (!this.categories) {
+            this.loadCategories();
+        }
         this.loadSlides();
-        this.loadCategories();
+        if (!this.slides) {
+            this.loadSlides();
+        }
     }
 
     private loadCategories() {
@@ -99,7 +109,7 @@ export class HomeComponent implements OnInit {
     }
 
     private loadSlides() {
-        this.slideService.query({}).subscribe(
+        this.slideService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.slides = res.json;
                 this.createSlides();
@@ -119,7 +129,16 @@ export class HomeComponent implements OnInit {
                     description: ''
                 } );
             }
+            console.log('slides');
+            console.log(this.slides);
+            console.log('slides');
         }
+    }
+
+    setSlideStyle(slide: any): String {
+        const url = 'background-image: url(\'' + this.sanitizer.bypassSecurityTrustUrl(slide.url) + '\')';
+        console.log(url);
+        return url;
     }
 
     private onError(error) {

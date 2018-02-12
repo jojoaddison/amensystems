@@ -13,8 +13,11 @@
                 "product": "Product Management",
                 "digitalAsset": "Digital Asset",
                 "slideShow": "Slide Show",
+                "blog": "Blog",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
+            "news": "News",
+            "products": "Products",
             "account": {
                 "main": "Account",
                 "settings": "Settings",
@@ -102,7 +105,13 @@
             "edit": "Edit",
             "open": "Open",
             "save": "Save",
-            "view": "View"
+            "view": "View",
+            "create": "Create",
+            "read": "Read",
+            "update": "Update",
+            "forward": "Forward",
+            "next": "Next",
+            "add": "Add"
         },
         "detail": {
             "field": "Field",

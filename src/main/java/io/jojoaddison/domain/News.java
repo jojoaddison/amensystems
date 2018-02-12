@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A News.
@@ -24,7 +25,7 @@ public class News implements Serializable {
     private String content;
 
     @Field("slides")
-    private String slides;
+    private Set<Slide> slides;
 
     @Field("created_date")
     private ZonedDateTime createdDate;
@@ -70,16 +71,16 @@ public class News implements Serializable {
         this.content = content;
     }
 
-    public String getSlides() {
+    public Set<Slide> getSlides() {
         return slides;
     }
 
-    public News slides(String slides) {
+    public News slides(Set<Slide> slides) {
         this.slides = slides;
         return this;
     }
 
-    public void setSlides(String slides) {
+    public void setSlides(Set<Slide> slides) {
         this.slides = slides;
     }
 

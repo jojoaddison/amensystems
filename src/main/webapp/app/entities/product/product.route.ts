@@ -10,7 +10,15 @@ import { ProductPopupComponent } from './product-dialog.component';
 import { ProductDeletePopupComponent } from './product-delete-dialog.component';
 
 export const productRoute: Routes = [
-    {
+     {
+        path: 'product-view',
+        component: ProductComponent,
+        data: {
+            authorities: [],
+            pageTitle: 'amensystemApp.product.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
         path: 'product',
         component: ProductComponent,
         data: {

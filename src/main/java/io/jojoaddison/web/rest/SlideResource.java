@@ -6,6 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import io.jojoaddison.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,7 @@ public class SlideResource {
         }
         slide.setCreatedDate(ZonedDateTime.now());
         slide.setLastModified(ZonedDateTime.now());
+        slide.setLastModifiedBy(SecurityUtils.getCurrentUserLogin());
         Slide result = slideService.save(slide);
         return ResponseEntity.created(new URI("/api/slides/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -82,6 +84,10 @@ public class SlideResource {
             return createSlide(slide);
         }
         slide.setLastModified(ZonedDateTime.now());
+       if(!Optional.ofNullable(slide.getCreatedDate()).isPresent()){
+           slide.setCreatedDate(ZonedDateTime.now());
+       }
+        slide.setLastModifiedBy(SecurityUtils.getCurrentUserLogin());
         Slide result = slideService.update(slide);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, slide.getId().toString()))

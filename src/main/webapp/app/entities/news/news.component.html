@@ -1,10 +1,31 @@
-<div class="container container-main bg-white fg-text-d mt-5">
+<div *ngIf="!isAuthenticated()" class="container bg-white fg-text-d mt-3">
+
+    <div class="row-fluid" *ngFor="let item of news | orderBy: 'modifiedDate' : 'desc' ; trackBy: trackId;">
+        <div class="col-lg-12 text-left mb-5">
+            <h2 class="card-title">{{item.title}}</h2>
+            <span class="card-subtitle">{{item.lastModifiedBy}} | {{item.modifiedDate | date: 'medium'}}</span>
+            <hr>
+            <div [innerHtml]="item.content"></div>
+        </div>
+        <ngb-carousel *ngIf="item.slides && item.slides.length > 0">
+            <ng-template ngbSlide *ngFor="let slide of item.slides">
+                <div class="carousel-item active" [style.backgroundImage]="'url(' + slide.url + ')'">
+                    <div class="carousel-caption d-none d-md-block">
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+        <p></p>
+    </div>
+
+</div>
+<div *ngIf="isAuthenticated()" class="dashboard bg-white fg-text-d">
     <h2>
-        <span jhiTranslate="amensystemApp.news.home.title">News</span>
+        <span jhiTranslate="amensystemApp.news.home.title">news</span>
         <button class="btn btn-primary float-right jh-create-entity create-news" [routerLink]="['/', { outlets: { popup: ['news-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="amensystemApp.news.home.createLabel">
-            Create new News
+            <span  jhiTranslate="entity.action.create">
+            Create new news
             </span>
         </button>
     </h2>
@@ -12,40 +33,36 @@
     <div class="row">
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="news">
+    <div class="table-responsive data-view" *ngIf="news">
         <table class="table table-striped">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                    <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="title"><span jhiTranslate="amensystemApp.news.title">Title</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="content"><span jhiTranslate="amensystemApp.news.content">Content</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="slides"><span jhiTranslate="amensystemApp.news.slides">Slides</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="albumId"><span jhiTranslate="amensystemApp.news.slides">Slides</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="createdDate"><span jhiTranslate="amensystemApp.news.createdDate">Created Date</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="modifiedDate"><span jhiTranslate="amensystemApp.news.modifiedDate">Modified Date</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="lastModifiedBy"><span jhiTranslate="amensystemApp.news.lastModifiedBy">Last Modified By</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="modifiedBy"><span jhiTranslate="amensystemApp.news.lastModifiedBy">Modified By</span> <span class="fa fa-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let news of news ;trackBy: trackId">
-                    <td><a [routerLink]="['../news', news.id ]">{{news.id}}</a></td>
-                    <td>{{news.title}}</td>
-                    <td>{{news.content}}</td>
-                    <td>{{news.slides}}</td>
-                    <td>{{news.createdDate | date:'medium'}}</td>
-                    <td>{{news.modifiedDate | date:'medium'}}</td>
-                    <td>{{news.lastModifiedBy}}</td>
+                <tr *ngFor="let article of news ;trackBy: trackId">
+                    <td><a [routerLink]="['../news', news.id ]">{{article.title}}</a></td>
+                    <td>{{article.albumId}}</td>
+                    <td>{{article.createdDate | date:'medium'}}</td>
+                    <td>{{article.modifiedDate | date:'medium'}}</td>
+                    <td>{{article.lastModifiedBy}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="submit" [routerLink]="['../news', news.id ]" class="btn btn-info btn-sm">
+                            <button type="submit" [routerLink]="['../news', article.id ]" class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
-                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'news/'+ news.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
+                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'news/'+ article.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'news/'+ news.id + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm">
+                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'news/'+ article.id + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
@@ -57,10 +74,10 @@
     </div>
     <div *ngIf="news && news.length">
         <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
         <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            <ngb-pagination [collectionSize]="totalItems" [maxSize]="5" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
         </div>
     </div>
 </div>

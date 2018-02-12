@@ -1,26 +1,26 @@
 {
     "amensystemApp": {
-        "news" : {
+        "news": {
             "home": {
-                "title": "News",
-                "createLabel": "News erstellen",
-                "createOrEditLabel": "News erstellen oder bearbeiten"
+                "title": "Nachrichten",
+                "createLabel": "Nachrichten erstellen",
+                "createOrEditLabel": "Nachrichten Verwaltung"
             },
-            "created": "News erstellt mit ID {{ param }}",
-            "updated": "News aktualisiert mit ID {{ param }}",
-            "deleted": "News gelöscht mit ID {{ param }}",
+            "created": "Nachrichten erstellt mit ID {{ param }}",
+            "updated": "Nachrichten aktualisiert mit ID {{ param }}",
+            "deleted": "Nachrichten gelöscht mit ID {{ param }}",
             "delete": {
-                "question": "Soll News {{ id }} wirklich dauerhaft gelöscht werden?"
+                "question": "Soll Nachrichten {{ id }} wirklich dauerhaft gelöscht werden?"
             },
             "detail": {
-                "title": "News"
+                "title": "Nachrichten"
             },
-            "title": "Title",
-            "content": "Content",
-            "slides": "Slides",
-            "createdDate": "Created Date",
-            "modifiedDate": "Modified Date",
-            "lastModifiedBy": "Last Modified By"
+            "title": "Titel",
+            "content": "Inhalt",
+            "slides": "Fotos",
+            "createdDate": "Erstellungsdatum",
+            "modifiedDate": "Modifizierungsdatum",
+            "lastModifiedBy": "Zuletzt modifiziert von"
         }
     }
 }

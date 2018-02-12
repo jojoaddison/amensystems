@@ -17,6 +17,7 @@ import { NewsService } from './news.service';
 export class NewsDialogComponent implements OnInit {
 
     news: News;
+    content: String;
     isSaving: boolean;
 
     constructor(
@@ -33,6 +34,10 @@ export class NewsDialogComponent implements OnInit {
 
     clear() {
         this.activeModal.dismiss('cancel');
+    }
+
+    setContentChanged(data: string): void {
+        this.news.content = data;
     }
 
     save() {

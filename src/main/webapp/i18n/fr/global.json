@@ -13,8 +13,11 @@
                 "product": "Product directeur",
                 "digitalAsset": "Digital Asset",
                 "slideShow": "Slide Show",
+                "blog": "Blog",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
+            "news": "News",
+            "products": "Products",
             "account": {
                 "main": "Compte",
                 "settings": "Profil",
@@ -102,7 +105,13 @@
             "delete": "Supprimer",
             "open": "Ouvrir",
             "save": "Sauvegarder",
-            "view": "Voir"
+            "view": "Voir",
+            "create": "Créer",
+            "read": "Read",
+            "update": "Lis",
+            "forward": "Avancer",
+            "next": "Suivant",
+            "add": "Ajouter"
         },
         "detail": {
             "field": "Champs",

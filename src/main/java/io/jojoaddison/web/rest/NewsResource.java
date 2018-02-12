@@ -4,11 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import io.jojoaddison.domain.News;
 
 import io.jojoaddison.repository.NewsRepository;
+import io.jojoaddison.security.SecurityUtils;
 import io.jojoaddison.web.rest.errors.BadRequestAlertException;
 import io.jojoaddison.web.rest.util.HeaderUtil;
 import io.jojoaddison.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +59,11 @@ public class NewsResource {
         if (news.getId() != null) {
             throw new BadRequestAlertException("A new news cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        news.setCreatedDate(ZonedDateTime.now());
+        news.setModifiedDate(ZonedDateTime.now());
+        news.setLastModifiedBy(SecurityUtils.getCurrentUserLogin());
+        Document document = Jsoup.parse(news.getContent());
+        news.setContent(document.body().html());
         News result = newsRepository.save(news);
         return ResponseEntity.created(new URI("/api/news/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -77,6 +86,13 @@ public class NewsResource {
         if (news.getId() == null) {
             return createNews(news);
         }
+        news.setModifiedDate(ZonedDateTime.now());
+        if(!Optional.ofNullable(news.getCreatedDate()).isPresent()){
+            news.setCreatedDate(ZonedDateTime.now());
+        }
+        news.setLastModifiedBy(SecurityUtils.getCurrentUserLogin());
+        Document document = Jsoup.parse(news.getContent());
+        news.setContent(document.body().html());
         News result = newsRepository.save(news);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, news.getId().toString()))

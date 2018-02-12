@@ -188,9 +188,23 @@
   dependencies:
     "@angular-devkit/core" "0.0.20"
 
+"@tinymce/tinymce-angular@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-angular/-/tinymce-angular-1.0.2.tgz#5990e46dd212454fe6e8dda7ed931fcac731c7ae"
+
+"@types/geojson@*":
+  version "7946.0.0"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.0.tgz#e8bc74e8183d966455f82023f0c72e1072a952d0"
+
 "@types/jasmine@2.5.53":
   version "2.5.53"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.53.tgz#4e0cefad09df5ec48c8dd40433512f84b1568d61"
+
+"@types/leaflet@1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.2.5.tgz#b172502c298849cadd034314dabfc936beff7636"
+  dependencies:
+    "@types/geojson" "*"
 
 "@types/node@8.0.18":
   version "8.0.18"
@@ -4493,6 +4507,10 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.3.1.tgz#86f336d2fb0e2d0ff446677049a5dc34cf0ea60e"
+
 less-loader@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-4.0.5.tgz#ae155a7406cac6acd293d785587fcff0f478c4dd"
@@ -5308,6 +5326,10 @@ ngx-cookie@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ngx-cookie/-/ngx-cookie-1.0.0.tgz#004fc653febd849b4dd3ee2c63c4cf171f464da9"
 
+ngx-editor@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/ngx-editor/-/ngx-editor-3.2.1.tgz#3e4be88cb939c1cbe89d550b1c97c504f1d60be5"
+
 ngx-infinite-scroll@0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-0.5.1.tgz#dd9452c602ff7c3222f0ca168481aa14140286b7"
@@ -5904,6 +5926,10 @@ pkg-dir@^2.0.0:
 pluralize@7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
+
+popper.js@^1.11.0:
+  version "1.12.9"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.9.tgz#0dfbc2dff96c451bb332edcfcfaaf566d331d5b3"
 
 portfinder@^1.0.9, portfinder@~1.0.12:
   version "1.0.13"
@@ -7742,9 +7768,9 @@ timers-browserify@^2.0.2:
   dependencies:
     setimmediate "^1.0.4"
 
-tinymce@4.5.3:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-4.5.3.tgz#1c9210e15d0575ff12eb941a87e6efff39824bd1"
+tinymce@^4.7.6:
+  version "4.7.6"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-4.7.6.tgz#6c70931d3308a8ff4ba20e5ee82379b46714eb5c"
 
 tmp@0.0.31:
   version "0.0.31"
@@ -8343,6 +8369,13 @@ webpack-notifier@1.5.0:
     node-notifier "^4.1.0"
     object-assign "^4.1.0"
     strip-ansi "^3.0.1"
+
+webpack-sources@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.1.0.tgz#a101ebae59d6507354d71d8013950a3a8b7a5a54"
+  dependencies:
+    source-list-map "^2.0.0"
+    source-map "~0.6.1"
 
 webpack-sources@^1.0.1:
   version "1.0.1"

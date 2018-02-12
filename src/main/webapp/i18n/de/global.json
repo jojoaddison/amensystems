@@ -13,8 +13,11 @@
                 "product": "Product verwalten",
                 "digitalAsset": "Digital Asset",
                 "slideShow": "Slide Show",
+                "blog": "Blog",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
+            "news": "Nachrichten",
+            "products": "Produkte",
             "account": {
                 "main": "Zugang",
                 "settings": "Einstellungen",
@@ -100,9 +103,15 @@
             "cancel": "Abbrechen",
             "delete": "Löschen",
             "edit": "Bearbeiten",
-            "open": "Open",
+            "open": "Öffnen",
             "save": "Speichern",
-            "view": "Details"
+            "view": "Details",
+            "create": "Erstellen",
+            "read": "Lesen",
+            "update": "Bearbeiten",
+            "forward": "Weiter",
+            "next": "Nächste",
+            "add": "Hinzufügen"
         },
         "detail": {
             "field": "Feld",
