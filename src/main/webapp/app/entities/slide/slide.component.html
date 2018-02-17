@@ -1,23 +1,23 @@
-<div class="container container-main bg-white fg-text-d mt-5">
-    <p>&nbsp;</p>
-    <h2>
-        <span jhiTranslate="amensystemApp.slide.home.title">Slides</span>
-
-    </h2>
-
+<div class="container container-main bg-white fg-text-d mt-3">
     <div class="row">
-        <div class="col-md-6"></div>
+        <div class="col-md-12 text-align" *ngIf="tiles && tiles.length > 0">
+            <jhi-tilebox [config]="tileConfig" [tiles]="tiles" [title]="title" (tileSelected)="onSlideSelected($event)"></jhi-tilebox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 float-left">
+            <button class="btn btn-success float-left " (click)="createSlideShow()" *ngIf="slideshow && slideshow.length > 0">
+                <span class="fa fa-plus"></span>
+                        Create Slideshow
+                </span>
+            </button>
+        </div>
         <div class="col-md-6 float-right">
             <button class="btn btn-primary float-right jh-create-entity create-slide" [routerLink]="['/', { outlets: { popup: ['slide-new'] } }]">
                 <span class="fa fa-plus"></span>
-            <span  jhiTranslate="amensystemApp.slide.home.createLabel">
-            Create new Slide
-            </span>
-            </button>
-            <button class="btn btn-success float-right " (click)="createSlideShow()" >
-                <span class="fa fa-plus"></span>
-                Create Slideshow
-            </span>
+                <span  jhiTranslate="amensystemApp.slide.home.createLabel">
+                Create new Slide
+                </span>
             </button>
         </div>
     </div>

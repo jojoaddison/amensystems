@@ -1,19 +1,29 @@
 {
-    "home": {
-        "title": "Bienvenue, Java Hipster !",
-        "subtitle": "Ceci est votre page d'accueil",
-        "logged": {
-            "message": "Vous êtes connecté en tant que \"{{username}}\"."
-        },
-        "question": "Si vous avez des questions à propos de JHipster :",
-        "link": {
-            "homepage": "Page d'accueil de JHipster",
-            "stackoverflow": "JHipster sur Stack Overflow",
-            "bugtracker": "JHipster bug tracker",
-            "chat": "JHipster public chat room",
-            "follow": "Suivez @java_hipster sur Twitter"
-        },
-        "like": "Si vous aimez JHipster, donnez nous une étoile sur",
-        "github": "GitHub "
+    "amensystemApp": {
+        "home": {
+            "home": {
+                "title": "Home management",
+                "createLabel": "Créer un nouveau Home",
+                "createOrEditLabel": "Créer ou éditer un Home"
+            },
+            "created": "Un nouveau Home a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Home avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Home avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Home {{ id }} ?"
+            },
+            "detail": {
+                "title": "Home"
+            },
+            "slides": "Slides",
+            "advert": "Advert",
+            "category": "Category",
+            "state": "State",
+            "version": "Version",
+            "createdBy": "Created By",
+            "createdDate": "Created Date",
+            "modifiedBy": "Modified By",
+            "modifiedDate": "Modified Date"
+        }
     }
 }

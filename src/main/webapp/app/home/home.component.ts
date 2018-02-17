@@ -7,14 +7,18 @@ import {style, animate, trigger, transition} from '@angular/animations';
 
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
-import { Slide } from '../entities/slide/slide.model';
-import { SlideService } from '../entities/slide/slide.service';
+import { Slide } from '../entities/slide';
+import { SlideService } from '../entities/slide';
 import { ITEMS_PER_PAGE, ResponseWrapper } from '../shared';
 
-import { Category } from '../entities/category/category.model';
-import { CategoryService } from '../entities/category/category.service';
+import { Category } from '../entities/category';
+import { CategoryService } from '../entities/category';
 import { LocalStorage } from 'ng2-webstorage';
 import { DomSanitizer } from '@angular/platform-browser';
+import { HomeService, Home } from '../entities/home';
+import { Product } from '../entities/product';
+import { ProductService } from '../entities/product';
+import { Tile } from '../widgets';
 
 @Component({
     selector: 'jhi-home',
@@ -35,6 +39,11 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     @LocalStorage() slides: Slide[];
     @LocalStorage() categories: Category[];
+    currentHome: Home;
+    advertTitle = '';
+    @LocalStorage() advertTiles: Tile[];
+    @LocalStorage() adverts: Product[];
+    showSelected = false;
 
     constructor(
         private categoryService: CategoryService,
@@ -44,7 +53,9 @@ export class HomeComponent implements OnInit {
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
         private sliderConfig: NgbCarouselConfig,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private homeService: HomeService,
+        private productService: ProductService
     ) {
        sliderConfig.interval = 5000;
        sliderConfig.wrap = true;
@@ -86,13 +97,69 @@ export class HomeComponent implements OnInit {
     loadAll() {
         // tslint:disable-next-line:no-console
         console.info('loading...');
-        if (!this.categories) {
-            this.loadCategories();
-        }
-        this.loadSlides();
-        if (!this.slides) {
-            this.loadSlides();
-        }
+        this.loadCurrentHome();
+    }
+
+    private loadProducts() {
+        this.productService.query().subscribe((res) => {
+            const products = res.json;
+            this.initAdverts(products);
+        });
+    }
+
+    private initAdverts(adverts: Product[]) {
+        this.adverts = adverts;
+        this.advertTiles = [];
+        this.adverts.forEach((advert) => {
+            const url = 'data:' + advert.photoContentType + ';base64,' + advert.photo;
+            advert.url = url;
+            this.advertTiles.push(new Tile(advert.id, advert.name, advert.category, url, false));
+        });
+        console.log(this.advertTiles);
+        console.log(this.adverts);
+    }
+
+    public onAdvertSelected(tile: Tile) {
+        const advert = this.findAdvertById(tile.id);
+        // Navigate to Advert
+    }
+
+    private findAdvertById(id: string): Product {
+        const advert = this.adverts.find((element) => element.id === id);
+        return advert;
+    }
+    private advertSelected(advert: Product): boolean {
+       const index = this.adverts.findIndex((element) => element.id === advert.id);
+        return index > -1;
+    }
+
+    private loadCurrentHome() {
+        this.homeService.getCurrentHome().subscribe((home: Home) => {
+            console.log('home');
+            console.log(home);
+            if (home && home !== null) {
+                this.currentHome = home;
+                if (home.slides.length > 0) {
+                    this.slides = home.slides;
+                } else {
+                    this.loadSlides();
+                }
+                if (home.advert.length > 0) {
+                    this.initAdverts(home.advert);
+                } else {
+                    this.loadProducts();
+                }
+                if (home.category.length > 0) {
+                    this.categories = home.category;
+                } else {
+                    this.loadCategories();
+                }
+            } else {
+                this.loadSlides();
+                this.loadCategories();
+                this.loadProducts();
+            }
+        });
     }
 
     private loadCategories() {

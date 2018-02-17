@@ -24,7 +24,9 @@ import java.net.URISyntaxException;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Product.
@@ -105,6 +107,21 @@ public class ProductResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+
+    /**
+     * GET  /products : get all the products.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of products in body
+     */
+    @GetMapping("/products/grouped-by-category")
+    @Timed
+    public ResponseEntity<Map<String, List<Product>>> getAllProductsGroupedByCategory() {
+        log.debug("REST request to get a page of Products");
+        List<Product> data = productRepository.findAll();
+        Map<String, List<Product>> group = data.stream().collect(Collectors.groupingBy(Product::getCategory));
+        return new ResponseEntity<Map<String, List<Product>>>(group, HttpStatus.OK);
+    }
+
     /**
      * GET  /products/:id : get the "id" product.
      *
@@ -122,7 +139,7 @@ public class ProductResource {
     /**
      * GET  /products/:id : get the "id" product.
      *
-     * @param id the id of the product to retrieve
+     * @param category the id of the product to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the product, or with status 404 (Not Found)
      */
     @GetMapping("/products/by-category/{category}")

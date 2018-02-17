@@ -1,5 +1,4 @@
 <header class="mt-1">
-
     <ngb-carousel *ngIf="slides && slides.length > 0">
         <ng-template ngbSlide *ngFor="let slide of slides ;trackBy: trackSlideId">
             <div class="carousel-item active full-width" [style.backgroundImage]="'url(' + slide.url + ')'">
@@ -8,56 +7,11 @@
             </div>
         </ng-template>
     </ngb-carousel>
-
 </header>
-<!--
-
-    <ngb-carousel>
-        <ng-template ngbSlide>
-            <div class="carousel-item active full-width"
-                 style="background-image: url('/content/slides/shop/slide-1.JPG')">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
-            </div>
-        </ng-template>
-        <ng-template ngbSlide>
-            <div class="carousel-item active" style="background-image: url('/content/slides/shop/slide-2.JPG')">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
-            </div>
-        </ng-template>
-        <ng-template ngbSlide>
-            <div class="carousel-item active" style="background-image: url('/content/slides/shop/slide-3.JPG')">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
-            </div>
-        </ng-template>
-        <ng-template ngbSlide>
-            <div class="carousel-item active" style="background-image: url('/content/slides/shop/slide-4.JPG')">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
-            </div>
-        </ng-template>
-        <ng-template ngbSlide>
-            <div class="carousel-item active" style="background-image: url('/content/slides/shop/slide-5.JPG')">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
-            </div>
-        </ng-template>
-    </ngb-carousel>
-    
-<header class="mt-1">
-    <ngb-carousel>
-        <ng-template ngSlide  *ngFor="let slide of slides ;trackBy: trackSlideId">
-            <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo"  alt="slide image" />
-            <div class="carousel-caption">
-                <h3>First slide label</h3>
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </div>
-        </ng-template>
-    </ngb-carousel>
-</header>
--->
+<section *ngIf="advertTiles && advertTiles.length > 0">
+    <jhi-tilebox [showSelected]="showSelected" [tiles]="advertTiles" [title]="advertTitle" (tileSelected)="onAdvertSelected($event)"></jhi-tilebox>
+</section>
+<hr>
 <!-- HAMPER -->
 <!--
 <section class="mt-1">
@@ -85,43 +39,48 @@
 <!-- HAMPER -->
 
 <!-- Start #food -->
-<div id="food" class="block bg-white border-b" data-edit="false">
-    <!-- Container -->
-    <div class="container container-main auto-invert pady-block-lg">
-        <!-- Title -->
-        <div class="section-title auto-invert line-b align-center">
-            <h2 class="font-cond-b fg-text-d lts-sm">A Variety of Food &amp; Drinks</h2>
+<section>
+    <div id="food" class="block bg-white border-b" data-edit="false">
+        <!-- Container -->
+        <div class="container container-main auto-invert pady-block-lg">
+            <!-- Title -->
+            <div class="section-title auto-invert line-b align-center">
+                <h2 class="font-cond-b fg-text-d lts-sm">A Variety of Food &amp; Drinks</h2>
 
-            <p class="font-cond-l fg-text lts-sm ">
-                Fresh harvested, neatly packaged and made just for you.
-            </p>
-        </div>
-        <!-- /Title -->
-
-        <!-- Tabled Row -->
-        <div class="row">
-            <!-- Col -->
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 v-middle" *ngFor="let cat of categories ;trackBy: trackCategoryId ">
-                <!-- Feature -->
-                <div class="hfeature align-center mgb-60">
-                    <div class="media-cell">
-                        <a [routerLink]="['category-view', cat.name]">
-                            <img [src]="'data:' + cat.photoContentType + ';base64,' + cat.photo" alt="cat.name" class="icon-round icon-outline-thick product-cell" />
-                        </a>
-                    </div>
-                    <div class="text-cell">
-                        <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">{{ cat.name }} </h4>
-
-                        <p class="font-cond-l fs-90 fg-text">
-                            {{ cat.description }}
-                        </p>
-                    </div>
-                </div>
-                <!-- /Feature -->
+                <p class="font-cond-l fg-text lts-sm ">
+                    Fresh harvested, neatly packaged and made just for you.
+                </p>
             </div>
-        </div>
+            <!-- /Title -->
 
+            <!-- Tabled Row -->
+            <div class="row">
+                <!-- Col -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 v-middle" *ngFor="let cat of categories ;trackBy: trackCategoryId ">
+                    <!-- Feature -->
+                    <div class="hfeature align-center mgb-60">
+                        <div class="media-cell">
+                            <a [routerLink]="['category-view', cat.name]">
+                                <img [src]="'data:' + cat.photoContentType + ';base64,' + cat.photo" alt="cat.name" class="icon-round icon-outline-thick product-cell" />
+                            </a>
+                        </div>
+                        <div class="text-cell">
+                            <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">{{ cat.name }} </h4>
+
+                            <p class="font-cond-l fs-90 fg-text">
+                                {{ cat.description }}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /Feature -->
+                </div>
+            </div>
+
+        </div>
+        <!-- /Container -->
     </div>
-    <!-- /Container -->
-</div>
-<!-- /End #food -->
+    <!-- /End #food -->
+</section>
+
+
+<span *ngIf="currentHome" class="float-right"> version: {{currentHome.version}}</span>

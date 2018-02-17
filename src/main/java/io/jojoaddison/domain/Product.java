@@ -20,6 +20,9 @@ public class Product implements Serializable {
     @Field("name")
     private String name;
 
+    @Field("url")
+    private String url;
+
     @Field("quantity")
     private String quantity;
 
@@ -64,6 +67,19 @@ public class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Product url(String url) {
+        this.url = url;
+        return this;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getQuantity() {

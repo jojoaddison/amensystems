@@ -1,4 +1,6 @@
 import { BaseEntity } from './../../shared';
+import { Product } from '../product';
+import { Tile } from '../../widgets';
 
 export class Category implements BaseEntity {
     constructor(
@@ -9,6 +11,7 @@ export class Category implements BaseEntity {
         public photo?: any,
         public thumbnail?: string,
         public link?: string,
+        public products?: Tile[]
     ) {
     }
 }

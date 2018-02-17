@@ -16,8 +16,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -29,6 +35,9 @@ public class AmensystemApp {
     private static final Logger log = LoggerFactory.getLogger(AmensystemApp.class);
 
     private final Environment env;
+
+    private final String ROOT_DIR = "content-directory";
+    private final String DATA_DIR = "data-directory";
 
     public AmensystemApp(Environment env) {
         this.env = env;
@@ -51,6 +60,16 @@ public class AmensystemApp {
         if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_CLOUD)) {
             log.error("You have misconfigured your application! It should not " +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
+        }
+        String ROOT_PATH = env.getProperty(ROOT_DIR);
+        Path rootPath = Paths.get(ROOT_PATH);
+        Path dataPath = Paths.get(env.getProperty(DATA_DIR));
+        if(Files.notExists(rootPath)) {
+            try {
+                Files.createLink(rootPath, dataPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -68,3 +68,9 @@ only screen and ( min-resolution: 2dppx) {
 .carousel-item.active {
     background-size: cover;
 }
+
+.advert {
+    margin-top: 20px;
+    min-height: 150px;
+    line-height: 150px;
+}

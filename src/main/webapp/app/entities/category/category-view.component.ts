@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiDataUtils, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
@@ -10,6 +10,8 @@ import { Product } from '../product/product.model';
 import { ProductService } from '../product/product.service';
 
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { LocalStorage } from 'ng2-webstorage';
+import { Tile } from '../../widgets';
 
 @Component({
     selector: 'jhi-category-view',
@@ -21,6 +23,9 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private eventSubscriber: Subscription;
     products: Product[];
+    @LocalStorage() categories: Category[];
+    tiles: Tile[] = [];
+    title = 'Categories';
 
     constructor(
         private productService: ProductService,
@@ -29,17 +34,16 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
         private parseLinks: JhiParseLinks,
         private jhiAlertService: JhiAlertService,
         private categoryService: CategoryService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router,
     ) {
         this.products = [];
     }
 
     nextCategory() {
-
     }
 
     previousCategory() {
-
     }
 
     loadProduct(category: string) {
@@ -50,11 +54,10 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
     }
 
     private createProductList(data: any , headers: any) {
-        console.log(data);
+        this.products = [];
         for (let i = 0; i < data.length; i++) {
             this.products.push(data[i]);
         }
-
         console.log(this.products);
     }
 
@@ -63,14 +66,29 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.categoryService.query({}).subscribe(
+            (res: ResponseWrapper) => {
+                this.categories = res.json;
+                this.tiles = [];
+                this.categories.forEach((category) => {
+                    const url = 'data:' + category.photoContentType + ';base64,' + category.photo;
+                    this.tiles.push(new Tile(category.id, category.name, category.description, url, false));
+                });
+            }
+        );
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['name']);
         });
         this.registerChangeInCategories();
     }
 
-    load(id) {
-        this.categoryService.findByName(id).subscribe((category) => {
+    public onCategorySelected(tile: Tile) {
+        this.router.navigate(['category-view',  tile.title]);
+
+    }
+
+    load(name) {
+        this.categoryService.findByName(name).subscribe((category) => {
             this.category = category;
             this.loadProduct(this.category.name);
         });

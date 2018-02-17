@@ -42,3 +42,29 @@
     margin-left: 1px;
     margin-right: 1px;
 }
+
+.tile {
+    min-height: 100px;
+    background-color: #ccc;
+    background-size: cover !important;
+}
+
+.tile h1 {
+    text-align: center;
+    line-height: 100px;
+    background: rgba(0, 0, 0, 0.32);
+    color: white;
+    margin: 0;
+}
+
+h4 {
+    margin: 0;
+    padding: 10px 15px;
+    text-align: center;
+}
+
+p {
+    margin: 0;
+    padding: 0 15px 10px;
+    text-align: center;
+}

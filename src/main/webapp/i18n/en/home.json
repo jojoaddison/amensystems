@@ -1,19 +1,29 @@
 {
-    "home": {
-        "title": "Amen supermarket!",
-        "subtitle": "African foods, clothing and accessories",
-        "logged": {
-            "message": "You are logged in as user \"{{username}}\"."
-        },
-        "question": "If you have any question on JHipster:",
-        "link": {
-            "homepage": "JHipster homepage",
-            "stackoverflow": "JHipster on Stack Overflow",
-            "bugtracker": "JHipster bug tracker",
-            "chat": "JHipster public chat room",
-            "follow": "follow @java_hipster on Twitter"
-        },
-        "like": "If you like JHipster, don't forget to give us a star on",
-        "github": "GitHub"
+    "amensystemApp": {
+        "home": {
+            "home": {
+                "title": "Home Management",
+                "createLabel": "Create a new Home",
+                "createOrEditLabel": "Create or edit a Home"
+            },
+            "created": "A new Home is created with identifier {{ param }}",
+            "updated": "A Home is updated with identifier {{ param }}",
+            "deleted": "A Home is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Home {{ id }}?"
+            },
+            "detail": {
+                "title": "Home"
+            },
+            "slides": "Slides",
+            "advert": "Advert",
+            "category": "Category",
+            "state": "State",
+            "version": "Version",
+            "createdBy": "Created By",
+            "createdDate": "Created Date",
+            "modifiedBy": "Modified By",
+            "modifiedDate": "Modified Date"
+        }
     }
 }

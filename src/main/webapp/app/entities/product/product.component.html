@@ -1,4 +1,11 @@
-<div class="container container-main bg-white fg-text-d mt-5">
+<div class="container container-main bg-white fg-text-d mt-5" *ngIf="!isAuthenticated()">
+    <div *ngFor="let category of categories ;trackBy :trackId ">
+        <div class="container container-main bg-white fg-text-d mt-3" *ngIf="category.tiles && category.tiles.length > 0">
+            <jhi-tilebox [tiles]="category.products" [title]="category.name" (tileSelected)="onProductSelected($event)"></jhi-tilebox>
+        </div>
+    </div>
+</div>
+<div class="container container-main bg-white fg-text-d mt-5" *ngIf="isAuthenticated()">
     <h2>
         <span jhiTranslate="amensystemApp.product.home.title">Products</span>
         <button class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/', { outlets: { popup: ['product-new'] } }]">

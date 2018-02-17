@@ -1,0 +1,15 @@
+<h2>{{title}}</h2>
+<ngx-carousel [inputs]="config" (carouselLoad)="init($event)">
+    <ngx-tile NgxCarouselItem *ngFor="let tile of tiles; let i = index;">
+        <div class="wBg" [ngClass]="{'selected': tile.selected && showSelected}" (click)="toggleSelected(tile)">
+            <span id="i" *ngIf="tile.selected == true && showSelected == true">
+                    <i class="fa fa-check-circle" aria-hidden="false"></i>
+                </span>
+            <h4>{{ tile.title }}</h4>
+            <div class="tile" [style.background]="'url(' + tile.url + ')'">
+            </div>
+        </div>
+    </ngx-tile>
+    <button NgxCarouselPrev class="left-arrow">&lt;</button>
+    <button NgxCarouselNext class="right-arrow">&gt;</button>
+</ngx-carousel>

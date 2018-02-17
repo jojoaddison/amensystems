@@ -96,7 +96,7 @@ public class NewsResourceIntTest {
         News news = new News()
             .title(DEFAULT_TITLE)
             .content(DEFAULT_CONTENT)
-            .slides(DEFAULT_SLIDES)
+            .slides(null)
             .createdDate(DEFAULT_CREATED_DATE)
             .modifiedDate(DEFAULT_MODIFIED_DATE)
             .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY);
@@ -203,7 +203,7 @@ public class NewsResourceIntTest {
         updatedNews
             .title(UPDATED_TITLE)
             .content(UPDATED_CONTENT)
-            .slides(UPDATED_SLIDES)
+            .slides(null)
             .createdDate(UPDATED_CREATED_DATE)
             .modifiedDate(UPDATED_MODIFIED_DATE)
             .lastModifiedBy(UPDATED_LAST_MODIFIED_BY);

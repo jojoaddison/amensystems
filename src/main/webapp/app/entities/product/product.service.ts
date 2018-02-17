@@ -23,6 +23,14 @@ export class ProductService {
         });
     }
 
+    getProductsGroupedByCategory(): Observable<any> {
+        const url = this.resourceUrl + '/grouped-by-category';
+        return this.http.get(url)
+                    .map((res: Response) => {
+                        return res.json();
+                    });
+    }
+
     update(product: Product): Observable<Product> {
         const copy = this.convert(product);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {

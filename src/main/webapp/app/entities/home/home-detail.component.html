@@ -1,0 +1,125 @@
+<div class="container mt-2">
+    <header *ngIf="home.slides && home.slides.length > 0" class="mt-1">
+        <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let slide of home.slides ;trackBy: trackId">
+                <div class="carousel-item active full-width" [style.backgroundImage]="'url(' + slide.url + ')'">
+                    <div class="carousel-caption d-none d-md-block">
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+    </header>
+    <div class="mt-2">
+        <jhi-tilebox [tiles]="advertTiles" [title]="advertTitle" (tileSelected)="onAdvertSelected($event)"></jhi-tilebox>
+    </div>
+    <hr>
+
+    <!-- Start #food -->
+    <div id="food" class="block bg-white border-b" data-edit="false">
+        <!-- Container -->
+        <div class="container container-main auto-invert pady-block-lg">
+            <!-- Title -->
+            <div class="section-title auto-invert line-b align-center">
+                <h2 class="font-cond-b fg-text-d lts-sm">A Variety of Food &amp; Drinks</h2>
+
+                <p class="font-cond-l fg-text lts-sm ">
+                    Fresh harvested, neatly packaged and made just for you.
+                </p>
+            </div>
+            <!-- /Title -->
+
+            <!-- Tabled Row -->
+            <div class="row">
+                <!-- Col -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 v-middle" *ngFor="let cat of home.category ;trackBy: trackCategoryId ">
+                    <!-- Feature -->
+                    <div class="hfeature align-center mgb-60">
+                        <div class="media-cell">
+                            <a [routerLink]="['category-view', cat.name]">
+                                <img [src]="cat.link" alt="cat.name" class="icon-round icon-outline-thick product-cell" />
+                            </a>
+                        </div>
+                        <div class="text-cell">
+                            <h4 class="case-u font-cond-b lts-sm mgb-sm fg-text-d">{{ cat.name }} </h4>
+
+                            <p class="font-cond-l fs-90 fg-text">
+                                {{ cat.description }}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /Feature -->
+                </div>
+            </div>
+
+        </div>
+        <!-- /Container -->
+    </div>
+    <!-- /End #food -->
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <button type="submit" (click)="previousState()" class="btn btn-info float-left">
+                        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                    </button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" [routerLink]="['/', { outlets: { popup: 'home-management/'+ home.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary float-right">
+                            <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                        </button>
+        </div>
+    </div>
+
+</div>
+<p>&nbsp;</p>
+<!--
+<div class="container mt-3 fg-text-d" *ngIf="home">
+    <h2><span jhiTranslate="amensystemApp.home.detail.title">Home</span> {{home.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="amensystemApp.home.slides">Slides</span></dt>
+        <dd>
+            <span>{{home.slides}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.advert">Advert</span></dt>
+        <dd>
+            <span>{{home.advert}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.category">Category</span></dt>
+        <dd>
+            <span>{{home.category}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.state">State</span></dt>
+        <dd>
+            <span jhiTranslate="{{'amensystemApp.StateType.' + home.state}}">{{home.state}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.version">Version</span></dt>
+        <dd>
+            <span>{{home.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.createdBy">Created By</span></dt>
+        <dd>
+            <span>{{home.createdBy}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.createdDate">Created Date</span></dt>
+        <dd>
+            <span>{{home.createdDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.modifiedBy">Modified By</span></dt>
+        <dd>
+            <span>{{home.modifiedBy}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.home.modifiedDate">Modified Date</span></dt>
+        <dd>
+            <span>{{home.modifiedDate | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/', { outlets: { popup: 'home/'+ home.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
+-->

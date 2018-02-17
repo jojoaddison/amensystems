@@ -17,6 +17,7 @@ import {
     CategoryViewComponent,
     TinyEditorComponent
 } from './';
+import { WidgetsModule } from '../../widgets/widgets.module';
 
 const ENTITY_STATES = [
     ...categoryRoute,
@@ -26,6 +27,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         AmensystemSharedModule,
+        WidgetsModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

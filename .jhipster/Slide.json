@@ -1,8 +1,7 @@
 {
     "fluentMethods": true,
     "relationships": [],
-    "fields": [
-        {
+    "fields": [{
             "fieldName": "url",
             "fieldType": "String"
         },
@@ -24,11 +23,15 @@
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldName": "lastModified",
+            "fieldName": "modifiedDate",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldName": "lastModifiedBy",
+            "fieldName": "createdBy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modifiedBy",
             "fieldType": "String"
         }
     ],

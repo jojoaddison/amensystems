@@ -26,3 +26,6 @@
     </div>
     <!-- /Container -->
 </div>
+<div class="container container-main bg-white fg-text-d mt-3" *ngIf="tiles && tiles.length > 0">
+    <jhi-tilebox [tiles]="tiles" [title]="title" (tileSelected)="onCategorySelected($event)"></jhi-tilebox>
+</div>

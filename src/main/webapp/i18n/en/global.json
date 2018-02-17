@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "Amen Supermarket",
+        "title": "Amen Supermarket!",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -13,7 +13,8 @@
                 "product": "Product Management",
                 "digitalAsset": "Digital Asset",
                 "slideShow": "Slide Show",
-                "blog": "Blog",
+                "blog": "Blog Management",
+                "home": "Home Management",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "news": "News",

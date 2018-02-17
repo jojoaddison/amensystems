@@ -1,14 +1,26 @@
 package io.jojoaddison.service;
 
+import com.mongodb.gridfs.GridFSDBFile;
 import io.jojoaddison.domain.Category;
+import io.jojoaddison.domain.Slide;
 import io.jojoaddison.repository.CategoryRepository;
+import io.jojoaddison.service.util.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsCriteria;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -20,9 +32,16 @@ public class CategoryService {
     private final Logger log = LoggerFactory.getLogger(CategoryService.class);
 
     private final CategoryRepository categoryRepository;
+    private final GridFsTemplate gridFsTemplate;
+    private final Environment environment;
+    private final String ROOT_DIR = "content-directory";
+    private final String CATEGORY_DIR = "category";
+    private final String CATEGORY_ID = "categoryId";
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, GridFsTemplate gridFsTemplate, Environment environment) {
         this.categoryRepository = categoryRepository;
+        this.gridFsTemplate = gridFsTemplate;
+        this.environment = environment;
     }
 
     /**
@@ -33,9 +52,56 @@ public class CategoryService {
      */
     public Category save(Category category) {
         log.debug("Request to save Category : {}", category);
+        try {
+            byte [] photo = category.getPhoto();
+            ByteArrayInputStream is = new ByteArrayInputStream(photo);
+            category = categoryRepository.save(category);
+            category = createFile(category);
+
+            Optional<GridFSDBFile> categoryFile = findFileByMetadata(CATEGORY_ID, category.getId());
+            if (!categoryFile.isPresent()) {
+                Map<String, String> data = new HashMap<>();
+                data.put(CATEGORY_ID, category.getId());
+                gridFsTemplate.store(is, category.getLink(), category.getPhotoContentType(), data);
+            }
+            is.close();
+        }catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
         return categoryRepository.save(category);
     }
 
+
+    private Category createFile(Category category){
+        try{
+            String fileExt = category.getPhotoContentType().split("/")[1];
+            String root = environment.getProperty(ROOT_DIR);
+            String directory = root.concat(Tools.getSeparator()).concat(CATEGORY_DIR);
+            String filename = ("category_").concat(category.getId()).concat(".").concat(fileExt);
+            String path = directory.concat(Tools.getSeparator()).concat(filename);
+            Tools.createFile(path, category.getPhoto());
+            String url = ("content").concat(Tools.getSeparator()).concat(CATEGORY_DIR).concat(Tools.getSeparator()).concat(filename);
+            category.setLink(url);
+            category.setPhoto(null);
+            category = categoryRepository.save(category);
+        }catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return category;
+    }
+
+    private Optional<GridFSDBFile> findFileByMetadata(String key, String value) {
+        GridFSDBFile file = gridFsTemplate.findOne(getQueryByMetadata(key, value));
+        return Optional.ofNullable(file);
+    }
+
+    private static Query getQueryByMetadata(String key, String value) {
+        return Query.query(GridFsCriteria.whereMetaData(key).is(value));
+    }
+
+    private static Query getFilenameQuery(String fileName) {
+        return Query.query(GridFsCriteria.whereMetaData("slideId").is(fileName));
+    }
     /**
      *  Get all the categories.
      *

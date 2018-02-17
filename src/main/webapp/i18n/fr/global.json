@@ -14,6 +14,7 @@
                 "digitalAsset": "Digital Asset",
                 "slideShow": "Slide Show",
                 "blog": "Blog",
+                "home": "Home directeur",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "news": "News",

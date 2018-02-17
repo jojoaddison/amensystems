@@ -118,4 +118,5 @@ jhipster:
 application:
 
 content-directory: /Users/kojo/workspace/amen/amensystem/target/www/content
+data-directory: /Users/kojo/workspace/amen/amensystem/data
 
