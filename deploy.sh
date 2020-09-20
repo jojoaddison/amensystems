@@ -3,20 +3,21 @@
 # Clean Build
 build(){
 mvn -Pprod clean package -DskipTests
-
+yarn build
 }
 
 # Deploy to test
+
 totest(){
-scp target/AmenSupermarketServer.jar jack@dev.gahano.at:/home/jack/amen/.
-scp -r target/www/* jack@dev.gahano.at:/home/jack/webroot/amen/dev/.
+scp target/AmenSupermarketServer.jar root@host.gahano.at:/var/www/vhosts/amen-supermarket.at/dev.amen-supermarket.at/.
+rsync -azr target/www/* root@host.gahano.at:/var/www/vhosts/amen-supermarket.at/dev.amen-supermarket.at/.
 }
 
 # Deploy to prod
 
 toprod(){
 scp target/AmenSupermarketServer.jar root@host.gahano.at:/opt/webservices/amen/.
-scp -r target/www/* root@host.gahano.at:/var/www/vhosts/amen-supermarket.at/httpdocs
+rsync -azr target/www/* root@host.gahano.at:/var/www/vhosts/amen-supermarket.at/httpdocs/.
 }
 
 

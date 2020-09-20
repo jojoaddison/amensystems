@@ -108,7 +108,8 @@ export class SlideComponent implements OnInit, OnDestroy {
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
-    createSlideShow() {
+
+    private createSlideShow() {
         console.log('create-slide-show');
         console.log(this.slideshow);
     }

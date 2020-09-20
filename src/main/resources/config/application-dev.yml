@@ -26,7 +26,7 @@ spring:
         serialization.indent_output: true
     data:
         mongodb:
-            uri: mongodb://localhost:27017
+            uri: mongodb://masterjoda:Ma$terJ0da!@staposerver:27017
             database: amensystem
     mail:
         host: localhost
@@ -56,7 +56,7 @@ spring:
 #        keyAlias: amensystem
 # ===================================================================
 server:
-    port: 8080
+    port: 1780
 
 # ===================================================================
 # JHipster specific properties
@@ -116,6 +116,6 @@ jhipster:
 # ===================================================================
 
 application:
-content-directory: /Users/kojo/workspace/amen/amensystem/target/www/content
-data-directory: /Users/kojo/workspace/amen/amensystem/data
+content-directory: content
+data-directory: data
 

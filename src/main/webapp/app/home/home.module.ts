@@ -8,7 +8,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
 
 @NgModule({
     imports: [
-    AmensystemSharedModule,
+        AmensystemSharedModule,
         WidgetsModule,
         RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
     ],

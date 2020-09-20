@@ -5,7 +5,6 @@ import { LocalStorage } from 'ng2-webstorage';
 import { NewsService } from './news.service';
 import { JhiEventManager, JhiDataUtils, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs/Rx';
-
 @Component(
     {
     selector: 'jhi-news-view',
@@ -32,6 +31,6 @@ export class NewsViewComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        console.log('news-view');
     }
 }

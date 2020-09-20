@@ -116,4 +116,8 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
         );
     }
 
+    trackId(item: any) {
+        return item.id;
+    }
+
 }

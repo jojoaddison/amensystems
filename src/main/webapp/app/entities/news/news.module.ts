@@ -14,6 +14,7 @@ import {
     newsRoute,
     newsPopupRoute,
     NewsResolvePagingParams,
+    NewsViewComponent,
 } from './';
 import { WidgetsModule } from '../../widgets/widgets.module';
 
@@ -30,6 +31,7 @@ const ENTITY_STATES = [
     ],
     declarations: [
         NewsComponent,
+        NewsViewComponent,
         NewsDetailComponent,
         NewsDialogComponent,
         NewsDeleteDialogComponent,
