@@ -1,6 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+<<<<<<< HEAD
 import { AmensystemSharedModule } from '../../shared';
 import {
     ProductService,
@@ -47,5 +48,18 @@ const ENTITY_STATES = [
         ProductPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
+=======
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { ProductComponent } from './product.component';
+import { ProductDetailComponent } from './product-detail.component';
+import { ProductUpdateComponent } from './product-update.component';
+import { ProductDeleteDialogComponent } from './product-delete-dialog.component';
+import { productRoute } from './product.route';
+
+@NgModule({
+  imports: [AmensystemSharedModule, RouterModule.forChild(productRoute)],
+  declarations: [ProductComponent, ProductDetailComponent, ProductUpdateComponent, ProductDeleteDialogComponent],
+  entryComponents: [ProductDeleteDialogComponent],
+>>>>>>> jhipster_upgrade
 })
 export class AmensystemProductModule {}

@@ -1,6 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+<<<<<<< HEAD
 import { AmensystemSharedModule } from '../../shared';
 import {
     NewsService,
@@ -51,5 +52,18 @@ const ENTITY_STATES = [
         NewsResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
+=======
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { NewsComponent } from './news.component';
+import { NewsDetailComponent } from './news-detail.component';
+import { NewsUpdateComponent } from './news-update.component';
+import { NewsDeleteDialogComponent } from './news-delete-dialog.component';
+import { newsRoute } from './news.route';
+
+@NgModule({
+  imports: [AmensystemSharedModule, RouterModule.forChild(newsRoute)],
+  declarations: [NewsComponent, NewsDetailComponent, NewsUpdateComponent, NewsDeleteDialogComponent],
+  entryComponents: [NewsDeleteDialogComponent],
+>>>>>>> jhipster_upgrade
 })
 export class AmensystemNewsModule {}

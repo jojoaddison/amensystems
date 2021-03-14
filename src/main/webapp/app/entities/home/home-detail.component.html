@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container mt-2">
     <header *ngIf="home.slides && home.slides.length > 0" class="mt-1">
         <ngb-carousel>
@@ -121,5 +122,68 @@
     <button type="button" [routerLink]="['/', { outlets: { popup: 'home/'+ home.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
+=======
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="home">
+            <h2><span jhiTranslate="amensystemApp.home.detail.title">Home</span> {{ home.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="amensystemApp.home.slides">Slides</span></dt>
+                <dd>
+                    <span>{{ home.slides }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.advert">Advert</span></dt>
+                <dd>
+                    <span>{{ home.advert }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.category">Category</span></dt>
+                <dd>
+                    <span>{{ home.category }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.state">State</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'amensystemApp.StateType.' + home.state }}">{{ home.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.version">Version</span></dt>
+                <dd>
+                    <span>{{ home.version }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.createdBy">Created By</span></dt>
+                <dd>
+                    <span>{{ home.createdBy }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.createdDate">Created Date</span></dt>
+                <dd>
+                    <span>{{ home.createdDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.modifiedBy">Modified By</span></dt>
+                <dd>
+                    <span>{{ home.modifiedBy }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.home.modifiedDate">Modified Date</span></dt>
+                <dd>
+                    <span>{{ home.modifiedDate }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/home', home.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+>>>>>>> jhipster_upgrade
 </div>
 -->

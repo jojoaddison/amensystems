@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container container-main bg-white fg-text-d mt-5" *ngIf="!isAuthenticated()">
     <div *ngFor="let category of categories ;trackBy :trackId ">
         <div class="container container-main bg-white fg-text-d mt-3" *ngIf="category.tiles && category.tiles.length > 0">
@@ -12,16 +13,32 @@
             <span class="fa fa-plus"></span>
             <span  jhiTranslate="entity.action.create">
             Create new Product
+=======
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="amensystemApp.product.home.title">Products</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/product/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="amensystemApp.product.home.createLabel">
+            Create a new Product
+>>>>>>> jhipster_upgrade
             </span>
         </button>
     </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
     <jhi-alert></jhi-alert>
-    <div class="row">
+
+    <div class="alert alert-warning" id="no-result" *ngIf="products?.length === 0">
+        <span jhiTranslate="amensystemApp.product.home.notFound">No products found</span>
     </div>
-    <br/>
-    <div class="table-responsive" *ngIf="products">
-        <table class="table table-striped">
+
+    <div class="table-responsive" id="entities" *ngIf="products && products.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
+<<<<<<< HEAD
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
                     <th jhiSortBy="name"><span jhiTranslate="amensystemApp.product.name">Name</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="quantity"><span jhiTranslate="amensystemApp.product.quantity">Quantity</span> <span class="fa fa-sort"></span></th>
@@ -32,10 +49,24 @@
                     <th jhiSortBy="modifiedDate"><span jhiTranslate="amensystemApp.product.modifiedDate">Modified Date</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="lastModifiedBy"><span jhiTranslate="amensystemApp.product.lastModifiedBy">Last Modified By</span> <span class="fa fa-sort"></span></th>
                     <th></th>
+=======
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="amensystemApp.product.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="quantity"><span jhiTranslate="amensystemApp.product.quantity">Quantity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="price"><span jhiTranslate="amensystemApp.product.price">Price</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="photo"><span jhiTranslate="amensystemApp.product.photo">Photo</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="category"><span jhiTranslate="amensystemApp.product.category">Category</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="createdDate"><span jhiTranslate="amensystemApp.product.createdDate">Created Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="modifiedDate"><span jhiTranslate="amensystemApp.product.modifiedDate">Modified Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastModifiedBy"><span jhiTranslate="amensystemApp.product.lastModifiedBy">Last Modified By</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+>>>>>>> jhipster_upgrade
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let product of products ;trackBy: trackId">
+<<<<<<< HEAD
                     <td><a [routerLink]="['../product', product.id ]">{{product.name}}</a></td>
                     <td>{{product.quantity}}</td>
                     <td>{{product.price}}</td>
@@ -65,6 +96,43 @@
                             <span class="fa fa-remove"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
+=======
+                    <td><a [routerLink]="['/product', product.id, 'view']">{{ product.id }}</a></td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <a *ngIf="product.photo" (click)="openFile(product.photoContentType, product.photo)">
+                            <img [src]="'data:' + product.photoContentType + ';base64,' + product.photo" style="max-height: 30px;" alt="product image"/>
+                        </a>
+                        <span *ngIf="product.photo">{{ product.photoContentType }}, {{ byteSize(product.photo) }}</span>
+                    </td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.createdDate | date:'medium' }}</td>
+                    <td>{{ product.modifiedDate | date:'medium' }}</td>
+                    <td>{{ product.lastModifiedBy }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/product', product.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/product', product.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(product)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+>>>>>>> jhipster_upgrade
                         </div>
                     </td>
                 </tr>

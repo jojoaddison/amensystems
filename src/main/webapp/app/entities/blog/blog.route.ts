@@ -1,82 +1,84 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
-import { UserRouteAccessService } from '../../shared';
-import { JhiPaginationUtil } from 'ng-jhipster';
-
+import { Authority } from 'app/shared/constants/authority.constants';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { IBlog, Blog } from 'app/shared/model/blog.model';
+import { BlogService } from './blog.service';
 import { BlogComponent } from './blog.component';
 import { BlogDetailComponent } from './blog-detail.component';
-import { BlogPopupComponent } from './blog-dialog.component';
-import { BlogDeletePopupComponent } from './blog-delete-dialog.component';
+import { BlogUpdateComponent } from './blog-update.component';
 
-@Injectable()
-export class BlogResolvePagingParams implements Resolve<any> {
+@Injectable({ providedIn: 'root' })
+export class BlogResolve implements Resolve<IBlog> {
+  constructor(private service: BlogService, private router: Router) {}
 
-    constructor(private paginationUtil: JhiPaginationUtil) {}
-
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
-        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
-        return {
-            page: this.paginationUtil.parsePage(page),
-            predicate: this.paginationUtil.parsePredicate(sort),
-            ascending: this.paginationUtil.parseAscending(sort)
-      };
+  resolve(route: ActivatedRouteSnapshot): Observable<IBlog> | Observable<never> {
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        flatMap((blog: HttpResponse<Blog>) => {
+          if (blog.body) {
+            return of(blog.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
     }
+    return of(new Blog());
+  }
 }
 
 export const blogRoute: Routes = [
-    {
-        path: 'blog',
-        component: BlogComponent,
-        resolve: {
-            'pagingParams': BlogResolvePagingParams
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.blog.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }, {
-        path: 'blog/:id',
-        component: BlogDetailComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.blog.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }
-];
-
-export const blogPopupRoute: Routes = [
-    {
-        path: 'blog-new',
-        component: BlogPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.blog.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
+  {
+    path: '',
+    component: BlogComponent,
+    data: {
+      authorities: [Authority.USER],
+      defaultSort: 'id,asc',
+      pageTitle: 'amensystemApp.blog.home.title',
     },
-    {
-        path: 'blog/:id/edit',
-        component: BlogPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.blog.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/view',
+    component: BlogDetailComponent,
+    resolve: {
+      blog: BlogResolve,
     },
-    {
-        path: 'blog/:id/delete',
-        component: BlogDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.blog.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    }
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'amensystemApp.blog.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new',
+    component: BlogUpdateComponent,
+    resolve: {
+      blog: BlogResolve,
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'amensystemApp.blog.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/edit',
+    component: BlogUpdateComponent,
+    resolve: {
+      blog: BlogResolve,
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'amensystemApp.blog.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
 ];

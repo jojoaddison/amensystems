@@ -3,11 +3,15 @@ package io.jojoaddison.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+<<<<<<< HEAD
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+=======
+>>>>>>> jhipster_upgrade
 
 import io.jojoaddison.domain.enumeration.StateType;
 
@@ -18,6 +22,7 @@ import io.jojoaddison.domain.enumeration.StateType;
 public class Home implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     private String id;
 
@@ -51,7 +56,7 @@ public class Home implements Serializable {
     @Field("modified_date")
     private ZonedDateTime modifiedDate;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
         return id;
     }
@@ -189,28 +194,25 @@ public class Home implements Serializable {
     public void setModifiedDate(ZonedDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Home)) {
             return false;
         }
-        Home home = (Home) o;
-        if (home.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), home.getId());
+        return id != null && id.equals(((Home) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Home{" +
@@ -219,7 +221,7 @@ public class Home implements Serializable {
             ", advert='" + getAdvert() + "'" +
             ", category='" + getCategory() + "'" +
             ", state='" + getState() + "'" +
-            ", version='" + getVersion() + "'" +
+            ", version=" + getVersion() +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +

@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiDataUtils, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+=======
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { JhiDataUtils } from 'ng-jhipster';
+>>>>>>> jhipster_upgrade
 
-import { Category } from './category.model';
-import { CategoryService } from './category.service';
+import { ICategory } from 'app/shared/model/category.model';
 
 import { Product } from '../product/product.model';
 import { ProductService } from '../product/product.service';
@@ -12,9 +17,10 @@ import { ProductService } from '../product/product.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 
 @Component({
-    selector: 'jhi-category-detail',
-    templateUrl: './category-detail.component.html'
+  selector: 'jhi-category-detail',
+  templateUrl: './category-detail.component.html',
 })
+<<<<<<< HEAD
 export class CategoryDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     category: Category;
@@ -59,14 +65,22 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit, OnDestroy
     private productLoadError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
+=======
+export class CategoryDetailComponent implements OnInit {
+  category: ICategory | null = null;
 
-    ngOnInit() {
-        this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
-        });
-        this.registerChangeInCategories();
-    }
+  constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ category }) => (this.category = category));
+  }
+>>>>>>> jhipster_upgrade
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+<<<<<<< HEAD
     load(id) {
         this.categoryService.find(id).subscribe((category) => {
             this.category = category;
@@ -96,4 +110,13 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit, OnDestroy
         );
     }
 
+=======
+  openFile(contentType = '', base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+>>>>>>> jhipster_upgrade
 }

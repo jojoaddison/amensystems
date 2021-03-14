@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager } from 'ng-jhipster';
 
+<<<<<<< HEAD
 import { Home } from './home.model';
 import { HomeService } from './home.service';
 import { Product } from '../product';
@@ -14,9 +13,18 @@ import { LocalStorage } from 'ng2-webstorage';
     selector: 'jhi-home-detail',
     templateUrl: './home-detail.component.html',
     styleUrls: ['../entities.component.css', './home.component.css']
-})
-export class HomeDetailComponent implements OnInit, OnDestroy {
+=======
+import { IHome } from 'app/shared/model/home.model';
 
+@Component({
+  selector: 'jhi-home-detail',
+  templateUrl: './home-detail.component.html',
+>>>>>>> jhipster_upgrade
+})
+export class HomeDetailComponent implements OnInit {
+  home: IHome | null = null;
+
+<<<<<<< HEAD
     home: Home;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
@@ -166,4 +174,15 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
        const index = this.home.category.findIndex((element) => element.id === category.id);
         return index > -1;
     }
+=======
+  constructor(protected activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ home }) => (this.home = home));
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+>>>>>>> jhipster_upgrade
 }

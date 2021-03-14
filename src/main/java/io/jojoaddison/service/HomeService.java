@@ -5,12 +5,14 @@ import io.jojoaddison.domain.enumeration.StateType;
 import io.jojoaddison.repository.HomeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
- * Service Implementation for managing Home.
+ * Service Implementation for managing {@link Home}.
  */
 @Service
 public class HomeService {
@@ -26,8 +28,8 @@ public class HomeService {
     /**
      * Save a home.
      *
-     * @param home the entity to save
-     * @return the persisted entity
+     * @param home the entity to save.
+     * @return the persisted entity.
      */
     public Home save(Home home) {
         log.debug("Request to save Home : {}", home);
@@ -35,34 +37,35 @@ public class HomeService {
     }
 
     /**
-     *  Get all the homes.
+     * Get all the homes.
      *
-     *  @return the list of entities
+     * @return the list of entities.
      */
     public List<Home> findAll() {
         log.debug("Request to get all Homes");
         return homeRepository.findAll();
     }
 
+
     /**
-     *  Get one home by id.
+     * Get one home by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
-    public Home findOne(String id) {
+    public Optional<Home> findOne(String id) {
         log.debug("Request to get Home : {}", id);
-        return homeRepository.findOne(id);
+        return homeRepository.findById(id);
     }
 
     /**
-     *  Delete the  home by id.
+     * Delete the home by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(String id) {
         log.debug("Request to delete Home : {}", id);
-        homeRepository.delete(id);
+        homeRepository.deleteById(id);
     }
 
     public Home findByState(StateType state) {

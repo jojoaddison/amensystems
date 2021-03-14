@@ -1,49 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AmensystemSharedModule } from '../../shared';
-import {
-    SlideShowService,
-    SlideShowPopupService,
-    SlideShowComponent,
-    SlideShowDetailComponent,
-    SlideShowDialogComponent,
-    SlideShowPopupComponent,
-    SlideShowDeletePopupComponent,
-    SlideShowDeleteDialogComponent,
-    slideShowRoute,
-    slideShowPopupRoute,
-} from './';
-
-const ENTITY_STATES = [
-    ...slideShowRoute,
-    ...slideShowPopupRoute,
-];
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { SlideShowComponent } from './slide-show.component';
+import { SlideShowDetailComponent } from './slide-show-detail.component';
+import { SlideShowUpdateComponent } from './slide-show-update.component';
+import { SlideShowDeleteDialogComponent } from './slide-show-delete-dialog.component';
+import { slideShowRoute } from './slide-show.route';
 
 @NgModule({
-    imports: [
-        AmensystemSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
-    ],
-    declarations: [
-        SlideShowComponent,
-        SlideShowDetailComponent,
-        SlideShowDialogComponent,
-        SlideShowDeleteDialogComponent,
-        SlideShowPopupComponent,
-        SlideShowDeletePopupComponent,
-    ],
-    entryComponents: [
-        SlideShowComponent,
-        SlideShowDialogComponent,
-        SlideShowPopupComponent,
-        SlideShowDeleteDialogComponent,
-        SlideShowDeletePopupComponent,
-    ],
-    providers: [
-        SlideShowService,
-        SlideShowPopupService,
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AmensystemSharedModule, RouterModule.forChild(slideShowRoute)],
+  declarations: [SlideShowComponent, SlideShowDetailComponent, SlideShowUpdateComponent, SlideShowDeleteDialogComponent],
+  entryComponents: [SlideShowDeleteDialogComponent],
 })
 export class AmensystemSlideShowModule {}

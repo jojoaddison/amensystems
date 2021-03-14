@@ -1,6 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+<<<<<<< HEAD
 import { AmensystemSharedModule } from '../../shared';
 import {
     HomeService,
@@ -47,5 +48,18 @@ const ENTITY_STATES = [
         HomePopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
+=======
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { HomeComponent } from './home.component';
+import { HomeDetailComponent } from './home-detail.component';
+import { HomeUpdateComponent } from './home-update.component';
+import { HomeDeleteDialogComponent } from './home-delete-dialog.component';
+import { homeRoute } from './home.route';
+
+@NgModule({
+  imports: [AmensystemSharedModule, RouterModule.forChild(homeRoute)],
+  declarations: [HomeComponent, HomeDetailComponent, HomeUpdateComponent, HomeDeleteDialogComponent],
+  entryComponents: [HomeDeleteDialogComponent],
+>>>>>>> jhipster_upgrade
 })
 export class AmensystemHomeModule {}

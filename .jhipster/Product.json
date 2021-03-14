@@ -1,44 +1,44 @@
 {
-    "fluentMethods": true,
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "name",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "quantity",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "price",
-            "fieldType": "Double"
-        },
-        {
-            "fieldName": "photo",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "image"
-        },
-        {
-            "fieldName": "category",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "createdDate",
-            "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "modifiedDate",
-            "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "lastModifiedBy",
-            "fieldType": "String"
-        }
-    ],
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "product",
-    "jpaMetamodelFiltering": false,
-    "pagination": "infinite-scroll"
+  "fluentMethods": true,
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "category",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String"
+    }
+  ],
+  "dto": "no",
+  "service": "no",
+  "entityTableName": "product",
+  "jpaMetamodelFiltering": false,
+  "pagination": "infinite-scroll"
 }

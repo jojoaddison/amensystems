@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "amensystemApp": {
         "news": {
             "home": {
@@ -24,3 +25,31 @@
         }
     }
 }
+=======
+  "amensystemApp": {
+    "news": {
+      "home": {
+        "title": "News",
+        "createLabel": "News erstellen",
+        "createOrEditLabel": "News erstellen oder bearbeiten",
+        "notFound": "No News found"
+      },
+      "created": "News erstellt mit ID {{ param }}",
+      "updated": "News aktualisiert mit ID {{ param }}",
+      "deleted": "News gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll News {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "News"
+      },
+      "title": "Title",
+      "content": "Content",
+      "slides": "Slides",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "lastModifiedBy": "Last Modified By"
+    }
+  }
+}
+>>>>>>> jhipster_upgrade

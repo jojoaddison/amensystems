@@ -3,9 +3,9 @@ package io.jojoaddison.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 /**
  * A Blog.
@@ -14,6 +14,7 @@ import java.util.Objects;
 public class Blog implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     private String id;
 
@@ -38,7 +39,7 @@ public class Blog implements Serializable {
     @Field("album_id")
     private String albumId;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
         return id;
     }
@@ -137,28 +138,25 @@ public class Blog implements Serializable {
     public void setAlbumId(String albumId) {
         this.albumId = albumId;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Blog)) {
             return false;
         }
-        Blog blog = (Blog) o;
-        if (blog.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), blog.getId());
+        return id != null && id.equals(((Blog) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Blog{" +

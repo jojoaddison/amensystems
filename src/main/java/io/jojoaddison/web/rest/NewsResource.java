@@ -1,35 +1,39 @@
 package io.jojoaddison.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import io.jojoaddison.domain.News;
-
 import io.jojoaddison.repository.NewsRepository;
 import io.jojoaddison.security.SecurityUtils;
 import io.jojoaddison.web.rest.errors.BadRequestAlertException;
-import io.jojoaddison.web.rest.util.HeaderUtil;
-import io.jojoaddison.web.rest.util.PaginationUtil;
-import io.swagger.annotations.ApiParam;
+
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+<<<<<<< HEAD
 
 import java.time.ZonedDateTime;
+=======
+>>>>>>> jhipster_upgrade
 import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing News.
+ * REST controller for managing {@link io.jojoaddison.domain.News}.
  */
 @RestController
 @RequestMapping("/api")
@@ -39,6 +43,9 @@ public class NewsResource {
 
     private static final String ENTITY_NAME = "news";
 
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final NewsRepository newsRepository;
 
     public NewsResource(NewsRepository newsRepository) {
@@ -46,14 +53,13 @@ public class NewsResource {
     }
 
     /**
-     * POST  /news : Create a new news.
+     * {@code POST  /news} : Create a new news.
      *
-     * @param news the news to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new news, or with status 400 (Bad Request) if the news has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param news the news to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new news, or with status {@code 400 (Bad Request)} if the news has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/news")
-    @Timed
     public ResponseEntity<News> createNews(@RequestBody News news) throws URISyntaxException {
         log.debug("REST request to save News : {}", news);
         if (news.getId() != null) {
@@ -66,25 +72,24 @@ public class NewsResource {
         news.setContent(document.body().html());
         News result = newsRepository.save(news);
         return ResponseEntity.created(new URI("/api/news/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
     /**
-     * PUT  /news : Updates an existing news.
+     * {@code PUT  /news} : Updates an existing news.
      *
-     * @param news the news to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated news,
-     * or with status 400 (Bad Request) if the news is not valid,
-     * or with status 500 (Internal Server Error) if the news couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param news the news to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated news,
+     * or with status {@code 400 (Bad Request)} if the news is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the news couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/news")
-    @Timed
     public ResponseEntity<News> updateNews(@RequestBody News news) throws URISyntaxException {
         log.debug("REST request to update News : {}", news);
         if (news.getId() == null) {
-            return createNews(news);
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         news.setModifiedDate(ZonedDateTime.now());
         if(!Optional.ofNullable(news.getCreatedDate()).isPresent()){
@@ -95,50 +100,47 @@ public class NewsResource {
         news.setContent(document.body().html());
         News result = newsRepository.save(news);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, news.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, news.getId()))
             .body(result);
     }
 
     /**
-     * GET  /news : get all the news.
+     * {@code GET  /news} : get all the news.
      *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of news in body
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of news in body.
      */
     @GetMapping("/news")
-    @Timed
-    public ResponseEntity<List<News>> getAllNews(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<News>> getAllNews(Pageable pageable) {
         log.debug("REST request to get a page of News");
         Page<News> page = newsRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/news");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
-     * GET  /news/:id : get the "id" news.
+     * {@code GET  /news/:id} : get the "id" news.
      *
-     * @param id the id of the news to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the news, or with status 404 (Not Found)
+     * @param id the id of the news to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the news, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/news/{id}")
-    @Timed
     public ResponseEntity<News> getNews(@PathVariable String id) {
         log.debug("REST request to get News : {}", id);
-        News news = newsRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(news));
+        Optional<News> news = newsRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(news);
     }
 
     /**
-     * DELETE  /news/:id : delete the "id" news.
+     * {@code DELETE  /news/:id} : delete the "id" news.
      *
-     * @param id the id of the news to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @param id the id of the news to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/news/{id}")
-    @Timed
     public ResponseEntity<Void> deleteNews(@PathVariable String id) {
         log.debug("REST request to delete News : {}", id);
-        newsRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+        newsRepository.deleteById(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

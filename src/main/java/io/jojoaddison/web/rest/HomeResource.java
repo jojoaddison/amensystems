@@ -1,27 +1,31 @@
 package io.jojoaddison.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import io.jojoaddison.domain.Home;
 import io.jojoaddison.domain.enumeration.StateType;
 import io.jojoaddison.security.SecurityUtils;
 import io.jojoaddison.service.HomeService;
 import io.jojoaddison.web.rest.errors.BadRequestAlertException;
-import io.jojoaddison.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+<<<<<<< HEAD
 
 import java.time.ZonedDateTime;
+=======
+>>>>>>> jhipster_upgrade
 import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing Home.
+ * REST controller for managing {@link io.jojoaddison.domain.Home}.
  */
 @RestController
 @RequestMapping("/api")
@@ -31,6 +35,9 @@ public class HomeResource {
 
     private static final String ENTITY_NAME = "home";
 
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final HomeService homeService;
 
     public HomeResource(HomeService homeService) {
@@ -38,14 +45,13 @@ public class HomeResource {
     }
 
     /**
-     * POST  /homes : Create a new home.
+     * {@code POST  /homes} : Create a new home.
      *
-     * @param home the home to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new home, or with status 400 (Bad Request) if the home has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param home the home to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new home, or with status {@code 400 (Bad Request)} if the home has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/homes")
-    @Timed
     public ResponseEntity<Home> createHome(@RequestBody Home home) throws URISyntaxException {
         log.debug("REST request to save Home : {}", home);
         if (home.getId() != null) {
@@ -59,47 +65,46 @@ public class HomeResource {
         home.setModifiedDate(ZonedDateTime.now());
         Home result = homeService.save(home);
         return ResponseEntity.created(new URI("/api/homes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
     /**
-     * PUT  /homes : Updates an existing home.
+     * {@code PUT  /homes} : Updates an existing home.
      *
-     * @param home the home to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated home,
-     * or with status 400 (Bad Request) if the home is not valid,
-     * or with status 500 (Internal Server Error) if the home couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param home the home to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated home,
+     * or with status {@code 400 (Bad Request)} if the home is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the home couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/homes")
-    @Timed
     public ResponseEntity<Home> updateHome(@RequestBody Home home) throws URISyntaxException {
         log.debug("REST request to update Home : {}", home);
         if (home.getId() == null) {
-            return createHome(home);
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         home.setModifiedBy(SecurityUtils.getCurrentUserLogin());
         home.setModifiedDate(ZonedDateTime.now());
         Home result = homeService.save(home);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, home.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, home.getId()))
             .body(result);
     }
 
     /**
-     * GET  /homes : get all the homes.
+     * {@code GET  /homes} : get all the homes.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of homes in body
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of homes in body.
      */
     @GetMapping("/homes")
-    @Timed
     public List<Home> getAllHomes() {
         log.debug("REST request to get all Homes");
         return homeService.findAll();
-        }
+    }
 
     /**
+<<<<<<< HEAD
      * GET  /homes : get all the homes.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of homes in body
@@ -113,29 +118,30 @@ public class HomeResource {
 
     /**
      * GET  /homes/:id : get the "id" home.
+=======
+     * {@code GET  /homes/:id} : get the "id" home.
+>>>>>>> jhipster_upgrade
      *
-     * @param id the id of the home to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the home, or with status 404 (Not Found)
+     * @param id the id of the home to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the home, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/homes/{id}")
-    @Timed
     public ResponseEntity<Home> getHome(@PathVariable String id) {
         log.debug("REST request to get Home : {}", id);
-        Home home = homeService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(home));
+        Optional<Home> home = homeService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(home);
     }
 
     /**
-     * DELETE  /homes/:id : delete the "id" home.
+     * {@code DELETE  /homes/:id} : delete the "id" home.
      *
-     * @param id the id of the home to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @param id the id of the home to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/homes/{id}")
-    @Timed
     public ResponseEntity<Void> deleteHome(@PathVariable String id) {
         log.debug("REST request to delete Home : {}", id);
         homeService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

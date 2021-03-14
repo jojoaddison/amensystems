@@ -1,61 +1,37 @@
-/* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { of } from 'rxjs';
+
 import { AmensystemTestModule } from '../../../test.module';
-import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { NewsDetailComponent } from '../../../../../../main/webapp/app/entities/news/news-detail.component';
-import { NewsService } from '../../../../../../main/webapp/app/entities/news/news.service';
-import { News } from '../../../../../../main/webapp/app/entities/news/news.model';
+import { NewsDetailComponent } from 'app/entities/news/news-detail.component';
+import { News } from 'app/shared/model/news.model';
 
 describe('Component Tests', () => {
+  describe('News Management Detail Component', () => {
+    let comp: NewsDetailComponent;
+    let fixture: ComponentFixture<NewsDetailComponent>;
+    const route = ({ data: of({ news: new News('123') }) } as any) as ActivatedRoute;
 
-    describe('News Management Detail Component', () => {
-        let comp: NewsDetailComponent;
-        let fixture: ComponentFixture<NewsDetailComponent>;
-        let service: NewsService;
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [AmensystemTestModule],
-                declarations: [NewsDetailComponent],
-                providers: [
-                    JhiDateUtils,
-                    JhiDataUtils,
-                    DatePipe,
-                    {
-                        provide: ActivatedRoute,
-                        useValue: new MockActivatedRoute({id: 123})
-                    },
-                    NewsService,
-                    JhiEventManager
-                ]
-            }).overrideTemplate(NewsDetailComponent, '')
-            .compileComponents();
-        }));
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(NewsDetailComponent);
-            comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(NewsService);
-        });
-
-        describe('OnInit', () => {
-            it('Should call load all on init', () => {
-            // GIVEN
-
-            spyOn(service, 'find').and.returnValue(Observable.of(new News('aaa')));
-
-            // WHEN
-            comp.ngOnInit();
-
-            // THEN
-            expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.news).toEqual(jasmine.objectContaining({id: 'aaa'}));
-            });
-        });
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [AmensystemTestModule],
+        declarations: [NewsDetailComponent],
+        providers: [{ provide: ActivatedRoute, useValue: route }],
+      })
+        .overrideTemplate(NewsDetailComponent, '')
+        .compileComponents();
+      fixture = TestBed.createComponent(NewsDetailComponent);
+      comp = fixture.componentInstance;
     });
 
+    describe('OnInit', () => {
+      it('Should load news on init', () => {
+        // WHEN
+        comp.ngOnInit();
+
+        // THEN
+        expect(comp.news).toEqual(jasmine.objectContaining({ id: '123' }));
+      });
+    });
+  });
 });

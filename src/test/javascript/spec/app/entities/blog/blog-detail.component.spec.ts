@@ -1,61 +1,69 @@
-/* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { of } from 'rxjs';
+import { JhiDataUtils } from 'ng-jhipster';
+
 import { AmensystemTestModule } from '../../../test.module';
-import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { BlogDetailComponent } from '../../../../../../main/webapp/app/entities/blog/blog-detail.component';
-import { BlogService } from '../../../../../../main/webapp/app/entities/blog/blog.service';
-import { Blog } from '../../../../../../main/webapp/app/entities/blog/blog.model';
+import { BlogDetailComponent } from 'app/entities/blog/blog-detail.component';
+import { Blog } from 'app/shared/model/blog.model';
 
 describe('Component Tests', () => {
+  describe('Blog Management Detail Component', () => {
+    let comp: BlogDetailComponent;
+    let fixture: ComponentFixture<BlogDetailComponent>;
+    let dataUtils: JhiDataUtils;
+    const route = ({ data: of({ blog: new Blog('123') }) } as any) as ActivatedRoute;
 
-    describe('Blog Management Detail Component', () => {
-        let comp: BlogDetailComponent;
-        let fixture: ComponentFixture<BlogDetailComponent>;
-        let service: BlogService;
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [AmensystemTestModule],
-                declarations: [BlogDetailComponent],
-                providers: [
-                    JhiDateUtils,
-                    JhiDataUtils,
-                    DatePipe,
-                    {
-                        provide: ActivatedRoute,
-                        useValue: new MockActivatedRoute({id: 123})
-                    },
-                    BlogService,
-                    JhiEventManager
-                ]
-            }).overrideTemplate(BlogDetailComponent, '')
-            .compileComponents();
-        }));
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(BlogDetailComponent);
-            comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(BlogService);
-        });
-
-        describe('OnInit', () => {
-            it('Should call load all on init', () => {
-            // GIVEN
-
-            spyOn(service, 'find').and.returnValue(Observable.of(new Blog('aaa')));
-
-            // WHEN
-            comp.ngOnInit();
-
-            // THEN
-            expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.blog).toEqual(jasmine.objectContaining({id: 'aaa'}));
-            });
-        });
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [AmensystemTestModule],
+        declarations: [BlogDetailComponent],
+        providers: [{ provide: ActivatedRoute, useValue: route }],
+      })
+        .overrideTemplate(BlogDetailComponent, '')
+        .compileComponents();
+      fixture = TestBed.createComponent(BlogDetailComponent);
+      comp = fixture.componentInstance;
+      dataUtils = fixture.debugElement.injector.get(JhiDataUtils);
     });
 
+    describe('OnInit', () => {
+      it('Should load blog on init', () => {
+        // WHEN
+        comp.ngOnInit();
+
+        // THEN
+        expect(comp.blog).toEqual(jasmine.objectContaining({ id: '123' }));
+      });
+    });
+
+    describe('byteSize', () => {
+      it('Should call byteSize from JhiDataUtils', () => {
+        // GIVEN
+        spyOn(dataUtils, 'byteSize');
+        const fakeBase64 = 'fake base64';
+
+        // WHEN
+        comp.byteSize(fakeBase64);
+
+        // THEN
+        expect(dataUtils.byteSize).toBeCalledWith(fakeBase64);
+      });
+    });
+
+    describe('openFile', () => {
+      it('Should call openFile from JhiDataUtils', () => {
+        // GIVEN
+        spyOn(dataUtils, 'openFile');
+        const fakeContentType = 'fake content type';
+        const fakeBase64 = 'fake base64';
+
+        // WHEN
+        comp.openFile(fakeContentType, fakeBase64);
+
+        // THEN
+        expect(dataUtils.openFile).toBeCalledWith(fakeContentType, fakeBase64);
+      });
+    });
+  });
 });

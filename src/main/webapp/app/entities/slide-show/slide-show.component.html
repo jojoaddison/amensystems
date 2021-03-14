@@ -1,21 +1,33 @@
+<<<<<<< HEAD
 <div class="container container-main bg-white fg-text-d mt-5">
     <h2>
+=======
+<div>
+    <h2 id="page-heading">
+>>>>>>> jhipster_upgrade
         <span jhiTranslate="amensystemApp.slideShow.home.title">Slide Shows</span>
-        <button class="btn btn-primary float-right jh-create-entity create-slide-show" [routerLink]="['/', { outlets: { popup: ['slide-show-new'] } }]">
-            <span class="fa fa-plus"></span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-slide-show" [routerLink]="['/slide-show/new']">
+            <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="amensystemApp.slideShow.home.createLabel">
-            Create new Slide Show
+            Create a new Slide Show
             </span>
         </button>
     </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
     <jhi-alert></jhi-alert>
-    <div class="row">
+
+    <div class="alert alert-warning" id="no-result" *ngIf="slideShows?.length === 0">
+        <span jhiTranslate="amensystemApp.slideShow.home.notFound">No slideShows found</span>
     </div>
-    <br/>
-    <div class="table-responsive" *ngIf="slideShows">
-        <table class="table table-striped">
+
+    <div class="table-responsive" id="entities" *ngIf="slideShows && slideShows.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr>
+<<<<<<< HEAD
                     <th><span jhiTranslate="global.field.id">ID</span></th>
                     <th><span jhiTranslate="amensystemApp.slideShow.name">Name</span></th>
                     <th><span jhiTranslate="amensystemApp.slideShow.slides">Slides</span></th>
@@ -23,10 +35,20 @@
                     <th><span jhiTranslate="amensystemApp.slideShow.modifiedDate">Modified Date</span></th>
                     <th><span jhiTranslate="amensystemApp.slideShow.lastModifiedBy">Last Modified By</span></th>
                     <th></th>
+=======
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slideShow.name">Name</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slideShow.slides">Slides</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slideShow.createdDate">Created Date</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slideShow.modifiedDate">Modified Date</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slideShow.lastModifiedBy">Last Modified By</span></th>
+                    <th scope="col"></th>
+>>>>>>> jhipster_upgrade
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let slideShow of slideShows ;trackBy: trackId">
+<<<<<<< HEAD
                     <td><a [routerLink]="['../slide-show', slideShow.id ]">{{slideShow.id}}</a></td>
                     <td>{{slideShow.name}}</td>
                     <td>{{slideShow.slides}}</td>
@@ -47,6 +69,35 @@
                             <span class="fa fa-remove"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
+=======
+                    <td><a [routerLink]="['/slide-show', slideShow.id, 'view']">{{ slideShow.id }}</a></td>
+                    <td>{{ slideShow.name }}</td>
+                    <td>{{ slideShow.slides }}</td>
+                    <td>{{ slideShow.createdDate | date:'medium' }}</td>
+                    <td>{{ slideShow.modifiedDate | date:'medium' }}</td>
+                    <td>{{ slideShow.lastModifiedBy }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/slide-show', slideShow.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/slide-show', slideShow.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(slideShow)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+>>>>>>> jhipster_upgrade
                         </div>
                     </td>
                 </tr>

@@ -1,19 +1,31 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+<<<<<<< HEAD
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+=======
+import { HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+>>>>>>> jhipster_upgrade
 
-import { Slide } from './slide.model';
+import { ISlide } from 'app/shared/model/slide.model';
 import { SlideService } from './slide.service';
+<<<<<<< HEAD
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { Tile } from '../../widgets';
+=======
+import { SlideDeleteDialogComponent } from './slide-delete-dialog.component';
+>>>>>>> jhipster_upgrade
 
 @Component({
-    selector: 'jhi-slide',
-    templateUrl: './slide.component.html'
+  selector: 'jhi-slide',
+  templateUrl: './slide.component.html',
 })
 export class SlideComponent implements OnInit, OnDestroy {
+<<<<<<< HEAD
     slides: Slide[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -135,4 +147,52 @@ export class SlideComponent implements OnInit, OnDestroy {
        const index = this.slides.findIndex((element) => element.id === slide.id);
         return index > -1;
     }
+=======
+  slides?: ISlide[];
+  eventSubscriber?: Subscription;
+
+  constructor(
+    protected slideService: SlideService,
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
+  ) {}
+
+  loadAll(): void {
+    this.slideService.query().subscribe((res: HttpResponse<ISlide[]>) => (this.slides = res.body || []));
+  }
+
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInSlides();
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
+  }
+
+  trackId(index: number, item: ISlide): string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType = '', base64String: string): void {
+    return this.dataUtils.openFile(contentType, base64String);
+  }
+
+  registerChangeInSlides(): void {
+    this.eventSubscriber = this.eventManager.subscribe('slideListModification', () => this.loadAll());
+  }
+
+  delete(slide: ISlide): void {
+    const modalRef = this.modalService.open(SlideDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.slide = slide;
+  }
+>>>>>>> jhipster_upgrade
 }

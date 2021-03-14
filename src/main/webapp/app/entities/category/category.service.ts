@@ -1,34 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import { Category } from './category.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { ICategory } from 'app/shared/model/category.model';
 
-@Injectable()
+type EntityResponseType = HttpResponse<ICategory>;
+type EntityArrayResponseType = HttpResponse<ICategory[]>;
+
+@Injectable({ providedIn: 'root' })
 export class CategoryService {
+  public resourceUrl = SERVER_API_URL + 'api/categories';
 
-    private resourceUrl = SERVER_API_URL + 'api/categories';
-
-    constructor(private http: Http) { }
-
-    create(category: Category): Observable<Category> {
-        const copy = this.convert(category);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    update(category: Category): Observable<Category> {
-        const copy = this.convert(category);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
+<<<<<<< HEAD
     list(): Observable<string[]> {
         const url = this.resourceUrl + '/list';
         return this.http.get(url)
@@ -56,33 +41,28 @@ export class CategoryService {
         return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
     }
+=======
+  constructor(protected http: HttpClient) {}
 
-    delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
+  create(category: ICategory): Observable<EntityResponseType> {
+    return this.http.post<ICategory>(this.resourceUrl, category, { observe: 'response' });
+  }
+>>>>>>> jhipster_upgrade
 
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
+  update(category: ICategory): Observable<EntityResponseType> {
+    return this.http.put<ICategory>(this.resourceUrl, category, { observe: 'response' });
+  }
 
-    /**
-     * Convert a returned JSON object to Category.
-     */
-    private convertItemFromServer(json: any): Category {
-        const entity: Category = Object.assign(new Category(), json);
-        return entity;
-    }
+  find(id: string): Observable<EntityResponseType> {
+    return this.http.get<ICategory>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
 
-    /**
-     * Convert a Category to a JSON which can be sent to the server.
-     */
-    private convert(category: Category): Category {
-        const copy: Category = Object.assign({}, category);
-        return copy;
-    }
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<ICategory[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
 }

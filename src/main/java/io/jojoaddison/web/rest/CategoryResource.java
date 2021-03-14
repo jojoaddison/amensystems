@@ -1,32 +1,36 @@
 package io.jojoaddison.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import io.jojoaddison.domain.Category;
 import io.jojoaddison.service.CategoryService;
 import io.jojoaddison.web.rest.errors.BadRequestAlertException;
-import io.jojoaddison.web.rest.util.HeaderUtil;
-import io.jojoaddison.web.rest.util.PaginationUtil;
-import io.swagger.annotations.ApiParam;
+
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+<<<<<<< HEAD
 
 import java.util.ArrayList;
+=======
+>>>>>>> jhipster_upgrade
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * REST controller for managing Category.
+ * REST controller for managing {@link io.jojoaddison.domain.Category}.
  */
 @RestController
 @RequestMapping("/api")
@@ -36,6 +40,9 @@ public class CategoryResource {
 
     private static final String ENTITY_NAME = "category";
 
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final CategoryService categoryService;
 
     public CategoryResource(CategoryService categoryService) {
@@ -43,14 +50,13 @@ public class CategoryResource {
     }
 
     /**
-     * POST  /categories : Create a new category.
+     * {@code POST  /categories} : Create a new category.
      *
-     * @param category the category to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new category, or with status 400 (Bad Request) if the category has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param category the category to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new category, or with status {@code 400 (Bad Request)} if the category has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/categories")
-    @Timed
     public ResponseEntity<Category> createCategory(@RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to save Category : {}", category);
         if (category.getId() != null) {
@@ -58,48 +64,47 @@ public class CategoryResource {
         }
         Category result = categoryService.save(category);
         return ResponseEntity.created(new URI("/api/categories/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
     /**
-     * PUT  /categories : Updates an existing category.
+     * {@code PUT  /categories} : Updates an existing category.
      *
-     * @param category the category to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated category,
-     * or with status 400 (Bad Request) if the category is not valid,
-     * or with status 500 (Internal Server Error) if the category couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param category the category to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated category,
+     * or with status {@code 400 (Bad Request)} if the category is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the category couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/categories")
-    @Timed
     public ResponseEntity<Category> updateCategory(@RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to update Category : {}", category);
         if (category.getId() == null) {
-            return createCategory(category);
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Category result = categoryService.save(category);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, category.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, category.getId()))
             .body(result);
     }
 
     /**
-     * GET  /categories : get all the categories.
+     * {@code GET  /categories} : get all the categories.
      *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of categories in body
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of categories in body.
      */
     @GetMapping("/categories")
-    @Timed
-    public ResponseEntity<List<Category>> getAllCategories(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<Category>> getAllCategories(Pageable pageable) {
         log.debug("REST request to get a page of Categories");
         Page<Category> page = categoryService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/categories");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
+<<<<<<< HEAD
      * GET  /categories : get all the categories.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of categories in body
@@ -114,16 +119,18 @@ public class CategoryResource {
 
     /**
      * GET  /categories/:id : get the "id" category.
+=======
+     * {@code GET  /categories/:id} : get the "id" category.
+>>>>>>> jhipster_upgrade
      *
-     * @param id the id of the category to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the category, or with status 404 (Not Found)
+     * @param id the id of the category to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the category, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/categories/{id}")
-    @Timed
     public ResponseEntity<Category> getCategory(@PathVariable String id) {
         log.debug("REST request to get Category : {}", id);
-        Category category = categoryService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
+        Optional<Category> category = categoryService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(category);
     }
 
 
@@ -142,16 +149,15 @@ public class CategoryResource {
     }
 
     /**
-     * DELETE  /categories/:id : delete the "id" category.
+     * {@code DELETE  /categories/:id} : delete the "id" category.
      *
-     * @param id the id of the category to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @param id the id of the category to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/categories/{id}")
-    @Timed
     public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
         log.debug("REST request to delete Category : {}", id);
         categoryService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

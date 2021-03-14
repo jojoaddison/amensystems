@@ -1,83 +1,76 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { INews } from 'app/shared/model/news.model';
 
-import { News } from './news.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+type EntityResponseType = HttpResponse<INews>;
+type EntityArrayResponseType = HttpResponse<INews[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NewsService {
+  public resourceUrl = SERVER_API_URL + 'api/news';
 
-    private resourceUrl = SERVER_API_URL + 'api/news';
+  constructor(protected http: HttpClient) {}
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+  create(news: INews): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(news);
+    return this.http
+      .post<INews>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
-    create(news: News): Observable<News> {
-        const copy = this.convert(news);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  update(news: INews): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(news);
+    return this.http
+      .put<INews>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  find(id: string): Observable<EntityResponseType> {
+    return this.http
+      .get<INews>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<INews[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromClient(news: INews): INews {
+    const copy: INews = Object.assign({}, news, {
+      createdDate: news.createdDate && news.createdDate.isValid() ? news.createdDate.toJSON() : undefined,
+      modifiedDate: news.modifiedDate && news.modifiedDate.isValid() ? news.modifiedDate.toJSON() : undefined,
+    });
+    return copy;
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.createdDate = res.body.createdDate ? moment(res.body.createdDate) : undefined;
+      res.body.modifiedDate = res.body.modifiedDate ? moment(res.body.modifiedDate) : undefined;
     }
+    return res;
+  }
 
-    update(news: News): Observable<News> {
-        const copy = this.convert(news);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((news: INews) => {
+        news.createdDate = news.createdDate ? moment(news.createdDate) : undefined;
+        news.modifiedDate = news.modifiedDate ? moment(news.modifiedDate) : undefined;
+      });
     }
-
-    find(id: string): Observable<News> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
-
-    /**
-     * Convert a returned JSON object to News.
-     */
-    private convertItemFromServer(json: any): News {
-        const entity: News = Object.assign(new News(), json);
-        entity.createdDate = this.dateUtils
-            .convertDateTimeFromServer(json.createdDate);
-        entity.modifiedDate = this.dateUtils
-            .convertDateTimeFromServer(json.modifiedDate);
-        return entity;
-    }
-
-    /**
-     * Convert a News to a JSON which can be sent to the server.
-     */
-    private convert(news: News): News {
-        const copy: News = Object.assign({}, news);
-
-        copy.createdDate = this.dateUtils.toDate(news.createdDate);
-
-        copy.modifiedDate = this.dateUtils.toDate(news.modifiedDate);
-        return copy;
-    }
+    return res;
+  }
 }

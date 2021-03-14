@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -69,22 +70,43 @@ export class HomeComponent implements OnInit {
         this.loadAll();
         this.registerAuthenticationSuccess();
     }
+=======
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-    registerAuthenticationSuccess() {
-        this.eventManager.subscribe('authenticationSuccess', (message) => {
-            this.principal.identity().then((account) => {
-                this.account = account;
-            });
-        });
-    }
+import { LoginModalService } from 'app/core/login/login-modal.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
 
-    isAuthenticated() {
-        return this.principal.isAuthenticated();
-    }
+@Component({
+  selector: 'jhi-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['home.scss'],
+})
+export class HomeComponent implements OnInit, OnDestroy {
+  account: Account | null = null;
+  authSubscription?: Subscription;
 
-    login() {
-        this.modalRef = this.loginModalService.open();
+  constructor(private accountService: AccountService, private loginModalService: LoginModalService) {}
+
+  ngOnInit(): void {
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+  }
+>>>>>>> jhipster_upgrade
+
+  isAuthenticated(): boolean {
+    return this.accountService.isAuthenticated();
+  }
+
+  login(): void {
+    this.loginModalService.open();
+  }
+
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
+<<<<<<< HEAD
 
     trackSlideId(index: number, item: Slide) {
         return item.id;
@@ -211,4 +233,7 @@ export class HomeComponent implements OnInit {
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
+=======
+  }
+>>>>>>> jhipster_upgrade
 }

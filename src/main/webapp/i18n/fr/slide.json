@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "amensystemApp": {
         "slide" : {
             "home": {
@@ -23,5 +24,33 @@
             "lastModified": "Last Modified",
             "lastModifiedBy": "Last Modified By"
         }
+=======
+  "amensystemApp": {
+    "slide": {
+      "home": {
+        "title": "Slides",
+        "createLabel": "Créer un nouveau Slide",
+        "createOrEditLabel": "Créer ou éditer un Slide",
+        "notFound": "Aucun Slide trouvé"
+      },
+      "created": "Un nouveau Slide a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Slide avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Slide avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Slide {{ id }} ?"
+      },
+      "detail": {
+        "title": "Slide"
+      },
+      "url": "Url",
+      "title": "Title",
+      "description": "Description",
+      "photo": "Photo",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By"
+>>>>>>> jhipster_upgrade
     }
+  }
 }

@@ -1,40 +1,40 @@
 {
-    "fluentMethods": true,
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "title",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "content",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "text"
-        },
-        {
-            "fieldName": "createdDate",
-            "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "modifiedDate",
-            "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "createdBy",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "modifiedBy",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "albumId",
-            "fieldType": "String"
-        }
-    ],
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "blog",
-    "jpaMetamodelFiltering": false,
-    "pagination": "pagination"
+  "fluentMethods": true,
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "albumId",
+      "fieldType": "String"
+    }
+  ],
+  "dto": "no",
+  "service": "no",
+  "entityTableName": "blog",
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
 }

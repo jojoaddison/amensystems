@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { ISlide } from 'app/shared/model/slide.model';
 
-import { Slide } from './slide.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+type EntityResponseType = HttpResponse<ISlide>;
+type EntityArrayResponseType = HttpResponse<ISlide[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SlideService {
+  public resourceUrl = SERVER_API_URL + 'api/slides';
 
-    private resourceUrl = SERVER_API_URL + 'api/slides';
+  constructor(protected http: HttpClient) {}
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+  create(slide: ISlide): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(slide);
+    return this.http
+      .post<ISlide>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
+<<<<<<< HEAD
     create(slide: Slide): Observable<Slide> {
         // slide.createdDate = new Date();
         // slide.lastModified = new Date();
@@ -33,33 +43,49 @@ export class SlideService {
             return this.convertItemFromServer(jsonResponse);
         });
     }
+=======
+  update(slide: ISlide): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(slide);
+    return this.http
+      .put<ISlide>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
-    find(id: string): Observable<Slide> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  find(id: string): Observable<EntityResponseType> {
+    return this.http
+      .get<ISlide>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+>>>>>>> jhipster_upgrade
+
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<ISlide[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromClient(slide: ISlide): ISlide {
+    const copy: ISlide = Object.assign({}, slide, {
+      createdDate: slide.createdDate && slide.createdDate.isValid() ? slide.createdDate.toJSON() : undefined,
+      modifiedDate: slide.modifiedDate && slide.modifiedDate.isValid() ? slide.modifiedDate.toJSON() : undefined,
+    });
+    return copy;
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.createdDate = res.body.createdDate ? moment(res.body.createdDate) : undefined;
+      res.body.modifiedDate = res.body.modifiedDate ? moment(res.body.modifiedDate) : undefined;
     }
+    return res;
+  }
 
-    query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
-
+<<<<<<< HEAD
     /**
      * Convert a returned JSON object to Slide.
      */
@@ -82,5 +108,15 @@ export class SlideService {
 
         copy.lastModified = this.dateUtils.toDate(slide.lastModified);
         return copy;
+=======
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((slide: ISlide) => {
+        slide.createdDate = slide.createdDate ? moment(slide.createdDate) : undefined;
+        slide.modifiedDate = slide.modifiedDate ? moment(slide.modifiedDate) : undefined;
+      });
+>>>>>>> jhipster_upgrade
     }
+    return res;
+  }
 }

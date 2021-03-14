@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "amensystemApp": {
         "home": {
             "home": {
@@ -27,3 +28,34 @@
         }
     }
 }
+=======
+  "amensystemApp": {
+    "home": {
+      "home": {
+        "title": "Homes",
+        "createLabel": "Create a new Home",
+        "createOrEditLabel": "Create or edit a Home",
+        "notFound": "No Homes found"
+      },
+      "created": "A new Home is created with identifier {{ param }}",
+      "updated": "A Home is updated with identifier {{ param }}",
+      "deleted": "A Home is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Home {{ id }}?"
+      },
+      "detail": {
+        "title": "Home"
+      },
+      "slides": "Slides",
+      "advert": "Advert",
+      "category": "Category",
+      "state": "State",
+      "version": "Version",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "modifiedBy": "Modified By",
+      "modifiedDate": "Modified Date"
+    }
+  }
+}
+>>>>>>> jhipster_upgrade

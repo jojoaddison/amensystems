@@ -1,83 +1,76 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { ISlideShow } from 'app/shared/model/slide-show.model';
 
-import { SlideShow } from './slide-show.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+type EntityResponseType = HttpResponse<ISlideShow>;
+type EntityArrayResponseType = HttpResponse<ISlideShow[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SlideShowService {
+  public resourceUrl = SERVER_API_URL + 'api/slide-shows';
 
-    private resourceUrl = SERVER_API_URL + 'api/slide-shows';
+  constructor(protected http: HttpClient) {}
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+  create(slideShow: ISlideShow): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(slideShow);
+    return this.http
+      .post<ISlideShow>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
-    create(slideShow: SlideShow): Observable<SlideShow> {
-        const copy = this.convert(slideShow);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  update(slideShow: ISlideShow): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(slideShow);
+    return this.http
+      .put<ISlideShow>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  find(id: string): Observable<EntityResponseType> {
+    return this.http
+      .get<ISlideShow>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<ISlideShow[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromClient(slideShow: ISlideShow): ISlideShow {
+    const copy: ISlideShow = Object.assign({}, slideShow, {
+      createdDate: slideShow.createdDate && slideShow.createdDate.isValid() ? slideShow.createdDate.toJSON() : undefined,
+      modifiedDate: slideShow.modifiedDate && slideShow.modifiedDate.isValid() ? slideShow.modifiedDate.toJSON() : undefined,
+    });
+    return copy;
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.createdDate = res.body.createdDate ? moment(res.body.createdDate) : undefined;
+      res.body.modifiedDate = res.body.modifiedDate ? moment(res.body.modifiedDate) : undefined;
     }
+    return res;
+  }
 
-    update(slideShow: SlideShow): Observable<SlideShow> {
-        const copy = this.convert(slideShow);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((slideShow: ISlideShow) => {
+        slideShow.createdDate = slideShow.createdDate ? moment(slideShow.createdDate) : undefined;
+        slideShow.modifiedDate = slideShow.modifiedDate ? moment(slideShow.modifiedDate) : undefined;
+      });
     }
-
-    find(id: string): Observable<SlideShow> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
-
-    /**
-     * Convert a returned JSON object to SlideShow.
-     */
-    private convertItemFromServer(json: any): SlideShow {
-        const entity: SlideShow = Object.assign(new SlideShow(), json);
-        entity.createdDate = this.dateUtils
-            .convertDateTimeFromServer(json.createdDate);
-        entity.modifiedDate = this.dateUtils
-            .convertDateTimeFromServer(json.modifiedDate);
-        return entity;
-    }
-
-    /**
-     * Convert a SlideShow to a JSON which can be sent to the server.
-     */
-    private convert(slideShow: SlideShow): SlideShow {
-        const copy: SlideShow = Object.assign({}, slideShow);
-
-        copy.createdDate = this.dateUtils.toDate(slideShow.createdDate);
-
-        copy.modifiedDate = this.dateUtils.toDate(slideShow.modifiedDate);
-        return copy;
-    }
+    return res;
+  }
 }

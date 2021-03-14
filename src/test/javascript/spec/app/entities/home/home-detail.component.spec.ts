@@ -1,61 +1,37 @@
-/* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { of } from 'rxjs';
+
 import { AmensystemTestModule } from '../../../test.module';
-import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { HomeDetailComponent } from '../../../../../../main/webapp/app/entities/home/home-detail.component';
-import { HomeService } from '../../../../../../main/webapp/app/entities/home/home.service';
-import { Home } from '../../../../../../main/webapp/app/entities/home/home.model';
+import { HomeDetailComponent } from 'app/entities/home/home-detail.component';
+import { Home } from 'app/shared/model/home.model';
 
 describe('Component Tests', () => {
+  describe('Home Management Detail Component', () => {
+    let comp: HomeDetailComponent;
+    let fixture: ComponentFixture<HomeDetailComponent>;
+    const route = ({ data: of({ home: new Home('123') }) } as any) as ActivatedRoute;
 
-    describe('Home Management Detail Component', () => {
-        let comp: HomeDetailComponent;
-        let fixture: ComponentFixture<HomeDetailComponent>;
-        let service: HomeService;
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [AmensystemTestModule],
-                declarations: [HomeDetailComponent],
-                providers: [
-                    JhiDateUtils,
-                    JhiDataUtils,
-                    DatePipe,
-                    {
-                        provide: ActivatedRoute,
-                        useValue: new MockActivatedRoute({id: 123})
-                    },
-                    HomeService,
-                    JhiEventManager
-                ]
-            }).overrideTemplate(HomeDetailComponent, '')
-            .compileComponents();
-        }));
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(HomeDetailComponent);
-            comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(HomeService);
-        });
-
-        describe('OnInit', () => {
-            it('Should call load all on init', () => {
-            // GIVEN
-
-            spyOn(service, 'find').and.returnValue(Observable.of(new Home('aaa')));
-
-            // WHEN
-            comp.ngOnInit();
-
-            // THEN
-            expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.home).toEqual(jasmine.objectContaining({id: 'aaa'}));
-            });
-        });
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [AmensystemTestModule],
+        declarations: [HomeDetailComponent],
+        providers: [{ provide: ActivatedRoute, useValue: route }],
+      })
+        .overrideTemplate(HomeDetailComponent, '')
+        .compileComponents();
+      fixture = TestBed.createComponent(HomeDetailComponent);
+      comp = fixture.componentInstance;
     });
 
+    describe('OnInit', () => {
+      it('Should load home on init', () => {
+        // WHEN
+        comp.ngOnInit();
+
+        // THEN
+        expect(comp.home).toEqual(jasmine.objectContaining({ id: '123' }));
+      });
+    });
+  });
 });

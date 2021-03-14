@@ -1,6 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+<<<<<<< HEAD
 import { AmensystemSharedModule } from '../../shared';
 import {
     CategoryService,
@@ -54,5 +55,18 @@ const ENTITY_STATES = [
         CategoryResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
+=======
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { CategoryComponent } from './category.component';
+import { CategoryDetailComponent } from './category-detail.component';
+import { CategoryUpdateComponent } from './category-update.component';
+import { CategoryDeleteDialogComponent } from './category-delete-dialog.component';
+import { categoryRoute } from './category.route';
+
+@NgModule({
+  imports: [AmensystemSharedModule, RouterModule.forChild(categoryRoute)],
+  declarations: [CategoryComponent, CategoryDetailComponent, CategoryUpdateComponent, CategoryDeleteDialogComponent],
+  entryComponents: [CategoryDeleteDialogComponent],
+>>>>>>> jhipster_upgrade
 })
 export class AmensystemCategoryModule {}

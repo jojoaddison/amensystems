@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "amensystemApp": {
         "slide" : {
             "home": {
@@ -23,5 +24,33 @@
             "lastModified": "Last Modified",
             "lastModifiedBy": "Last Modified By"
         }
+=======
+  "amensystemApp": {
+    "slide": {
+      "home": {
+        "title": "Slides",
+        "createLabel": "Slide erstellen",
+        "createOrEditLabel": "Slide erstellen oder bearbeiten",
+        "notFound": "No Slides found"
+      },
+      "created": "Slide erstellt mit ID {{ param }}",
+      "updated": "Slide aktualisiert mit ID {{ param }}",
+      "deleted": "Slide gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Slide {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Slide"
+      },
+      "url": "Url",
+      "title": "Title",
+      "description": "Description",
+      "photo": "Photo",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By"
+>>>>>>> jhipster_upgrade
     }
+  }
 }
