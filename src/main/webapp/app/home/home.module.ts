@@ -4,12 +4,10 @@ import { RouterModule } from '@angular/router';
 import { AmensystemSharedModule } from '../shared';
 
 import { HOME_ROUTE, HomeComponent } from './';
-import { WidgetsModule } from '../widgets/widgets.module';
 
 @NgModule({
     imports: [
         AmensystemSharedModule,
-        WidgetsModule,
         RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
     ],
     declarations: [

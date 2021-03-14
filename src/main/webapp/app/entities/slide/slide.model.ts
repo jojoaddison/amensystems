@@ -7,11 +7,11 @@ export class Slide implements BaseEntity {
         public title?: string,
         public description?: string,
         public photoContentType?: string,
-        public photoFile?: string,
         public photo?: any,
         public createdDate?: any,
-        public lastModified?: any,
-        public lastModifiedBy?: string,
+        public modifiedDate?: any,
+        public createdBy?: string,
+        public modifiedBy?: string,
     ) {
     }
 }

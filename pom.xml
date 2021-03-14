@@ -12,7 +12,7 @@
     <groupId>io.jojoaddison</groupId>
     <artifactId>amensystem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>Amensystem</name>
 
     <properties>
@@ -43,6 +43,7 @@
         <mongobee.version>0.12</mongobee.version>
         <guava.version>23.0</guava.version>
         <node.version>v6.11.4</node.version>
+        <npm.version>5.5.1</npm.version>
         <problem-spring-web.version>0.21.0</problem-spring-web.version>
         <!-- These remain empty unless the corresponding profile is active -->
         <profile.no-liquibase />
@@ -85,7 +86,6 @@
         <!-- Spring social -->
         <spring-social-google.version>1.0.0.RELEASE</spring-social-google.version>
         <springfox.version>2.7.0</springfox.version>
-        <yarn.version>v1.2.1</yarn.version>
     </properties>
 
 
@@ -155,12 +155,6 @@
             <artifactId>json-path</artifactId>
             <scope>test</scope>
             <!-- parent POM declares this dependency in default (compile) scope -->
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.11.2</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -360,7 +354,6 @@
     </dependencies>
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
-        <finalName>AmenSupermarketServer</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -583,8 +576,8 @@
                                         <artifactId>frontend-maven-plugin</artifactId>
                                         <versionRange>${frontend-maven-plugin.version}</versionRange>
                                         <goals>
-                                            <goal>install-node-and-yarn</goal>
-                                            <goal>yarn</goal>
+                                            <goal>install-node-and-npm</goal>
+                                            <goal>npm</goal>
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
@@ -621,19 +614,19 @@
                         <version>${frontend-maven-plugin.version}</version>
                         <executions>
                             <execution>
-                                <id>install node and yarn</id>
+                                <id>install node and npm</id>
                                 <goals>
-                                    <goal>install-node-and-yarn</goal>
+                                    <goal>install-node-and-npm</goal>
                                 </goals>
                                 <configuration>
                                     <nodeVersion>${node.version}</nodeVersion>
-                                    <yarnVersion>${yarn.version}</yarnVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
                                 </configuration>
                             </execution>
                             <execution>
                                 <id>webpack build dev</id>
                                 <goals>
-                                    <goal>yarn</goal>
+                                    <goal>npm</goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
@@ -742,19 +735,19 @@
                         <version>${frontend-maven-plugin.version}</version>
                         <executions>
                             <execution>
-                                <id>install node and yarn</id>
+                                <id>install node and npm</id>
                                 <goals>
-                                    <goal>install-node-and-yarn</goal>
+                                    <goal>install-node-and-npm</goal>
                                 </goals>
                                 <configuration>
                                     <nodeVersion>${node.version}</nodeVersion>
-                                    <yarnVersion>${yarn.version}</yarnVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>yarn install</id>
+                                <id>npm install</id>
                                 <goals>
-                                    <goal>yarn</goal>
+                                    <goal>npm</goal>
                                 </goals>
                                 <configuration>
                                     <arguments>install</arguments>
@@ -763,7 +756,7 @@
                             <execution>
                                 <id>webpack build test</id>
                                 <goals>
-                                    <goal>yarn</goal>
+                                    <goal>npm</goal>
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
@@ -773,7 +766,7 @@
                             <execution>
                                 <id>webpack build prod</id>
                                 <goals>
-                                    <goal>yarn</goal>
+                                    <goal>npm</goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>

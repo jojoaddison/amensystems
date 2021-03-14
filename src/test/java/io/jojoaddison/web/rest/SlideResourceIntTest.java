@@ -1,22 +1,11 @@
 package io.jojoaddison.web.rest;
 
-import static io.jojoaddison.web.rest.TestUtil.createFormattingConversionService;
-import static io.jojoaddison.web.rest.TestUtil.sameInstant;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import io.jojoaddison.AmensystemApp;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.List;
+import io.jojoaddison.domain.Slide;
+import io.jojoaddison.repository.SlideRepository;
+import io.jojoaddison.service.SlideService;
+import io.jojoaddison.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,10 +21,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
 
-import io.jojoaddison.AmensystemApp;
-import io.jojoaddison.domain.Slide;
-import io.jojoaddison.service.SlideService;
-import io.jojoaddison.web.rest.errors.ExceptionTranslator;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
+import java.util.List;
+
+import static io.jojoaddison.web.rest.TestUtil.sameInstant;
+import static io.jojoaddison.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the SlideResource REST controller.
@@ -63,14 +60,20 @@ public class SlideResourceIntTest {
     private static final ZonedDateTime DEFAULT_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
-    private static final ZonedDateTime DEFAULT_LAST_MODIFIED = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_LAST_MODIFIED = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime DEFAULT_MODIFIED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_MODIFIED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
-    private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MODIFIED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_MODIFIED_BY = "BBBBBBBBBB";
 
     @Autowired
-    private SlideService slideRepository;
+    private SlideRepository slideRepository;
+
+    @Autowired
+    private SlideService slideService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -88,7 +91,7 @@ public class SlideResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlideResource slideResource = new SlideResource(slideRepository);
+        final SlideResource slideResource = new SlideResource(slideService);
         this.restSlideMockMvc = MockMvcBuilders.standaloneSetup(slideResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -110,8 +113,9 @@ public class SlideResourceIntTest {
             .photo(DEFAULT_PHOTO)
             .photoContentType(DEFAULT_PHOTO_CONTENT_TYPE)
             .createdDate(DEFAULT_CREATED_DATE)
-            .lastModified(DEFAULT_LAST_MODIFIED)
-            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY);
+            .modifiedDate(DEFAULT_MODIFIED_DATE)
+            .createdBy(DEFAULT_CREATED_BY)
+            .modifiedBy(DEFAULT_MODIFIED_BY);
         return slide;
     }
 
@@ -141,8 +145,9 @@ public class SlideResourceIntTest {
         assertThat(testSlide.getPhoto()).isEqualTo(DEFAULT_PHOTO);
         assertThat(testSlide.getPhotoContentType()).isEqualTo(DEFAULT_PHOTO_CONTENT_TYPE);
         assertThat(testSlide.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
-        assertThat(testSlide.getLastModified()).isEqualTo(DEFAULT_LAST_MODIFIED);
-        assertThat(testSlide.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testSlide.getModifiedDate()).isEqualTo(DEFAULT_MODIFIED_DATE);
+        assertThat(testSlide.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testSlide.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
     }
 
     @Test
@@ -179,8 +184,9 @@ public class SlideResourceIntTest {
             .andExpect(jsonPath("$.[*].photoContentType").value(hasItem(DEFAULT_PHOTO_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].photo").value(hasItem(Base64Utils.encodeToString(DEFAULT_PHOTO))))
             .andExpect(jsonPath("$.[*].createdDate").value(hasItem(sameInstant(DEFAULT_CREATED_DATE))))
-            .andExpect(jsonPath("$.[*].lastModified").value(hasItem(sameInstant(DEFAULT_LAST_MODIFIED))))
-            .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY.toString())));
+            .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(sameInstant(DEFAULT_MODIFIED_DATE))))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY.toString())));
     }
 
     @Test
@@ -199,8 +205,9 @@ public class SlideResourceIntTest {
             .andExpect(jsonPath("$.photoContentType").value(DEFAULT_PHOTO_CONTENT_TYPE))
             .andExpect(jsonPath("$.photo").value(Base64Utils.encodeToString(DEFAULT_PHOTO)))
             .andExpect(jsonPath("$.createdDate").value(sameInstant(DEFAULT_CREATED_DATE)))
-            .andExpect(jsonPath("$.lastModified").value(sameInstant(DEFAULT_LAST_MODIFIED)))
-            .andExpect(jsonPath("$.lastModifiedBy").value(DEFAULT_LAST_MODIFIED_BY.toString()));
+            .andExpect(jsonPath("$.modifiedDate").value(sameInstant(DEFAULT_MODIFIED_DATE)))
+            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
+            .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY.toString()));
     }
 
     @Test
@@ -213,7 +220,8 @@ public class SlideResourceIntTest {
     @Test
     public void updateSlide() throws Exception {
         // Initialize the database
-        slideRepository.save(slide);
+        slideService.save(slide);
+
         int databaseSizeBeforeUpdate = slideRepository.findAll().size();
 
         // Update the slide
@@ -225,8 +233,9 @@ public class SlideResourceIntTest {
             .photo(UPDATED_PHOTO)
             .photoContentType(UPDATED_PHOTO_CONTENT_TYPE)
             .createdDate(UPDATED_CREATED_DATE)
-            .lastModified(UPDATED_LAST_MODIFIED)
-            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY);
+            .modifiedDate(UPDATED_MODIFIED_DATE)
+            .createdBy(UPDATED_CREATED_BY)
+            .modifiedBy(UPDATED_MODIFIED_BY);
 
         restSlideMockMvc.perform(put("/api/slides")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -243,8 +252,9 @@ public class SlideResourceIntTest {
         assertThat(testSlide.getPhoto()).isEqualTo(UPDATED_PHOTO);
         assertThat(testSlide.getPhotoContentType()).isEqualTo(UPDATED_PHOTO_CONTENT_TYPE);
         assertThat(testSlide.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
-        assertThat(testSlide.getLastModified()).isEqualTo(UPDATED_LAST_MODIFIED);
-        assertThat(testSlide.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
+        assertThat(testSlide.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
+        assertThat(testSlide.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testSlide.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
     }
 
     @Test
@@ -267,7 +277,8 @@ public class SlideResourceIntTest {
     @Test
     public void deleteSlide() throws Exception {
         // Initialize the database
-        slideRepository.save(slide);
+        slideService.save(slide);
+
         int databaseSizeBeforeDelete = slideRepository.findAll().size();
 
         // Get the slide

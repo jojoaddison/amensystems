@@ -11,7 +11,7 @@ import { HomeDeletePopupComponent } from './home-delete-dialog.component';
 
 export const homeRoute: Routes = [
     {
-        path: 'home-management',
+        path: 'home',
         component: HomeComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -19,7 +19,7 @@ export const homeRoute: Routes = [
         },
         canActivate: [UserRouteAccessService]
     }, {
-        path: 'home-management/:id',
+        path: 'home/:id',
         component: HomeDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -31,7 +31,7 @@ export const homeRoute: Routes = [
 
 export const homePopupRoute: Routes = [
     {
-        path: 'home-management-new',
+        path: 'home-new',
         component: HomePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -41,7 +41,7 @@ export const homePopupRoute: Routes = [
         outlet: 'popup'
     },
     {
-        path: 'home-management/:id/edit',
+        path: 'home/:id/edit',
         component: HomePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -51,7 +51,7 @@ export const homePopupRoute: Routes = [
         outlet: 'popup'
     },
     {
-        path: 'home-management/:id/delete',
+        path: 'home/:id/delete',
         component: HomeDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],

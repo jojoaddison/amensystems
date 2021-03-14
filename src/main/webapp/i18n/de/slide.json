@@ -20,8 +20,9 @@
             "description": "Description",
             "photo": "Photo",
             "createdDate": "Created Date",
-            "lastModified": "Last Modified",
-            "lastModifiedBy": "Last Modified By"
+            "modifiedDate": "Modified Date",
+            "createdBy": "Created By",
+            "modifiedBy": "Modified By"
         }
     }
 }

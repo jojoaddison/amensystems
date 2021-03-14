@@ -1,49 +1,58 @@
-<div class="container fg-text-d mt-3" *ngIf="slide">
-    <h2>{{slide.title}}</h2>
+
+<div *ngIf="slide">
+    <h2><span jhiTranslate="amensystemApp.slide.detail.title">Slide</span> {{slide.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <div class="row">
-        <div class="col-md-4 text-left">
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="amensystemApp.slide.title">Title</span></dt>
-                <dd>
-                    <span>{{slide.title}}</span>
-                </dd>
-                <dt><span jhiTranslate="amensystemApp.slide.description">Description</span></dt>
-                <dd>
-                    <span>{{slide.description}}</span>
-                </dd>
-                <dt><span jhiTranslate="amensystemApp.slide.createdDate">Created Date</span></dt>
-                <dd>
-                    <span>{{slide.createdDate | date:'medium'}}</span>
-                </dd>
-                <dt><span jhiTranslate="amensystemApp.slide.lastModified">Last Modified</span></dt>
-                <dd>
-                    <span>{{slide.lastModified | date:'medium'}}</span>
-                </dd>
-                <dt><span jhiTranslate="amensystemApp.slide.lastModifiedBy">Last Modified By</span></dt>
-                <dd>
-                    <span>{{slide.lastModifiedBy}}</span>
-                </dd>
-            </dl>
-        </div>
-        <div class="col-md-8">
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="amensystemApp.slide.url">Url</span></dt>
+        <dd>
+            <span>{{slide.url}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.slide.title">Title</span></dt>
+        <dd>
+            <span>{{slide.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.slide.description">Description</span></dt>
+        <dd>
+            <span>{{slide.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.slide.photo">Photo</span></dt>
+        <dd>
             <div *ngIf="slide.photo">
                 <a (click)="openFile(slide.photoContentType, slide.photo)">
-                    <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo" style="max-width: 100%;" alt="slide image" />
+                    <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo" style="max-width: 100%;" alt="slide image"/>
                 </a>
-                {{slide.photoContentType}}, {{byteSize(slide.photo)}}, {{slide.url}}
+                {{slide.photoContentType}}, {{byteSize(slide.photo)}}
             </div>
-        </div>
-    </div>
-    <p>&nbsp;</p>
-    <button type="submit" (click)="previousState()" class="btn btn-info">
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.slide.createdDate">Created Date</span></dt>
+        <dd>
+            <span>{{slide.createdDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.slide.modifiedDate">Modified Date</span></dt>
+        <dd>
+            <span>{{slide.modifiedDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.slide.createdBy">Created By</span></dt>
+        <dd>
+            <span>{{slide.createdBy}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.slide.modifiedBy">Modified By</span></dt>
+        <dd>
+            <span>{{slide.modifiedBy}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
         <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
     </button>
 
-    <button type="button" [routerLink]="['/', { outlets: { popup: 'slide/'+ slide.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'slide/'+ slide.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
 </div>
-<p>&nbsp;</p>
-<hr>

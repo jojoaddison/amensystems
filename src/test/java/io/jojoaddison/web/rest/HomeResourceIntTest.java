@@ -2,10 +2,7 @@ package io.jojoaddison.web.rest;
 
 import io.jojoaddison.AmensystemApp;
 
-import io.jojoaddison.domain.Category;
 import io.jojoaddison.domain.Home;
-import io.jojoaddison.domain.Product;
-import io.jojoaddison.domain.Slide;
 import io.jojoaddison.repository.HomeRepository;
 import io.jojoaddison.service.HomeService;
 import io.jojoaddison.web.rest.errors.ExceptionTranslator;
@@ -27,9 +24,7 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static io.jojoaddison.web.rest.TestUtil.sameInstant;
 import static io.jojoaddison.web.rest.TestUtil.createFormattingConversionService;
@@ -48,14 +43,14 @@ import io.jojoaddison.domain.enumeration.StateType;
 @SpringBootTest(classes = AmensystemApp.class)
 public class HomeResourceIntTest {
 
-    private static final Set<Slide> DEFAULT_SLIDES = new HashSet<>();
-    private static final Set<Slide> UPDATED_SLIDES = new HashSet<>();
+    private static final String DEFAULT_SLIDES = "AAAAAAAAAA";
+    private static final String UPDATED_SLIDES = "BBBBBBBBBB";
 
-    private static final Set<Product> DEFAULT_ADVERT = new HashSet<>();
-    private static final Set<Product> UPDATED_ADVERT = new HashSet<>();
+    private static final String DEFAULT_ADVERT = "AAAAAAAAAA";
+    private static final String UPDATED_ADVERT = "BBBBBBBBBB";
 
-    private static final Set<Category> DEFAULT_CATEGORY = new HashSet<>();
-    private static final Set<Category> UPDATED_CATEGORY = new HashSet<>();
+    private static final String DEFAULT_CATEGORY = "AAAAAAAAAA";
+    private static final String UPDATED_CATEGORY = "BBBBBBBBBB";
 
     private static final StateType DEFAULT_STATE = StateType.CURRENT;
     private static final StateType UPDATED_STATE = StateType.UNPUBLISH;

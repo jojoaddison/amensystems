@@ -26,7 +26,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
             ],
             target: 'http://127.0.0.1:8080',
             secure: false
-        }, {
+        },{
             context: [
                 '/websocket'
             ],
@@ -49,29 +49,28 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
     },
     module: {
         rules: [{
-                test: /\.ts$/,
-                enforce: 'pre',
-                loaders: 'tslint-loader',
-                exclude: ['node_modules', new RegExp('reflect-metadata\\' + path.sep + 'Reflect\\.ts')]
-            },
-            {
-                test: /\.ts$/,
-                loaders: [
-                    'angular2-template-loader',
-                    'awesome-typescript-loader'
-                ],
-                exclude: ['node_modules/generator-jhipster']
-            },
-            {
-                test: /\.css$/,
-                loaders: ['to-string-loader', 'css-loader'],
-                exclude: /(vendor\.css|global\.css)/
-            },
-            {
-                test: /(vendor\.css|global\.css)/,
-                loaders: ['style-loader', 'css-loader']
-            }
-        ]
+            test: /\.ts$/,
+            enforce: 'pre',
+            loaders: 'tslint-loader',
+            exclude: ['node_modules', new RegExp('reflect-metadata\\' + path.sep + 'Reflect\\.ts')]
+        },
+        {
+            test: /\.ts$/,
+            loaders: [
+                'angular2-template-loader',
+                'awesome-typescript-loader'
+            ],
+            exclude: ['node_modules/generator-jhipster']
+        },
+        {
+            test: /\.css$/,
+            loaders: ['to-string-loader', 'css-loader'],
+            exclude: /(vendor\.css|global\.css)/
+        },
+        {
+            test: /(vendor\.css|global\.css)/,
+            loaders: ['style-loader', 'css-loader']
+        }]
     },
     plugins: [
         new BrowserSyncPlugin({
@@ -91,7 +90,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
             utils.root('src/test'),
         ]),
         new WebpackNotifierPlugin({
-            title: 'Amensystem',
+            title: 'JHipster',
             contentImage: path.join(__dirname, 'logo-jhipster.png')
         })
     ]

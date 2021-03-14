@@ -1,7 +1,7 @@
-<div class="container fg-text-d mt-3">
+<div>
     <h2>
         <span jhiTranslate="amensystemApp.home.home.title">Homes</span>
-        <button class="btn btn-primary float-right jh-create-entity create-home" [routerLink]="['/', { outlets: { popup: ['home-management-new'] } }]">
+        <button class="btn btn-primary float-right jh-create-entity create-home" [routerLink]="['/', { outlets: { popup: ['home-new'] } }]">
             <span class="fa fa-plus"></span>
             <span  jhiTranslate="amensystemApp.home.home.createLabel">
             Create new Home
@@ -15,49 +15,57 @@
     <div class="table-responsive" *ngIf="homes">
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th><span jhiTranslate="global.field.id">ID</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.slides">Slides</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.advert">Advert</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.category">Category</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.state">State</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.version">Version</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.createdBy">Created By</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.createdDate">Created Date</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.modifiedBy">Modified By</span></th>
-                    <th><span jhiTranslate="amensystemApp.home.modifiedDate">Modified Date</span></th>
-                    <th></th>
-                </tr>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="amensystemApp.home.slides">Slides</span></th>
+            <th><span jhiTranslate="amensystemApp.home.advert">Advert</span></th>
+            <th><span jhiTranslate="amensystemApp.home.category">Category</span></th>
+            <th><span jhiTranslate="amensystemApp.home.state">State</span></th>
+            <th><span jhiTranslate="amensystemApp.home.version">Version</span></th>
+            <th><span jhiTranslate="amensystemApp.home.createdBy">Created By</span></th>
+            <th><span jhiTranslate="amensystemApp.home.createdDate">Created Date</span></th>
+            <th><span jhiTranslate="amensystemApp.home.modifiedBy">Modified By</span></th>
+            <th><span jhiTranslate="amensystemApp.home.modifiedDate">Modified Date</span></th>
+            <th></th>
+            </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let home of homes ;trackBy: trackId ; let id = index">
-                    <td><a [routerLink]="['../home', home.id ]">{{id + 1}}</a></td>
-                    <td>{{home.slides.length}}</td>
-                    <td>{{home.advert.length}}</td>
-                    <td>{{home.category.length}}</td>
-                    <td jhiTranslate="{{'amensystemApp.StateType.' + home.state}}">{{home.state}}</td>
-                    <td>{{home.version}}</td>
-                    <td>{{home.createdBy}}</td>
-                    <td>{{home.createdDate | date:'medium'}}</td>
-                    <td>{{home.modifiedBy}}</td>
-                    <td>{{home.modifiedDate | date:'medium'}}</td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit" [routerLink]="['../home-management', home.id ]" class="btn btn-info btn-sm">
+            <tr *ngFor="let home of homes ;trackBy: trackId">
+                <td><a [routerLink]="['../home', home.id ]">{{home.id}}</a></td>
+                <td>{{home.slides}}</td>
+                <td>{{home.advert}}</td>
+                <td>{{home.category}}</td>
+                <td jhiTranslate="{{'amensystemApp.StateType.' + home.state}}">{{home.state}}</td>
+                <td>{{home.version}}</td>
+                <td>{{home.createdBy}}</td>
+                <td>{{home.createdDate | date:'medium'}}</td>
+                <td>{{home.modifiedBy}}</td>
+                <td>{{home.modifiedDate | date:'medium'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../home', home.id ]"
+                                class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
-                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'home-management/'+ home.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'home/'+ home.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'home-management/'+ home.id + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm">
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'home/'+ home.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
-                        </div>
-                    </td>
-                </tr>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

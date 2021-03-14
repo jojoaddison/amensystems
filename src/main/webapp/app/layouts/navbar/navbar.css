@@ -1,17 +1,14 @@
 /* ==========================================================================
 Navbar
 ========================================================================== */
-
 .navbar-version {
     font-size: 10px;
     color: #ccc
 }
 
 .jh-navbar {
-    background-color: #547737;
+    background-color: #353d47;
     padding: .2em 1em;
-    height: 75px;
-    z-index: 100;
 }
 
 .jh-navbar .profile-image {
@@ -21,10 +18,8 @@ Navbar
     border-radius: 50%;
 }
 
-.jh-navbar .dropdown-item.active,
-.jh-navbar .dropdown-item.active:focus,
-.jh-navbar .dropdown-item.active:hover {
-    background-color: #547737;
+.jh-navbar .dropdown-item.active, .jh-navbar .dropdown-item.active:focus, .jh-navbar .dropdown-item.active:hover {
+    background-color: #353d47;
 }
 
 .jh-navbar .dropdown-toggle::after {
@@ -49,11 +44,6 @@ Navbar
     padding: 10px;
 }
 
-.collapse.show {
-    background-color: #547737;
-    border: solid 1px white;
-}
-
 .jh-navbar .jh-navbar-toggler:hover {
     color: #fff;
 }
@@ -75,33 +65,23 @@ Navbar
     vertical-align: middle;
 }
 
-
 /* ==========================================================================
 Logo styles
 ========================================================================== */
-
 .navbar-brand.logo {
     padding: 5px 15px;
 }
 
-.logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 96px;
-    width: auto;
-}
-
 .logo .logo-img {
-    height: 100px;
+    height: 45px;
     display: inline-block;
     vertical-align: middle;
-    width: 300px;
+    width: 70px;
 }
 
 .logo-img {
     height: 100%;
-    background: url("../../../content/img/logo.png") no-repeat center center;
+    background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
     background-size: contain;
-    width: auto;
+    width: 100%;
 }

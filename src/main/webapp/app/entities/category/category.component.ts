@@ -13,7 +13,7 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
 
-    currentAccount: any;
+currentAccount: any;
     categories: Category[];
     error: any;
     success: any;
@@ -63,7 +63,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         }
     }
     transition() {
-        this.router.navigate(['/category'], { queryParams:
+        this.router.navigate(['/category'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,

@@ -1,29 +1,45 @@
-<div class="container bg-white fg-text-d mt-3" *ngIf="news">
-    <jhi-alert-error></jhi-alert-error>
-    <div class="row-fluid">
-        <div class="col-lg-12 text-left mb-5">
-            <h2 class="card-title">{{news.title}}</h2>
-            <span class="card-subtitle">{{news.lastModifiedBy}} | {{news.modifiedDate | date: 'medium'}}</span>
-            <hr>
-            <div [innerHtml]="news.content"></div>
-        </div>
-        <ngb-carousel *ngIf="news.slides && news.slides.length > 0">
-            <ng-template ngbSlide *ngFor="let slide of news.slides">
-                <div class="carousel-item active" [style.backgroundImage]="'url(' + slide.url + ')'">
-                    <div class="carousel-caption d-none d-md-block" *ngIf="slide.title">
-                        {{slide.title}}
-                    </div>
-                </div>
-            </ng-template>
-        </ngb-carousel>
-        <p></p>
-    </div>
 
-    <button type="submit" (click)="previousState()" class="btn btn-info">
+<div *ngIf="news">
+    <h2><span jhiTranslate="amensystemApp.news.detail.title">News</span> {{news.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="amensystemApp.news.title">Title</span></dt>
+        <dd>
+            <span>{{news.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.news.content">Content</span></dt>
+        <dd>
+            <span>{{news.content}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.news.slides">Slides</span></dt>
+        <dd>
+            <span>{{news.slides}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.news.createdDate">Created Date</span></dt>
+        <dd>
+            <span>{{news.createdDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.news.modifiedDate">Modified Date</span></dt>
+        <dd>
+            <span>{{news.modifiedDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="amensystemApp.news.lastModifiedBy">Last Modified By</span></dt>
+        <dd>
+            <span>{{news.lastModifiedBy}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
         <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
     </button>
 
-    <button type="button" [routerLink]="['/', { outlets: { popup: 'news/'+ news.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'news/'+ news.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
 </div>

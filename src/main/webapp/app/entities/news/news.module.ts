@@ -14,9 +14,7 @@ import {
     newsRoute,
     newsPopupRoute,
     NewsResolvePagingParams,
-    NewsViewComponent,
 } from './';
-import { WidgetsModule } from '../../widgets/widgets.module';
 
 const ENTITY_STATES = [
     ...newsRoute,
@@ -26,12 +24,10 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         AmensystemSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
-        WidgetsModule
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
         NewsComponent,
-        NewsViewComponent,
         NewsDetailComponent,
         NewsDialogComponent,
         NewsDeleteDialogComponent,

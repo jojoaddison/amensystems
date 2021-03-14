@@ -23,14 +23,6 @@ export class ProductService {
         });
     }
 
-    getProductsGroupedByCategory(): Observable<any> {
-        const url = this.resourceUrl + '/grouped-by-category';
-        return this.http.get(url)
-                    .map((res: Response) => {
-                        return res.json();
-                    });
-    }
-
     update(product: Product): Observable<Product> {
         const copy = this.convert(product);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
@@ -44,11 +36,6 @@ export class ProductService {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
-    }
-
-    findByCategory(category: string): Observable<ResponseWrapper> {
-        return this.http.get(`${this.resourceUrl}/by-category/${category}`)
-            .map((res: Response) => this.convertResponse(res));
     }
 
     query(req?: any): Observable<ResponseWrapper> {

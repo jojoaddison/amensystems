@@ -1,8 +1,8 @@
 {
     "amensystemApp": {
-        "home": {
+        "home" : {
             "home": {
-                "title": "Home management",
+                "title": "Homes",
                 "createLabel": "Créer un nouveau Home",
                 "createOrEditLabel": "Créer ou éditer un Home"
             },

@@ -2,8 +2,6 @@ package io.jojoaddison.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.jojoaddison.domain.Home;
-import io.jojoaddison.domain.enumeration.StateType;
-import io.jojoaddison.security.SecurityUtils;
 import io.jojoaddison.service.HomeService;
 import io.jojoaddison.web.rest.errors.BadRequestAlertException;
 import io.jojoaddison.web.rest.util.HeaderUtil;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,12 +48,6 @@ public class HomeResource {
         if (home.getId() != null) {
             throw new BadRequestAlertException("A new home cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        int version = getAllHomes().size() + 1;
-        home.setVersion(version);
-        home.setCreatedBy(SecurityUtils.getCurrentUserLogin());
-        home.setCreatedDate(ZonedDateTime.now());
-        home.setModifiedBy(SecurityUtils.getCurrentUserLogin());
-        home.setModifiedDate(ZonedDateTime.now());
         Home result = homeService.save(home);
         return ResponseEntity.created(new URI("/api/homes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -79,8 +70,6 @@ public class HomeResource {
         if (home.getId() == null) {
             return createHome(home);
         }
-        home.setModifiedBy(SecurityUtils.getCurrentUserLogin());
-        home.setModifiedDate(ZonedDateTime.now());
         Home result = homeService.save(home);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, home.getId().toString()))
@@ -98,18 +87,6 @@ public class HomeResource {
         log.debug("REST request to get all Homes");
         return homeService.findAll();
         }
-
-    /**
-     * GET  /homes : get all the homes.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of homes in body
-     */
-    @GetMapping("/homes/current")
-    @Timed
-    public Home getCurrentHome() {
-        log.debug("REST request to get all Homes");
-        return homeService.findByState(StateType.CURRENT);
-    }
 
     /**
      * GET  /homes/:id : get the "id" home.

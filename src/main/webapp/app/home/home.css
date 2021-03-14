@@ -10,67 +10,17 @@ Main page styles
     background-size: contain;
 }
 
-
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and ( min--moz-device-pixel-ratio: 2),
-only screen and ( -o-min-device-pixel-ratio: 2/1),
-only screen and ( min-device-pixel-ratio: 2),
-only screen and ( min-resolution: 192dpi),
-only screen and ( min-resolution: 2dppx) {
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
     .hipster {
         background: url("../../content/images/hipster2x.png") no-repeat center top;
         background-size: contain;
     }
 }
 
-.campaign {
-    display: inline-block;
-    width: 100%;
-    height: 200px;
-    background: url("../../campaign/christmas-hamper.gif") no-repeat center center;
-    background-size: contain;
-}
-
-.bg-hamper {
-    background: url('../../content/img/red-bg.png');
-}
-
-.hamper {
-    display: inline-block;
-    width: 350px;
-    height: 374px;
-    background: url("../../content/img/hamper-en.jpg") no-repeat center center;
-    background-size: contain;
-    align-self: center;
-    align-content: center;
-    align-items: center;
-    vertical-align: middle;
-}
-
-.hamper-de {
-    display: inline-block;
-    width: 350px;
-    height: 374px;
-    background: url("../../content/img/hamper-de.jpg") no-repeat center center;
-    background-size: contain;
-    align-self: center;
-    align-content: center;
-    align-items: center;
-    vertical-align: middle;
-}
-
-.product-cell {
-    max-width: 150px;
-}
-
-.carousel-item.active {
-    background-size: cover;
-}
-
-.advert {
-    margin-top: 20px;
-    min-height: 150px;
-    line-height: 150px;
-}

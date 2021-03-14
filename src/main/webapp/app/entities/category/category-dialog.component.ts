@@ -1,4 +1,4 @@
-import { Component, Output, AfterViewInit, EventEmitter, OnInit, Input, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
@@ -9,14 +9,6 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { Category } from './category.model';
 import { CategoryPopupService } from './category-popup.service';
 import { CategoryService } from './category.service';
-
-import 'tinymce';
-import 'tinymce/themes/modern';
-
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/link';
-
-declare var tinymce: any;
 
 @Component({
     selector: 'jhi-category-dialog',
@@ -119,36 +111,5 @@ export class CategoryPopupComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.routeSub.unsubscribe();
-    }
-
-}
-
-@Component({
-    selector: 'jhi-tiny-editor',
-    template: `<textarea id="{{elementId}}"></textarea>`
-})
-export class TinyEditorComponent implements AfterViewInit, OnDestroy {
-    @Input() elementId: String;
-    @Output() onEditorContentChange = new EventEmitter();
-
-    editor;
-
-    ngAfterViewInit() {
-        tinymce.init({
-            selector: '#' + this.elementId,
-            plugins: ['link', 'table'],
-            skin_url: 'content/skins/lightgray',
-            setup: ( (editor) => {
-                this.editor = editor;
-                editor.on('keyup change', () => {
-                    const content = editor.getContent();
-                    this.onEditorContentChange.emit(content);
-                });
-            } )
-    });
-    }
-
-    ngOnDestroy() {
-        tinymce.remove(this.editor);
     }
 }

@@ -2,11 +2,11 @@
 
     <div class="modal-header">
         <h4 class="modal-title" id="mySlideLabel" jhiTranslate="amensystemApp.slide.home.createOrEditLabel">Create or edit a Slide</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <!--
         <div class="form-group" [hidden]="!slide.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
@@ -14,31 +14,59 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="amensystemApp.slide.url" for="field_url">Url</label>
-            <input type="text" class="form-control" name="url" id="field_url" [(ngModel)]="slide.url" />
+            <input type="text" class="form-control" name="url" id="field_url"
+                [(ngModel)]="slide.url"  />
         </div>
-        -->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="amensystemApp.slide.title" for="field_title">Title</label>
-            <input type="text" class="form-control" name="title" id="field_title" [(ngModel)]="slide.title" />
+            <input type="text" class="form-control" name="title" id="field_title"
+                [(ngModel)]="slide.title"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="amensystemApp.slide.description" for="field_description">Description</label>
-            <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="slide.description" />
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="slide.description"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="amensystemApp.slide.photo" for="field_photo">Photo</label>
             <div>
-                <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo" style="max-height: 100px;" *ngIf="slide.photo" alt="slide image" />
+                <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo" style="max-height: 100px;" *ngIf="slide.photo" alt="slide image"/>
                 <div *ngIf="slide.photo" class="form-text text-danger clearfix">
                     <span class="pull-left">{{slide.photoContentType}}, {{byteSize(slide.photo)}}</span>
                     <button type="button" (click)="clearInputImage('photo', 'photoContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                         <span class="fa fa-times"></span>
                     </button>
                 </div>
-                <input type="file" id="file_photo" (change)="setFileData($event, slide, 'photo', true)" accept="image/*" jhiTranslate="entity.action.addimage" />
+                <input type="file" id="file_photo" (change)="setFileData($event, slide, 'photo', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
             </div>
-            <input type="hidden" class="form-control" name="photo" id="field_photo" [(ngModel)]="slide.photo" />
-            <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType" [(ngModel)]="slide.photoContentType" />
+            <input type="hidden" class="form-control" name="photo" id="field_photo"
+                [(ngModel)]="slide.photo"  />
+            <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+                [(ngModel)]="slide.photoContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="amensystemApp.slide.createdDate" for="field_createdDate">Created Date</label>
+            <div class="d-flex">
+                <input id="field_createdDate" type="datetime-local" class="form-control" name="createdDate" [(ngModel)]="slide.createdDate"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="amensystemApp.slide.modifiedDate" for="field_modifiedDate">Modified Date</label>
+            <div class="d-flex">
+                <input id="field_modifiedDate" type="datetime-local" class="form-control" name="modifiedDate" [(ngModel)]="slide.modifiedDate"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="amensystemApp.slide.createdBy" for="field_createdBy">Created By</label>
+            <input type="text" class="form-control" name="createdBy" id="field_createdBy"
+                [(ngModel)]="slide.createdBy"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="amensystemApp.slide.modifiedBy" for="field_modifiedBy">Modified By</label>
+            <input type="text" class="form-control" name="modifiedBy" id="field_modifiedBy"
+                [(ngModel)]="slide.modifiedBy"  />
         </div>
 
     </div>

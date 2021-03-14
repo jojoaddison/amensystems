@@ -1,24 +1,21 @@
 {
     "global": {
-        "title": "Amen Supermarket!",
+        "title": "Amensystem",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Dashboard",
-                "slide": "Slide Management",
-                "news": "News Management",
-                "category": "Category Management",
-                "product": "Product Management",
+                "main": "Entities",
+                "blog": "Blog",
+                "category": "Category",
                 "digitalAsset": "Digital Asset",
+                "news": "News",
+                "product": "Product",
+                "slide": "Slide",
                 "slideShow": "Slide Show",
-                "blog": "Blog Management",
-                "home": "Home Management",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
-            "news": "News",
-            "products": "Products",
             "account": {
                 "main": "Account",
                 "settings": "Settings",
@@ -92,7 +89,7 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev": "Development"
+            "dev":"Development"
         },
         "item-count": "Showing {{first}} - {{second}} of {{total}} items."
     },
@@ -106,13 +103,7 @@
             "edit": "Edit",
             "open": "Open",
             "save": "Save",
-            "view": "View",
-            "create": "Create",
-            "read": "Read",
-            "update": "Update",
-            "forward": "Forward",
-            "next": "Next",
-            "add": "Add"
+            "view": "View"
         },
         "detail": {
             "field": "Field",

@@ -27,18 +27,6 @@ export class NewsResolvePagingParams implements Resolve<any> {
 
 export const newsRoute: Routes = [
     {
-        path: 'news-view',
-        component: NewsComponent,
-        resolve: {
-            'pagingParams': NewsResolvePagingParams
-        },
-        data: {
-            authorities: [],
-            pageTitle: 'amensystemApp.news.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    },
-    {
         path: 'news',
         component: NewsComponent,
         resolve: {

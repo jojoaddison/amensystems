@@ -25,7 +25,6 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
-import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
     imports: [
@@ -37,7 +36,6 @@ import { NgxEditorModule } from 'ngx-editor';
         AmensystemAdminModule,
         AmensystemAccountModule,
         AmensystemEntityModule,
-        NgxEditorModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

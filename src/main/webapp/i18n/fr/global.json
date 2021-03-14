@@ -6,19 +6,17 @@
             "home": "Accueil",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Dashboard",
-                "slide": "Slide directeur",
-                "news": "News directeur",
-                "category": "Category directeur",
-                "product": "Product directeur",
-                "digitalAsset": "Digital Asset",
-                "slideShow": "Slide Show",
+                "main": "Entités",
                 "blog": "Blog",
-                "home": "Home directeur",
+                "category": "Category",
+                "digitalAsset": "Digital Asset",
+                "home": "Home",
+                "news": "News",
+                "product": "Product",
+                "slide": "Slide",
+                "slideShow": "Slide Show",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
-            "news": "News",
-            "products": "Products",
             "account": {
                 "main": "Compte",
                 "settings": "Profil",
@@ -92,7 +90,7 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev": "Développement"
+            "dev":"Développement"
         },
         "item-count": "Affichage {{first}} - {{second}} de {{total}} items."
     },
@@ -106,13 +104,7 @@
             "delete": "Supprimer",
             "open": "Ouvrir",
             "save": "Sauvegarder",
-            "view": "Voir",
-            "create": "Créer",
-            "read": "Read",
-            "update": "Lis",
-            "forward": "Avancer",
-            "next": "Suivant",
-            "add": "Ajouter"
+            "view": "Voir"
         },
         "detail": {
             "field": "Champs",

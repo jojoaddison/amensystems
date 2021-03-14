@@ -15,13 +15,6 @@ export class HomeService {
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
-    getCurrentHome(): Observable<Home>  {
-        const url = this.resourceUrl + '/current';
-        return this.http.get(url).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
     create(home: Home): Observable<Home> {
         const copy = this.convert(home);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
@@ -81,10 +74,10 @@ export class HomeService {
      */
     private convert(home: Home): Home {
         const copy: Home = Object.assign({}, home);
-        if (home.createdDate != null) {
-            copy.createdDate = new Date(home.createdDate).toISOString();
-        }
-        copy.modifiedDate = null;
+
+        copy.createdDate = this.dateUtils.toDate(home.createdDate);
+
+        copy.modifiedDate = this.dateUtils.toDate(home.modifiedDate);
         return copy;
     }
 }

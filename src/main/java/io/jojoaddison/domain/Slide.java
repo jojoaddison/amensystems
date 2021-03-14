@@ -31,18 +31,18 @@ public class Slide implements Serializable {
 
     @Field("photo_content_type")
     private String photoContentType;
-    
-    @Field("photo_file")
-    private String photoFile;
 
     @Field("created_date")
     private ZonedDateTime createdDate;
 
-    @Field("last_modified")
-    private ZonedDateTime lastModified;
+    @Field("modified_date")
+    private ZonedDateTime modifiedDate;
 
-    @Field("last_modified_by")
-    private String lastModifiedBy;
+    @Field("created_by")
+    private String createdBy;
+
+    @Field("modified_by")
+    private String modifiedBy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
@@ -118,15 +118,7 @@ public class Slide implements Serializable {
         this.photoContentType = photoContentType;
     }
 
-    public String getPhotoFile() {
-		return photoFile;
-	}
-
-	public void setPhotoFile(String photoFile) {
-		this.photoFile = photoFile;
-	}
-
-	public ZonedDateTime getCreatedDate() {
+    public ZonedDateTime getCreatedDate() {
         return createdDate;
     }
 
@@ -139,30 +131,43 @@ public class Slide implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public ZonedDateTime getLastModified() {
-        return lastModified;
+    public ZonedDateTime getModifiedDate() {
+        return modifiedDate;
     }
 
-    public Slide lastModified(ZonedDateTime lastModified) {
-        this.lastModified = lastModified;
+    public Slide modifiedDate(ZonedDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
         return this;
     }
 
-    public void setLastModified(ZonedDateTime lastModified) {
-        this.lastModified = lastModified;
+    public void setModifiedDate(ZonedDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public Slide lastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public Slide createdBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public Slide modifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+        return this;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -196,8 +201,9 @@ public class Slide implements Serializable {
             ", photo='" + getPhoto() + "'" +
             ", photoContentType='" + photoContentType + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
-            ", lastModified='" + getLastModified() + "'" +
-            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
+            ", modifiedDate='" + getModifiedDate() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", modifiedBy='" + getModifiedBy() + "'" +
             "}";
     }
 }

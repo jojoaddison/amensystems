@@ -6,13 +6,10 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { News } from './news.model';
 import { NewsService } from './news.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Slide } from '../slide';
 
 @Component({
     selector: 'jhi-news',
-    templateUrl: './news.component.html',
-    styleUrls: ['../entities.component.css']
+    templateUrl: './news.component.html'
 })
 export class NewsComponent implements OnInit, OnDestroy {
 
@@ -38,8 +35,7 @@ currentAccount: any;
         private principal: Principal,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private eventManager: JhiEventManager,
-        private sanitizer: DomSanitizer
+        private eventManager: JhiEventManager
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -48,10 +44,6 @@ currentAccount: any;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
         });
-    }
-
-    isAuthenticated() {
-        return this.principal.isAuthenticated();
     }
 
     loadAll() {
@@ -121,16 +113,6 @@ currentAccount: any;
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.news = data;
-        /**
-        if (data && data.length > 0 ) {
-            data.forEach((element: News) => {
-                const content = this.sanitizer.bypassSecurityTrustHtml(element.content);
-                const item: News = element;
-                // item.content = content.toString();
-                this.news.push(item);
-            });
-        }
-         */
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);

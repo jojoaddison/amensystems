@@ -16,8 +16,6 @@ export class SlideService {
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
     create(slide: Slide): Observable<Slide> {
-        // slide.createdDate = new Date();
-        // slide.lastModified = new Date();
         const copy = this.convert(slide);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
@@ -26,7 +24,6 @@ export class SlideService {
     }
 
     update(slide: Slide): Observable<Slide> {
-        // slide.lastModified = new Date();
         const copy = this.convert(slide);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
@@ -67,8 +64,8 @@ export class SlideService {
         const entity: Slide = Object.assign(new Slide(), json);
         entity.createdDate = this.dateUtils
             .convertDateTimeFromServer(json.createdDate);
-        entity.lastModified = this.dateUtils
-            .convertDateTimeFromServer(json.lastModified);
+        entity.modifiedDate = this.dateUtils
+            .convertDateTimeFromServer(json.modifiedDate);
         return entity;
     }
 
@@ -80,7 +77,7 @@ export class SlideService {
 
         copy.createdDate = this.dateUtils.toDate(slide.createdDate);
 
-        copy.lastModified = this.dateUtils.toDate(slide.lastModified);
+        copy.modifiedDate = this.dateUtils.toDate(slide.modifiedDate);
         return copy;
     }
 }

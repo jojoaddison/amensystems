@@ -9,27 +9,17 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { News } from './news.model';
 import { NewsPopupService } from './news-popup.service';
 import { NewsService } from './news.service';
-import { Tile } from '../../widgets';
-import { SlideService, Slide } from '../slide';
-import { ResponseWrapper } from '../../shared';
-import { LocalStorage } from 'ng2-webstorage';
 
 @Component({
     selector: 'jhi-news-dialog',
-    templateUrl: './news-dialog.component.html',
-    styleUrls: ['../entities.component.css']
+    templateUrl: './news-dialog.component.html'
 })
 export class NewsDialogComponent implements OnInit {
 
     news: News;
-    content: String;
     isSaving: boolean;
-    title = 'Slides';
-    @LocalStorage() tiles: Tile[];
-    @LocalStorage() slides: Slide[];
 
     constructor(
-        private slideService: SlideService,
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private newsService: NewsService,
@@ -39,33 +29,10 @@ export class NewsDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-
-        if (typeof (this.news.slides) === 'undefined' || this.news.slides === null) {
-            this.news.slides = [];
-        }
-        console.log(this.news);
-
-        this.slideService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.slides = res.json;
-                this.tiles = [];
-                this.slides.forEach((slide) => {
-                    this.tiles.push(new Tile(slide.id, slide.title, slide.description, slide.url, this.slideSelected(slide)));
-                });
-                console.log(this.tiles);
-                console.log(this.slides);
-            },
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-
     }
 
     clear() {
         this.activeModal.dismiss('cancel');
-    }
-
-    setContentChanged(data: string): void {
-        this.news.content = data;
     }
 
     save() {
@@ -77,25 +44,6 @@ export class NewsDialogComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.newsService.create(this.news));
         }
-    }
-
-    private slideSelected(slide: Slide): boolean {
-        const index = this.news.slides.findIndex((element) => element.id === slide.id);
-         return index > -1;
-     }
-    public onTileSelected(tile: Tile) {
-        const slide = this.findSlideById(tile.id);
-        if (tile.selected) {
-            this.news.slides.push(slide);
-        } else {
-            const index = this.news.slides.findIndex((element) => element.id === slide.id);
-            this.news.slides.splice(index, 1);
-        }
-    }
-
-    private findSlideById(id: string): Slide {
-        const slide = this.slides.find((element) => element.id === id);
-        return slide;
     }
 
     private subscribeToSaveResponse(result: Observable<News>) {

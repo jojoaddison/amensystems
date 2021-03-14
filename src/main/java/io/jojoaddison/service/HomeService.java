@@ -1,7 +1,6 @@
 package io.jojoaddison.service;
 
 import io.jojoaddison.domain.Home;
-import io.jojoaddison.domain.enumeration.StateType;
 import io.jojoaddison.repository.HomeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,9 +62,5 @@ public class HomeService {
     public void delete(String id) {
         log.debug("Request to delete Home : {}", id);
         homeRepository.delete(id);
-    }
-
-    public Home findByState(StateType state) {
-        return homeRepository.findByState(state);
     }
 }

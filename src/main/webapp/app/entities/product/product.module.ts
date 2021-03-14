@@ -14,7 +14,6 @@ import {
     productRoute,
     productPopupRoute,
 } from './';
-import { WidgetsModule } from '../../widgets/widgets.module';
 
 const ENTITY_STATES = [
     ...productRoute,
@@ -24,7 +23,6 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         AmensystemSharedModule,
-        WidgetsModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

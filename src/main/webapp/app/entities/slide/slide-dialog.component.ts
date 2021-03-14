@@ -56,12 +56,9 @@ export class SlideDialogComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.slide.id !== undefined) {
-            this.slide.lastModified = (new Date()).toString();
             this.subscribeToSaveResponse(
                 this.slideService.update(this.slide));
         } else {
-            this.slide.createdDate = (new Date()).toString();
-            this.slide.lastModified = (new Date()).toString();
             this.subscribeToSaveResponse(
                 this.slideService.create(this.slide));
         }

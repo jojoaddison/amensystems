@@ -1,24 +1,22 @@
 {
     "global": {
-        "title": "Amen Supermarket!",
+        "title": "Amensystem",
         "browsehappy": "Sie benutzen einen <strong>veralteten</strong> Browser. Bitte <a href=\"http://browsehappy.com/?locale=de/\">aktualisieren Sie Ihren Browser</a>, um die Benutzerfreundlichkeit zu erhöhen.",
         "menu": {
             "home": "Startseite",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Dashboard",
-                "slide": "Slides verwalten",
-                "news": "News verwalten",
-                "category": "Category verwalten",
-                "product": "Product verwalten",
-                "digitalAsset": "Digital Asset",
-                "slideShow": "Slide Show",
+                "main": "Entitäten",
                 "blog": "Blog",
+                "category": "Category",
+                "digitalAsset": "Digital Asset",
                 "home": "Home",
+                "news": "News",
+                "product": "Product",
+                "slide": "Slide",
+                "slideShow": "Slide Show",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
-            "news": "Nachrichten",
-            "products": "Produkte",
             "account": {
                 "main": "Zugang",
                 "settings": "Einstellungen",
@@ -89,10 +87,10 @@
             }
         },
         "field": {
-            "id": "ID"
+            "id" : "ID"
         },
         "ribbon": {
-            "dev": "Development"
+            "dev":"Development"
         },
         "item-count": "Ergebnis {{first}} - {{second}} von {{total}} Elemente."
     },
@@ -104,15 +102,9 @@
             "cancel": "Abbrechen",
             "delete": "Löschen",
             "edit": "Bearbeiten",
-            "open": "Öffnen",
+            "open": "Open",
             "save": "Speichern",
-            "view": "Details",
-            "create": "Erstellen",
-            "read": "Lesen",
-            "update": "Bearbeiten",
-            "forward": "Weiter",
-            "next": "Nächste",
-            "add": "Hinzufügen"
+            "view": "Details"
         },
         "detail": {
             "field": "Feld",

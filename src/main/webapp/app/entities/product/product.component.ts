@@ -6,9 +6,6 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'n
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { Category } from '../category';
-import { CategoryService } from '../category/category.service';
-import { Tile } from '../../widgets';
 
 @Component({
     selector: 'jhi-product',
@@ -16,7 +13,6 @@ import { Tile } from '../../widgets';
 })
 export class ProductComponent implements OnInit, OnDestroy {
 
-    categories: any[];
     products: Product[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -34,10 +30,8 @@ export class ProductComponent implements OnInit, OnDestroy {
         private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
-        private principal: Principal,
-        private categoryService: CategoryService
+        private principal: Principal
     ) {
-        this.categories = [];
         this.products = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 0;
@@ -49,23 +43,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.categoryService.query({}).subscribe((res) => {
-            const categories = res.json;
-            this.productService.getProductsGroupedByCategory().subscribe((productCategories) => {
-                console.log(productCategories);
-                const keys = Object.keys(productCategories);
-                keys.forEach((key) => {
-                    const category = categories.find((cat) => cat.name === key);
-                    category.products = productCategories[key];
-                    this.categories.push(category);
-                });
-                console.log(this.categories);
-            });
-        });
         this.productService.query({
-            page: this.page - 1,
+            page: this.page,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe((res) => this.onSuccess, (error) => this.onError);
+            sort: this.sort()
+        }).subscribe(
+            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
     }
 
     reset() {
@@ -113,10 +98,6 @@ export class ProductComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    public onProductSelected(tile: Tile) {
-        console.log(tile);
-    }
-
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
@@ -127,9 +108,5 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
-    }
-
-    public isAuthenticated() {
-        return this.principal.isAuthenticated();
     }
 }

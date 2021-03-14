@@ -14,10 +14,7 @@ import {
     categoryRoute,
     categoryPopupRoute,
     CategoryResolvePagingParams,
-    CategoryViewComponent,
-    TinyEditorComponent
 } from './';
-import { WidgetsModule } from '../../widgets/widgets.module';
 
 const ENTITY_STATES = [
     ...categoryRoute,
@@ -27,7 +24,6 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         AmensystemSharedModule,
-        WidgetsModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
@@ -37,8 +33,6 @@ const ENTITY_STATES = [
         CategoryDeleteDialogComponent,
         CategoryPopupComponent,
         CategoryDeletePopupComponent,
-        TinyEditorComponent,
-        CategoryViewComponent
     ],
     entryComponents: [
         CategoryComponent,
@@ -46,7 +40,6 @@ const ENTITY_STATES = [
         CategoryPopupComponent,
         CategoryDeleteDialogComponent,
         CategoryDeletePopupComponent,
-        CategoryViewComponent
     ],
     providers: [
         CategoryService,

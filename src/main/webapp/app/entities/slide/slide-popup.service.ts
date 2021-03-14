@@ -30,8 +30,8 @@ export class SlidePopupService {
                 this.slideService.find(id).subscribe((slide) => {
                     slide.createdDate = this.datePipe
                         .transform(slide.createdDate, 'yyyy-MM-ddTHH:mm:ss');
-                    slide.lastModified = this.datePipe
-                        .transform(slide.lastModified, 'yyyy-MM-ddTHH:mm:ss');
+                    slide.modifiedDate = this.datePipe
+                        .transform(slide.modifiedDate, 'yyyy-MM-ddTHH:mm:ss');
                     this.ngbModalRef = this.slideModalRef(component, slide);
                     resolve(this.ngbModalRef);
                 });

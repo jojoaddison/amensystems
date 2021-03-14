@@ -69,7 +69,7 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: baa709d4536bab0475d4950b8973fd6e4a7a4064
+                secret: MmVkMTJiMzYzNDY0NTAxMDYyOGZlMTlmM2JlMDM0ZDEyZjRhMjYyZGMwMTY5YzE5MTM2NGZiNDVkZjY4ZGUwYTRjMzYwNmU4Y2Q4NDYwOGMxYjkxYTVkNmQ3NDllNjEwNTc0OTc0MjgyYzM5YjRmZGYzOGY5OTQ1ZDEzMDZmZDA=
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
@@ -107,7 +107,3 @@ jhipster:
 # ===================================================================
 
 application:
-
-content-directory: /var/www/vhosts/amen-supermarket.at/httpdocs/content
-data-directory: /var/www/vhosts/amen-supermarket.at/httpdocs/data
-

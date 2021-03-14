@@ -4,7 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import io.jojoaddison.domain.Product;
 
 import io.jojoaddison.repository.ProductRepository;
-import io.jojoaddison.security.SecurityUtils;
 import io.jojoaddison.web.rest.errors.BadRequestAlertException;
 import io.jojoaddison.web.rest.util.HeaderUtil;
 import io.jojoaddison.web.rest.util.PaginationUtil;
@@ -22,11 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Product.
@@ -59,9 +55,6 @@ public class ProductResource {
         if (product.getId() != null) {
             throw new BadRequestAlertException("A new product cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        product.setCreatedDate(ZonedDateTime.now());
-        product.setModifiedDate(ZonedDateTime.now());
-        product.setLastModifiedBy(SecurityUtils.getCurrentUserLogin());
         Product result = productRepository.save(product);
         return ResponseEntity.created(new URI("/api/products/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -84,8 +77,6 @@ public class ProductResource {
         if (product.getId() == null) {
             return createProduct(product);
         }
-        product.setModifiedDate(ZonedDateTime.now());
-        product.setLastModifiedBy(SecurityUtils.getCurrentUserLogin());
         Product result = productRepository.save(product);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, product.getId().toString()))
@@ -107,21 +98,6 @@ public class ProductResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-
-    /**
-     * GET  /products : get all the products.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of products in body
-     */
-    @GetMapping("/products/grouped-by-category")
-    @Timed
-    public ResponseEntity<Map<String, List<Product>>> getAllProductsGroupedByCategory() {
-        log.debug("REST request to get a page of Products");
-        List<Product> data = productRepository.findAll();
-        Map<String, List<Product>> group = data.stream().collect(Collectors.groupingBy(Product::getCategory));
-        return new ResponseEntity<Map<String, List<Product>>>(group, HttpStatus.OK);
-    }
-
     /**
      * GET  /products/:id : get the "id" product.
      *
@@ -133,20 +109,6 @@ public class ProductResource {
     public ResponseEntity<Product> getProduct(@PathVariable String id) {
         log.debug("REST request to get Product : {}", id);
         Product product = productRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(product));
-    }
-
-    /**
-     * GET  /products/:id : get the "id" product.
-     *
-     * @param category the id of the product to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the product, or with status 404 (Not Found)
-     */
-    @GetMapping("/products/by-category/{category}")
-    @Timed
-    public ResponseEntity<List<Product>> getProductCategory(@PathVariable String category) {
-        log.debug("REST request to get Product by category : {}", category);
-        List<Product> product = productRepository.findByCategory(category);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(product));
     }
 

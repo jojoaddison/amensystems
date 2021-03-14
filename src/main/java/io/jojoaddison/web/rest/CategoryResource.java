@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Category.
@@ -100,19 +98,6 @@ public class CategoryResource {
     }
 
     /**
-     * GET  /categories : get all the categories.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of categories in body
-     */
-    @GetMapping("/categories/list")
-    @Timed
-    public ResponseEntity<List<String>> getCategories() {
-        log.debug("REST request to get list of Categories");
-        List<String> categories = categoryService.findAll().stream().map(Category::getName).collect(Collectors.toList());
-        return new ResponseEntity<>(categories, null, HttpStatus.OK);
-    }
-
-    /**
      * GET  /categories/:id : get the "id" category.
      *
      * @param id the id of the category to retrieve
@@ -123,21 +108,6 @@ public class CategoryResource {
     public ResponseEntity<Category> getCategory(@PathVariable String id) {
         log.debug("REST request to get Category : {}", id);
         Category category = categoryService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
-    }
-
-
-    /**
-     * GET  /categories/by-name/:name : get the "name" category.
-     *
-     * @param name the name of the category to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the category, or with status 404 (Not Found)
-     */
-    @GetMapping("/categories/by-name/{name}")
-    @Timed
-    public ResponseEntity<Category> getCategoryByName(@PathVariable String name) {
-        log.debug("REST request to get Category by Name: {}", name);
-        Category category = categoryService.findByName(name);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
     }
 

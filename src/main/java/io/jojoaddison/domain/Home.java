@@ -5,9 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import io.jojoaddison.domain.enumeration.StateType;
 
@@ -21,17 +19,14 @@ public class Home implements Serializable {
     @Id
     private String id;
 
-    @Field("name")
-    private String name;
-
     @Field("slides")
-    private Set<Slide> slides = new HashSet<>();
+    private String slides;
 
     @Field("advert")
-    private Set<Product> advert = new HashSet<>();
+    private String advert;
 
     @Field("category")
-    private Set<Category> category = new HashSet<>();
+    private String category;
 
     @Field("state")
     private StateType state;
@@ -60,55 +55,42 @@ public class Home implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Home name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Slide> getSlides() {
+    public String getSlides() {
         return slides;
     }
 
-    public Home slides(Set<Slide> slides) {
+    public Home slides(String slides) {
         this.slides = slides;
         return this;
     }
 
-    public void setSlides(Set<Slide> slides) {
+    public void setSlides(String slides) {
         this.slides = slides;
     }
 
-    public Set<Product> getAdvert() {
+    public String getAdvert() {
         return advert;
     }
 
-    public Home advert(Set<Product> advert) {
+    public Home advert(String advert) {
         this.advert = advert;
         return this;
     }
 
-    public void setAdvert(Set<Product> advert) {
+    public void setAdvert(String advert) {
         this.advert = advert;
     }
 
-    public Set<Category> getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public Home category(Set<Category> category) {
+    public Home category(String category) {
         this.category = category;
         return this;
     }
 
-    public void setCategory(Set<Category> category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
