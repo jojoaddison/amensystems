@@ -4,13 +4,15 @@ import io.jojoaddison.domain.Category;
 import io.jojoaddison.repository.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 /**
- * Service Implementation for managing Category.
+ * Service Implementation for managing {@link Category}.
  */
 @Service
 public class CategoryService {
@@ -26,8 +28,8 @@ public class CategoryService {
     /**
      * Save a category.
      *
-     * @param category the entity to save
-     * @return the persisted entity
+     * @param category the entity to save.
+     * @return the persisted entity.
      */
     public Category save(Category category) {
         log.debug("Request to save Category : {}", category);
@@ -35,34 +37,35 @@ public class CategoryService {
     }
 
     /**
-     *  Get all the categories.
+     * Get all the categories.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     public Page<Category> findAll(Pageable pageable) {
         log.debug("Request to get all Categories");
         return categoryRepository.findAll(pageable);
     }
 
+
     /**
-     *  Get one category by id.
+     * Get one category by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
-    public Category findOne(String id) {
+    public Optional<Category> findOne(String id) {
         log.debug("Request to get Category : {}", id);
-        return categoryRepository.findOne(id);
+        return categoryRepository.findById(id);
     }
 
     /**
-     *  Delete the  category by id.
+     * Delete the category by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(String id) {
         log.debug("Request to delete Category : {}", id);
-        categoryRepository.delete(id);
+        categoryRepository.deleteById(id);
     }
 }

@@ -1,61 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { JhiDataUtils } from 'ng-jhipster';
 
-import { Blog } from './blog.model';
-import { BlogService } from './blog.service';
+import { IBlog } from 'app/shared/model/blog.model';
 
 @Component({
-    selector: 'jhi-blog-detail',
-    templateUrl: './blog-detail.component.html'
+  selector: 'jhi-blog-detail',
+  templateUrl: './blog-detail.component.html',
 })
-export class BlogDetailComponent implements OnInit, OnDestroy {
+export class BlogDetailComponent implements OnInit {
+  blog: IBlog | null = null;
 
-    blog: Blog;
-    private subscription: Subscription;
-    private eventSubscriber: Subscription;
+  constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
-    constructor(
-        private eventManager: JhiEventManager,
-        private dataUtils: JhiDataUtils,
-        private blogService: BlogService,
-        private route: ActivatedRoute
-    ) {
-    }
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ blog }) => (this.blog = blog));
+  }
 
-    ngOnInit() {
-        this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
-        });
-        this.registerChangeInBlogs();
-    }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
 
-    load(id) {
-        this.blogService.find(id).subscribe((blog) => {
-            this.blog = blog;
-        });
-    }
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  openFile(contentType = '', base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-    previousState() {
-        window.history.back();
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
-    registerChangeInBlogs() {
-        this.eventSubscriber = this.eventManager.subscribe(
-            'blogListModification',
-            (response) => this.load(this.blog.id)
-        );
-    }
+  previousState(): void {
+    window.history.back();
+  }
 }

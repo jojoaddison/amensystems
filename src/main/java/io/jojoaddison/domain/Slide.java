@@ -3,9 +3,9 @@ package io.jojoaddison.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 /**
  * A Slide.
@@ -14,6 +14,7 @@ import java.util.Objects;
 public class Slide implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     private String id;
 
@@ -44,7 +45,7 @@ public class Slide implements Serializable {
     @Field("modified_by")
     private String modifiedBy;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
         return id;
     }
@@ -169,28 +170,25 @@ public class Slide implements Serializable {
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Slide)) {
             return false;
         }
-        Slide slide = (Slide) o;
-        if (slide.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), slide.getId());
+        return id != null && id.equals(((Slide) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Slide{" +
@@ -199,7 +197,7 @@ public class Slide implements Serializable {
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
             ", photo='" + getPhoto() + "'" +
-            ", photoContentType='" + photoContentType + "'" +
+            ", photoContentType='" + getPhotoContentType() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", modifiedDate='" + getModifiedDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

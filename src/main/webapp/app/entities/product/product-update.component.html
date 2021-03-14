@@ -1,0 +1,88 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-product-heading" jhiTranslate="amensystemApp.product.home.createOrEditLabel">Create or edit a Product</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.quantity" for="field_quantity">Quantity</label>
+                    <input type="text" class="form-control" name="quantity" id="field_quantity"
+                           formControlName="quantity"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.price" for="field_price">Price</label>
+                    <input type="number" class="form-control" name="price" id="field_price"
+                           formControlName="price"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.photo" for="field_photo">Photo</label>
+                    <div>
+                        <img [src]="'data:' + editForm.get('photoContentType')!.value + ';base64,' + editForm.get('photo')!.value" style="max-height: 100px;" *ngIf="editForm.get('photo')!.value" alt="product image"/>
+                        <div *ngIf="editForm.get('photo')!.value" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{ editForm.get('photoContentType')!.value }}, {{ byteSize(editForm.get('photo')!.value) }}</span>
+                            <button type="button" (click)="clearInputImage('photo', 'photoContentType', 'file_photo')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon icon="times"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_photo" (change)="setFileData($event, 'photo', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="photo" id="field_photo"
+                           formControlName="photo"/>
+                    <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+                           formControlName="photoContentType" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.category" for="field_category">Category</label>
+                    <input type="text" class="form-control" name="category" id="field_category"
+                           formControlName="category"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.createdDate" for="field_createdDate">Created Date</label>
+                    <div class="d-flex">
+                        <input id="field_createdDate" type="datetime-local" class="form-control" name="createdDate" formControlName="createdDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.modifiedDate" for="field_modifiedDate">Modified Date</label>
+                    <div class="d-flex">
+                        <input id="field_modifiedDate" type="datetime-local" class="form-control" name="modifiedDate" formControlName="modifiedDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="amensystemApp.product.lastModifiedBy" for="field_lastModifiedBy">Last Modified By</label>
+                    <input type="text" class="form-control" name="lastModifiedBy" id="field_lastModifiedBy"
+                           formControlName="lastModifiedBy"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

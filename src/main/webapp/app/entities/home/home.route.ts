@@ -1,63 +1,83 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
-import { UserRouteAccessService } from '../../shared';
-import { JhiPaginationUtil } from 'ng-jhipster';
-
+import { Authority } from 'app/shared/constants/authority.constants';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { IHome, Home } from 'app/shared/model/home.model';
+import { HomeService } from './home.service';
 import { HomeComponent } from './home.component';
 import { HomeDetailComponent } from './home-detail.component';
-import { HomePopupComponent } from './home-dialog.component';
-import { HomeDeletePopupComponent } from './home-delete-dialog.component';
+import { HomeUpdateComponent } from './home-update.component';
+
+@Injectable({ providedIn: 'root' })
+export class HomeResolve implements Resolve<IHome> {
+  constructor(private service: HomeService, private router: Router) {}
+
+  resolve(route: ActivatedRouteSnapshot): Observable<IHome> | Observable<never> {
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        flatMap((home: HttpResponse<Home>) => {
+          if (home.body) {
+            return of(home.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
+    }
+    return of(new Home());
+  }
+}
 
 export const homeRoute: Routes = [
-    {
-        path: 'home',
-        component: HomeComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.home.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }, {
-        path: 'home/:id',
-        component: HomeDetailComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.home.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }
-];
-
-export const homePopupRoute: Routes = [
-    {
-        path: 'home-new',
-        component: HomePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.home.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
+  {
+    path: '',
+    component: HomeComponent,
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'amensystemApp.home.home.title',
     },
-    {
-        path: 'home/:id/edit',
-        component: HomePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.home.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/view',
+    component: HomeDetailComponent,
+    resolve: {
+      home: HomeResolve,
     },
-    {
-        path: 'home/:id/delete',
-        component: HomeDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'amensystemApp.home.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    }
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'amensystemApp.home.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new',
+    component: HomeUpdateComponent,
+    resolve: {
+      home: HomeResolve,
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'amensystemApp.home.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/edit',
+    component: HomeUpdateComponent,
+    resolve: {
+      home: HomeResolve,
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'amensystemApp.home.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
 ];

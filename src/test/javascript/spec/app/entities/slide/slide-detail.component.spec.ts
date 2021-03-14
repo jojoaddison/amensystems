@@ -1,61 +1,69 @@
-/* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { of } from 'rxjs';
+import { JhiDataUtils } from 'ng-jhipster';
+
 import { AmensystemTestModule } from '../../../test.module';
-import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { SlideDetailComponent } from '../../../../../../main/webapp/app/entities/slide/slide-detail.component';
-import { SlideService } from '../../../../../../main/webapp/app/entities/slide/slide.service';
-import { Slide } from '../../../../../../main/webapp/app/entities/slide/slide.model';
+import { SlideDetailComponent } from 'app/entities/slide/slide-detail.component';
+import { Slide } from 'app/shared/model/slide.model';
 
 describe('Component Tests', () => {
+  describe('Slide Management Detail Component', () => {
+    let comp: SlideDetailComponent;
+    let fixture: ComponentFixture<SlideDetailComponent>;
+    let dataUtils: JhiDataUtils;
+    const route = ({ data: of({ slide: new Slide('123') }) } as any) as ActivatedRoute;
 
-    describe('Slide Management Detail Component', () => {
-        let comp: SlideDetailComponent;
-        let fixture: ComponentFixture<SlideDetailComponent>;
-        let service: SlideService;
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [AmensystemTestModule],
-                declarations: [SlideDetailComponent],
-                providers: [
-                    JhiDateUtils,
-                    JhiDataUtils,
-                    DatePipe,
-                    {
-                        provide: ActivatedRoute,
-                        useValue: new MockActivatedRoute({id: 123})
-                    },
-                    SlideService,
-                    JhiEventManager
-                ]
-            }).overrideTemplate(SlideDetailComponent, '')
-            .compileComponents();
-        }));
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(SlideDetailComponent);
-            comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(SlideService);
-        });
-
-        describe('OnInit', () => {
-            it('Should call load all on init', () => {
-            // GIVEN
-
-            spyOn(service, 'find').and.returnValue(Observable.of(new Slide('aaa')));
-
-            // WHEN
-            comp.ngOnInit();
-
-            // THEN
-            expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.slide).toEqual(jasmine.objectContaining({id: 'aaa'}));
-            });
-        });
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [AmensystemTestModule],
+        declarations: [SlideDetailComponent],
+        providers: [{ provide: ActivatedRoute, useValue: route }],
+      })
+        .overrideTemplate(SlideDetailComponent, '')
+        .compileComponents();
+      fixture = TestBed.createComponent(SlideDetailComponent);
+      comp = fixture.componentInstance;
+      dataUtils = fixture.debugElement.injector.get(JhiDataUtils);
     });
 
+    describe('OnInit', () => {
+      it('Should load slide on init', () => {
+        // WHEN
+        comp.ngOnInit();
+
+        // THEN
+        expect(comp.slide).toEqual(jasmine.objectContaining({ id: '123' }));
+      });
+    });
+
+    describe('byteSize', () => {
+      it('Should call byteSize from JhiDataUtils', () => {
+        // GIVEN
+        spyOn(dataUtils, 'byteSize');
+        const fakeBase64 = 'fake base64';
+
+        // WHEN
+        comp.byteSize(fakeBase64);
+
+        // THEN
+        expect(dataUtils.byteSize).toBeCalledWith(fakeBase64);
+      });
+    });
+
+    describe('openFile', () => {
+      it('Should call openFile from JhiDataUtils', () => {
+        // GIVEN
+        spyOn(dataUtils, 'openFile');
+        const fakeContentType = 'fake content type';
+        const fakeBase64 = 'fake base64';
+
+        // WHEN
+        comp.openFile(fakeContentType, fakeBase64);
+
+        // THEN
+        expect(dataUtils.openFile).toBeCalledWith(fakeContentType, fakeBase64);
+      });
+    });
+  });
 });

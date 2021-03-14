@@ -1,66 +1,62 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Slide } from './slide.model';
+import { ISlide } from 'app/shared/model/slide.model';
 import { SlideService } from './slide.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { SlideDeleteDialogComponent } from './slide-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-slide',
-    templateUrl: './slide.component.html'
+  selector: 'jhi-slide',
+  templateUrl: './slide.component.html',
 })
 export class SlideComponent implements OnInit, OnDestroy {
-slides: Slide[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+  slides?: ISlide[];
+  eventSubscriber?: Subscription;
 
-    constructor(
-        private slideService: SlideService,
-        private jhiAlertService: JhiAlertService,
-        private dataUtils: JhiDataUtils,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
-    }
+  constructor(
+    protected slideService: SlideService,
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
+  ) {}
 
-    loadAll() {
-        this.slideService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.slides = res.json;
-            },
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-    }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInSlides();
-    }
+  loadAll(): void {
+    this.slideService.query().subscribe((res: HttpResponse<ISlide[]>) => (this.slides = res.body || []));
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInSlides();
+  }
 
-    trackId(index: number, item: Slide) {
-        return item.id;
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
+  }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  trackId(index: number, item: ISlide): string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-    registerChangeInSlides() {
-        this.eventSubscriber = this.eventManager.subscribe('slideListModification', (response) => this.loadAll());
-    }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
 
-    private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
-    }
+  openFile(contentType = '', base64String: string): void {
+    return this.dataUtils.openFile(contentType, base64String);
+  }
+
+  registerChangeInSlides(): void {
+    this.eventSubscriber = this.eventManager.subscribe('slideListModification', () => this.loadAll());
+  }
+
+  delete(slide: ISlide): void {
+    const modalRef = this.modalService.open(SlideDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.slide = slide;
+  }
 }

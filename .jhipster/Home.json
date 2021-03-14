@@ -1,48 +1,48 @@
 {
-    "fluentMethods": true,
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "slides",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "advert",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "category",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "state",
-            "fieldType": "StateType",
-            "fieldValues": "CURRENT,UNPUBLISH,PUBLISH"
-        },
-        {
-            "fieldName": "version",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "createdBy",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "createdDate",
-            "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "modifiedBy",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "modifiedDate",
-            "fieldType": "ZonedDateTime"
-        }
-    ],
-    "dto": "no",
-    "service": "serviceClass",
-    "entityTableName": "home",
-    "jpaMetamodelFiltering": false,
-    "pagination": "no"
+  "fluentMethods": true,
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "slides",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "advert",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "category",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "StateType",
+      "fieldValues": "CURRENT,UNPUBLISH,PUBLISH"
+    },
+    {
+      "fieldName": "version",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "dto": "no",
+  "service": "serviceClass",
+  "entityTableName": "home",
+  "jpaMetamodelFiltering": false,
+  "pagination": "no"
 }

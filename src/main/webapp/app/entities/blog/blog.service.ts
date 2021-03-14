@@ -1,83 +1,76 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { IBlog } from 'app/shared/model/blog.model';
 
-import { Blog } from './blog.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+type EntityResponseType = HttpResponse<IBlog>;
+type EntityArrayResponseType = HttpResponse<IBlog[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BlogService {
+  public resourceUrl = SERVER_API_URL + 'api/blogs';
 
-    private resourceUrl = SERVER_API_URL + 'api/blogs';
+  constructor(protected http: HttpClient) {}
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+  create(blog: IBlog): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(blog);
+    return this.http
+      .post<IBlog>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
-    create(blog: Blog): Observable<Blog> {
-        const copy = this.convert(blog);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  update(blog: IBlog): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(blog);
+    return this.http
+      .put<IBlog>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  find(id: string): Observable<EntityResponseType> {
+    return this.http
+      .get<IBlog>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IBlog[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromClient(blog: IBlog): IBlog {
+    const copy: IBlog = Object.assign({}, blog, {
+      createdDate: blog.createdDate && blog.createdDate.isValid() ? blog.createdDate.toJSON() : undefined,
+      modifiedDate: blog.modifiedDate && blog.modifiedDate.isValid() ? blog.modifiedDate.toJSON() : undefined,
+    });
+    return copy;
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.createdDate = res.body.createdDate ? moment(res.body.createdDate) : undefined;
+      res.body.modifiedDate = res.body.modifiedDate ? moment(res.body.modifiedDate) : undefined;
     }
+    return res;
+  }
 
-    update(blog: Blog): Observable<Blog> {
-        const copy = this.convert(blog);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((blog: IBlog) => {
+        blog.createdDate = blog.createdDate ? moment(blog.createdDate) : undefined;
+        blog.modifiedDate = blog.modifiedDate ? moment(blog.modifiedDate) : undefined;
+      });
     }
-
-    find(id: string): Observable<Blog> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
-
-    /**
-     * Convert a returned JSON object to Blog.
-     */
-    private convertItemFromServer(json: any): Blog {
-        const entity: Blog = Object.assign(new Blog(), json);
-        entity.createdDate = this.dateUtils
-            .convertDateTimeFromServer(json.createdDate);
-        entity.modifiedDate = this.dateUtils
-            .convertDateTimeFromServer(json.modifiedDate);
-        return entity;
-    }
-
-    /**
-     * Convert a Blog to a JSON which can be sent to the server.
-     */
-    private convert(blog: Blog): Blog {
-        const copy: Blog = Object.assign({}, blog);
-
-        copy.createdDate = this.dateUtils.toDate(blog.createdDate);
-
-        copy.modifiedDate = this.dateUtils.toDate(blog.modifiedDate);
-        return copy;
-    }
+    return res;
+  }
 }
