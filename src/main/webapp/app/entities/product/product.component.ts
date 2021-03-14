@@ -1,112 +1,114 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { JhiEventManager, JhiParseLinks, JhiDataUtils } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Product } from './product.model';
+import { IProduct } from 'app/shared/model/product.model';
+
+import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ProductService } from './product.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { ProductDeleteDialogComponent } from './product-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-product',
-    templateUrl: './product.component.html'
+  selector: 'jhi-product',
+  templateUrl: './product.component.html',
 })
 export class ProductComponent implements OnInit, OnDestroy {
+  products: IProduct[];
+  eventSubscriber?: Subscription;
+  itemsPerPage: number;
+  links: any;
+  page: number;
+  predicate: string;
+  ascending: boolean;
 
-    products: Product[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
-    itemsPerPage: number;
-    links: any;
-    page: any;
-    predicate: any;
-    queryCount: any;
-    reverse: any;
-    totalItems: number;
+  constructor(
+    protected productService: ProductService,
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal,
+    protected parseLinks: JhiParseLinks
+  ) {
+    this.products = [];
+    this.itemsPerPage = ITEMS_PER_PAGE;
+    this.page = 0;
+    this.links = {
+      last: 0,
+    };
+    this.predicate = 'id';
+    this.ascending = true;
+  }
 
-    constructor(
-        private productService: ProductService,
-        private jhiAlertService: JhiAlertService,
-        private dataUtils: JhiDataUtils,
-        private eventManager: JhiEventManager,
-        private parseLinks: JhiParseLinks,
-        private principal: Principal
-    ) {
-        this.products = [];
-        this.itemsPerPage = ITEMS_PER_PAGE;
-        this.page = 0;
-        this.links = {
-            last: 0
-        };
-        this.predicate = 'id';
-        this.reverse = true;
-    }
+  loadAll(): void {
+    this.productService
+      .query({
+        page: this.page,
+        size: this.itemsPerPage,
+        sort: this.sort(),
+      })
+      .subscribe((res: HttpResponse<IProduct[]>) => this.paginateProducts(res.body, res.headers));
+  }
 
-    loadAll() {
-        this.productService.query({
-            page: this.page,
-            size: this.itemsPerPage,
-            sort: this.sort()
-        }).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-    }
+  reset(): void {
+    this.page = 0;
+    this.products = [];
+    this.loadAll();
+  }
 
-    reset() {
-        this.page = 0;
-        this.products = [];
-        this.loadAll();
-    }
+  loadPage(page: number): void {
+    this.page = page;
+    this.loadAll();
+  }
 
-    loadPage(page) {
-        this.page = page;
-        this.loadAll();
-    }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInProducts();
-    }
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInProducts();
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
+  }
 
-    trackId(index: number, item: Product) {
-        return item.id;
-    }
+  trackId(index: number, item: IProduct): string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-    registerChangeInProducts() {
-        this.eventSubscriber = this.eventManager.subscribe('productListModification', (response) => this.reset());
-    }
+  openFile(contentType = '', base64String: string): void {
+    return this.dataUtils.openFile(contentType, base64String);
+  }
 
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
+  registerChangeInProducts(): void {
+    this.eventSubscriber = this.eventManager.subscribe('productListModification', () => this.reset());
+  }
 
-    private onSuccess(data, headers) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
-        for (let i = 0; i < data.length; i++) {
-            this.products.push(data[i]);
-        }
-    }
+  delete(product: IProduct): void {
+    const modalRef = this.modalService.open(ProductDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.product = product;
+  }
 
-    private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+  sort(): string[] {
+    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+    if (this.predicate !== 'id') {
+      result.push('id');
     }
+    return result;
+  }
+
+  protected paginateProducts(data: IProduct[] | null, headers: HttpHeaders): void {
+    const headersLink = headers.get('link');
+    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
+    if (data) {
+      for (let i = 0; i < data.length; i++) {
+        this.products.push(data[i]);
+      }
+    }
+  }
 }

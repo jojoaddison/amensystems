@@ -1,61 +1,37 @@
-/* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { of } from 'rxjs';
+
 import { AmensystemTestModule } from '../../../test.module';
-import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { SlideShowDetailComponent } from '../../../../../../main/webapp/app/entities/slide-show/slide-show-detail.component';
-import { SlideShowService } from '../../../../../../main/webapp/app/entities/slide-show/slide-show.service';
-import { SlideShow } from '../../../../../../main/webapp/app/entities/slide-show/slide-show.model';
+import { SlideShowDetailComponent } from 'app/entities/slide-show/slide-show-detail.component';
+import { SlideShow } from 'app/shared/model/slide-show.model';
 
 describe('Component Tests', () => {
+  describe('SlideShow Management Detail Component', () => {
+    let comp: SlideShowDetailComponent;
+    let fixture: ComponentFixture<SlideShowDetailComponent>;
+    const route = ({ data: of({ slideShow: new SlideShow('123') }) } as any) as ActivatedRoute;
 
-    describe('SlideShow Management Detail Component', () => {
-        let comp: SlideShowDetailComponent;
-        let fixture: ComponentFixture<SlideShowDetailComponent>;
-        let service: SlideShowService;
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [AmensystemTestModule],
-                declarations: [SlideShowDetailComponent],
-                providers: [
-                    JhiDateUtils,
-                    JhiDataUtils,
-                    DatePipe,
-                    {
-                        provide: ActivatedRoute,
-                        useValue: new MockActivatedRoute({id: 123})
-                    },
-                    SlideShowService,
-                    JhiEventManager
-                ]
-            }).overrideTemplate(SlideShowDetailComponent, '')
-            .compileComponents();
-        }));
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(SlideShowDetailComponent);
-            comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(SlideShowService);
-        });
-
-        describe('OnInit', () => {
-            it('Should call load all on init', () => {
-            // GIVEN
-
-            spyOn(service, 'find').and.returnValue(Observable.of(new SlideShow('aaa')));
-
-            // WHEN
-            comp.ngOnInit();
-
-            // THEN
-            expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.slideShow).toEqual(jasmine.objectContaining({id: 'aaa'}));
-            });
-        });
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [AmensystemTestModule],
+        declarations: [SlideShowDetailComponent],
+        providers: [{ provide: ActivatedRoute, useValue: route }],
+      })
+        .overrideTemplate(SlideShowDetailComponent, '')
+        .compileComponents();
+      fixture = TestBed.createComponent(SlideShowDetailComponent);
+      comp = fixture.componentInstance;
     });
 
+    describe('OnInit', () => {
+      it('Should load slideShow on init', () => {
+        // WHEN
+        comp.ngOnInit();
+
+        // THEN
+        expect(comp.slideShow).toEqual(jasmine.objectContaining({ id: '123' }));
+      });
+    });
+  });
 });

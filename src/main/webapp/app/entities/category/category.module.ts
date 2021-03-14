@@ -1,51 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AmensystemSharedModule } from '../../shared';
-import {
-    CategoryService,
-    CategoryPopupService,
-    CategoryComponent,
-    CategoryDetailComponent,
-    CategoryDialogComponent,
-    CategoryPopupComponent,
-    CategoryDeletePopupComponent,
-    CategoryDeleteDialogComponent,
-    categoryRoute,
-    categoryPopupRoute,
-    CategoryResolvePagingParams,
-} from './';
-
-const ENTITY_STATES = [
-    ...categoryRoute,
-    ...categoryPopupRoute,
-];
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { CategoryComponent } from './category.component';
+import { CategoryDetailComponent } from './category-detail.component';
+import { CategoryUpdateComponent } from './category-update.component';
+import { CategoryDeleteDialogComponent } from './category-delete-dialog.component';
+import { categoryRoute } from './category.route';
 
 @NgModule({
-    imports: [
-        AmensystemSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
-    ],
-    declarations: [
-        CategoryComponent,
-        CategoryDetailComponent,
-        CategoryDialogComponent,
-        CategoryDeleteDialogComponent,
-        CategoryPopupComponent,
-        CategoryDeletePopupComponent,
-    ],
-    entryComponents: [
-        CategoryComponent,
-        CategoryDialogComponent,
-        CategoryPopupComponent,
-        CategoryDeleteDialogComponent,
-        CategoryDeletePopupComponent,
-    ],
-    providers: [
-        CategoryService,
-        CategoryPopupService,
-        CategoryResolvePagingParams,
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AmensystemSharedModule, RouterModule.forChild(categoryRoute)],
+  declarations: [CategoryComponent, CategoryDetailComponent, CategoryUpdateComponent, CategoryDeleteDialogComponent],
+  entryComponents: [CategoryDeleteDialogComponent],
 })
 export class AmensystemCategoryModule {}

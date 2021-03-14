@@ -1,16 +1,16 @@
 version: '2'
 services:
-    amensystem-mongodb:
-        image: mongo:3.4.8
-        ports:
-            - "27017:27017"
-        command: mongos --configdb amensystem-mongodb-config
-    amensystem-mongodb-node:
-        build:
-            context: .
-            dockerfile: mongodb/MongoDB.Dockerfile
-        command: mongod --replSet rs1 --noprealloc --smallfiles
-    amensystem-mongodb-config:
-        image: mongo:3.4.8
-        container_name: amensystem-mongodb-config
-        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db
+  amensystem-mongodb:
+    image: mongo:4.2.7
+    ports:
+      - '27017:27017'
+    command: mongos --configdb csvr/amensystem-mongodb-config --bind_ip 0.0.0.0
+  amensystem-mongodb-node:
+    build:
+      context: .
+      dockerfile: mongodb/MongoDB.Dockerfile
+    command: mongod --shardsvr --replSet rs1
+  amensystem-mongodb-config:
+    image: mongo:4.2.7
+    container_name: amensystem-mongodb-config
+    command: mongod --configsvr --dbpath /data/db --replSet csvr

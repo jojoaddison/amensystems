@@ -9,11 +9,9 @@ import com.github.mongobee.changeset.ChangeSet;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
- * Creates the initial database setup
+ * Creates the initial database setup.
  */
 @ChangeLog(order = "001")
 public class InitialSetupMigration {

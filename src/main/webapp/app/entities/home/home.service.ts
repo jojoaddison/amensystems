@@ -1,83 +1,76 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { IHome } from 'app/shared/model/home.model';
 
-import { Home } from './home.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+type EntityResponseType = HttpResponse<IHome>;
+type EntityArrayResponseType = HttpResponse<IHome[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class HomeService {
+  public resourceUrl = SERVER_API_URL + 'api/homes';
 
-    private resourceUrl = SERVER_API_URL + 'api/homes';
+  constructor(protected http: HttpClient) {}
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+  create(home: IHome): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(home);
+    return this.http
+      .post<IHome>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
-    create(home: Home): Observable<Home> {
-        const copy = this.convert(home);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  update(home: IHome): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(home);
+    return this.http
+      .put<IHome>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  find(id: string): Observable<EntityResponseType> {
+    return this.http
+      .get<IHome>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IHome[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromClient(home: IHome): IHome {
+    const copy: IHome = Object.assign({}, home, {
+      createdDate: home.createdDate && home.createdDate.isValid() ? home.createdDate.toJSON() : undefined,
+      modifiedDate: home.modifiedDate && home.modifiedDate.isValid() ? home.modifiedDate.toJSON() : undefined,
+    });
+    return copy;
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.createdDate = res.body.createdDate ? moment(res.body.createdDate) : undefined;
+      res.body.modifiedDate = res.body.modifiedDate ? moment(res.body.modifiedDate) : undefined;
     }
+    return res;
+  }
 
-    update(home: Home): Observable<Home> {
-        const copy = this.convert(home);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((home: IHome) => {
+        home.createdDate = home.createdDate ? moment(home.createdDate) : undefined;
+        home.modifiedDate = home.modifiedDate ? moment(home.modifiedDate) : undefined;
+      });
     }
-
-    find(id: string): Observable<Home> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
-
-    /**
-     * Convert a returned JSON object to Home.
-     */
-    private convertItemFromServer(json: any): Home {
-        const entity: Home = Object.assign(new Home(), json);
-        entity.createdDate = this.dateUtils
-            .convertDateTimeFromServer(json.createdDate);
-        entity.modifiedDate = this.dateUtils
-            .convertDateTimeFromServer(json.modifiedDate);
-        return entity;
-    }
-
-    /**
-     * Convert a Home to a JSON which can be sent to the server.
-     */
-    private convert(home: Home): Home {
-        const copy: Home = Object.assign({}, home);
-
-        copy.createdDate = this.dateUtils.toDate(home.createdDate);
-
-        copy.modifiedDate = this.dateUtils.toDate(home.modifiedDate);
-        return copy;
-    }
+    return res;
+  }
 }

@@ -1,74 +1,79 @@
 <div>
-    <h2>
+    <h2 id="page-heading">
         <span jhiTranslate="amensystemApp.slide.home.title">Slides</span>
-        <button class="btn btn-primary float-right jh-create-entity create-slide" [routerLink]="['/', { outlets: { popup: ['slide-new'] } }]">
-            <span class="fa fa-plus"></span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-slide" [routerLink]="['/slide/new']">
+            <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="amensystemApp.slide.home.createLabel">
-            Create new Slide
+            Create a new Slide
             </span>
         </button>
     </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
     <jhi-alert></jhi-alert>
-    <div class="row">
+
+    <div class="alert alert-warning" id="no-result" *ngIf="slides?.length === 0">
+        <span jhiTranslate="amensystemApp.slide.home.notFound">No slides found</span>
     </div>
-    <br/>
-    <div class="table-responsive" *ngIf="slides">
-        <table class="table table-striped">
+
+    <div class="table-responsive" id="entities" *ngIf="slides && slides.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-            <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.url">Url</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.title">Title</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.description">Description</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.photo">Photo</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.createdDate">Created Date</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.modifiedDate">Modified Date</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.createdBy">Created By</span></th>
-            <th><span jhiTranslate="amensystemApp.slide.modifiedBy">Modified By</span></th>
-            <th></th>
-            </tr>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.url">Url</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.title">Title</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.description">Description</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.photo">Photo</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.createdDate">Created Date</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.modifiedDate">Modified Date</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.createdBy">Created By</span></th>
+                    <th scope="col" ><span jhiTranslate="amensystemApp.slide.modifiedBy">Modified By</span></th>
+                    <th scope="col"></th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let slide of slides ;trackBy: trackId">
-                <td><a [routerLink]="['../slide', slide.id ]">{{slide.id}}</a></td>
-                <td>{{slide.url}}</td>
-                <td>{{slide.title}}</td>
-                <td>{{slide.description}}</td>
-                <td>
-                    <a *ngIf="slide.photo" (click)="openFile(slide.photoContentType, slide.photo)">
-                        <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo" style="max-height: 30px;" alt="slide image"/>
-                    </a>
-                    <span *ngIf="slide.photo">{{slide.photoContentType}}, {{byteSize(slide.photo)}}</span>
-                </td>
-                <td>{{slide.createdDate | date:'medium'}}</td>
-                <td>{{slide.modifiedDate | date:'medium'}}</td>
-                <td>{{slide.createdBy}}</td>
-                <td>{{slide.modifiedBy}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../slide', slide.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'slide/'+ slide.id + '/edit'} }]"
-                                replaceUrl="true"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'slide/'+ slide.id + '/delete'} }]"
-                                replaceUrl="true"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                <tr *ngFor="let slide of slides ;trackBy: trackId">
+                    <td><a [routerLink]="['/slide', slide.id, 'view']">{{ slide.id }}</a></td>
+                    <td>{{ slide.url }}</td>
+                    <td>{{ slide.title }}</td>
+                    <td>{{ slide.description }}</td>
+                    <td>
+                        <a *ngIf="slide.photo" (click)="openFile(slide.photoContentType, slide.photo)">
+                            <img [src]="'data:' + slide.photoContentType + ';base64,' + slide.photo" style="max-height: 30px;" alt="slide image"/>
+                        </a>
+                        <span *ngIf="slide.photo">{{ slide.photoContentType }}, {{ byteSize(slide.photo) }}</span>
+                    </td>
+                    <td>{{ slide.createdDate | date:'medium' }}</td>
+                    <td>{{ slide.modifiedDate | date:'medium' }}</td>
+                    <td>{{ slide.createdBy }}</td>
+                    <td>{{ slide.modifiedBy }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/slide', slide.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/slide', slide.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(slide)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

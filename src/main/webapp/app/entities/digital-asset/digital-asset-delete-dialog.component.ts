@@ -1,64 +1,30 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { DigitalAsset } from './digital-asset.model';
-import { DigitalAssetPopupService } from './digital-asset-popup.service';
+import { IDigitalAsset } from 'app/shared/model/digital-asset.model';
 import { DigitalAssetService } from './digital-asset.service';
 
 @Component({
-    selector: 'jhi-digital-asset-delete-dialog',
-    templateUrl: './digital-asset-delete-dialog.component.html'
+  templateUrl: './digital-asset-delete-dialog.component.html',
 })
 export class DigitalAssetDeleteDialogComponent {
+  digitalAsset?: IDigitalAsset;
 
-    digitalAsset: DigitalAsset;
+  constructor(
+    protected digitalAssetService: DigitalAssetService,
+    public activeModal: NgbActiveModal,
+    protected eventManager: JhiEventManager
+  ) {}
 
-    constructor(
-        private digitalAssetService: DigitalAssetService,
-        public activeModal: NgbActiveModal,
-        private eventManager: JhiEventManager
-    ) {
-    }
+  cancel(): void {
+    this.activeModal.dismiss();
+  }
 
-    clear() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    confirmDelete(id: string) {
-        this.digitalAssetService.delete(id).subscribe((response) => {
-            this.eventManager.broadcast({
-                name: 'digitalAssetListModification',
-                content: 'Deleted an digitalAsset'
-            });
-            this.activeModal.dismiss(true);
-        });
-    }
-}
-
-@Component({
-    selector: 'jhi-digital-asset-delete-popup',
-    template: ''
-})
-export class DigitalAssetDeletePopupComponent implements OnInit, OnDestroy {
-
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private digitalAssetPopupService: DigitalAssetPopupService
-    ) {}
-
-    ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            this.digitalAssetPopupService
-                .open(DigitalAssetDeleteDialogComponent as Component, params['id']);
-        });
-    }
-
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
-    }
+  confirmDelete(id: string): void {
+    this.digitalAssetService.delete(id).subscribe(() => {
+      this.eventManager.broadcast('digitalAssetListModification');
+      this.activeModal.close();
+    });
+  }
 }

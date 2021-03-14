@@ -1,83 +1,76 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { IProduct } from 'app/shared/model/product.model';
 
-import { Product } from './product.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+type EntityResponseType = HttpResponse<IProduct>;
+type EntityArrayResponseType = HttpResponse<IProduct[]>;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProductService {
+  public resourceUrl = SERVER_API_URL + 'api/products';
 
-    private resourceUrl = SERVER_API_URL + 'api/products';
+  constructor(protected http: HttpClient) {}
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+  create(product: IProduct): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(product);
+    return this.http
+      .post<IProduct>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
-    create(product: Product): Observable<Product> {
-        const copy = this.convert(product);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  update(product: IProduct): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(product);
+    return this.http
+      .put<IProduct>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  find(id: string): Observable<EntityResponseType> {
+    return this.http
+      .get<IProduct>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IProduct[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromClient(product: IProduct): IProduct {
+    const copy: IProduct = Object.assign({}, product, {
+      createdDate: product.createdDate && product.createdDate.isValid() ? product.createdDate.toJSON() : undefined,
+      modifiedDate: product.modifiedDate && product.modifiedDate.isValid() ? product.modifiedDate.toJSON() : undefined,
+    });
+    return copy;
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.createdDate = res.body.createdDate ? moment(res.body.createdDate) : undefined;
+      res.body.modifiedDate = res.body.modifiedDate ? moment(res.body.modifiedDate) : undefined;
     }
+    return res;
+  }
 
-    update(product: Product): Observable<Product> {
-        const copy = this.convert(product);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((product: IProduct) => {
+        product.createdDate = product.createdDate ? moment(product.createdDate) : undefined;
+        product.modifiedDate = product.modifiedDate ? moment(product.modifiedDate) : undefined;
+      });
     }
-
-    find(id: string): Observable<Product> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
-
-    /**
-     * Convert a returned JSON object to Product.
-     */
-    private convertItemFromServer(json: any): Product {
-        const entity: Product = Object.assign(new Product(), json);
-        entity.createdDate = this.dateUtils
-            .convertDateTimeFromServer(json.createdDate);
-        entity.modifiedDate = this.dateUtils
-            .convertDateTimeFromServer(json.modifiedDate);
-        return entity;
-    }
-
-    /**
-     * Convert a Product to a JSON which can be sent to the server.
-     */
-    private convert(product: Product): Product {
-        const copy: Product = Object.assign({}, product);
-
-        copy.createdDate = this.dateUtils.toDate(product.createdDate);
-
-        copy.modifiedDate = this.dateUtils.toDate(product.modifiedDate);
-        return copy;
-    }
+    return res;
+  }
 }

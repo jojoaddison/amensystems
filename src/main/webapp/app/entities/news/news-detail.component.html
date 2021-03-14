@@ -1,45 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="news">
+            <h2><span jhiTranslate="amensystemApp.news.detail.title">News</span> {{ news.id }}</h2>
 
-<div *ngIf="news">
-    <h2><span jhiTranslate="amensystemApp.news.detail.title">News</span> {{news.id}}</h2>
-    <hr>
-    <jhi-alert-error></jhi-alert-error>
-    <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="amensystemApp.news.title">Title</span></dt>
-        <dd>
-            <span>{{news.title}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.news.content">Content</span></dt>
-        <dd>
-            <span>{{news.content}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.news.slides">Slides</span></dt>
-        <dd>
-            <span>{{news.slides}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.news.createdDate">Created Date</span></dt>
-        <dd>
-            <span>{{news.createdDate | date:'medium'}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.news.modifiedDate">Modified Date</span></dt>
-        <dd>
-            <span>{{news.modifiedDate | date:'medium'}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.news.lastModifiedBy">Last Modified By</span></dt>
-        <dd>
-            <span>{{news.lastModifiedBy}}</span>
-        </dd>
-    </dl>
+            <hr>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
+            <jhi-alert-error></jhi-alert-error>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'news/'+ news.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="amensystemApp.news.title">Title</span></dt>
+                <dd>
+                    <span>{{ news.title }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.news.content">Content</span></dt>
+                <dd>
+                    <span>{{ news.content }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.news.slides">Slides</span></dt>
+                <dd>
+                    <span>{{ news.slides }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.news.createdDate">Created Date</span></dt>
+                <dd>
+                    <span>{{ news.createdDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.news.modifiedDate">Modified Date</span></dt>
+                <dd>
+                    <span>{{ news.modifiedDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.news.lastModifiedBy">Last Modified By</span></dt>
+                <dd>
+                    <span>{{ news.lastModifiedBy }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/news', news.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
 </div>

@@ -18,7 +18,11 @@ import java.io.IOException;
  */
 public class JWTFilter extends GenericFilterBean {
 
-    private TokenProvider tokenProvider;
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    public static final String AUTHORIZATION_TOKEN = "access_token";
+
+    private final TokenProvider tokenProvider;
 
     public JWTFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
@@ -36,12 +40,12 @@ public class JWTFilter extends GenericFilterBean {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private String resolveToken(HttpServletRequest request){
-        String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
+    private String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
+            return bearerToken.substring(7);
         }
-        String jwt = request.getParameter(JWTConfigurer.AUTHORIZATION_TOKEN);
+        String jwt = request.getParameter(AUTHORIZATION_TOKEN);
         if (StringUtils.hasText(jwt)) {
             return jwt;
         }

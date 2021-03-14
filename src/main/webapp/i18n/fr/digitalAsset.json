@@ -1,29 +1,30 @@
 {
-    "amensystemApp": {
-        "digitalAsset" : {
-            "home": {
-                "title": "DigitalAssets",
-                "createLabel": "Créer un nouveau Digital Asset",
-                "createOrEditLabel": "Créer ou éditer un Digital Asset"
-            },
-            "created": "Un nouveau Digital Asset a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Digital Asset avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Digital Asset avec l'identifiant {{ param }} a été supprimé",
-            "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Digital Asset {{ id }} ?"
-            },
-            "detail": {
-                "title": "Digital Asset"
-            },
-            "name": "Name",
-            "description": "Description",
-            "url": "Url",
-            "resource": "Resource",
-            "type": "Type",
-            "createdDate": "Created Date",
-            "modifiedDate": "Modified Date",
-            "createdBy": "Created By",
-            "lastModifiedBy": "Last Modified By"
-        }
+  "amensystemApp": {
+    "digitalAsset": {
+      "home": {
+        "title": "DigitalAssets",
+        "createLabel": "Créer un nouveau Digital Asset",
+        "createOrEditLabel": "Créer ou éditer un Digital Asset",
+        "notFound": "Aucun Digital Asset trouvé"
+      },
+      "created": "Un nouveau Digital Asset a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Digital Asset avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Digital Asset avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Digital Asset {{ id }} ?"
+      },
+      "detail": {
+        "title": "Digital Asset"
+      },
+      "name": "Name",
+      "description": "Description",
+      "url": "Url",
+      "resource": "Resource",
+      "type": "Type",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "lastModifiedBy": "Last Modified By"
     }
+  }
 }

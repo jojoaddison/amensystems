@@ -3,8 +3,8 @@ package io.jojoaddison.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A Category.
@@ -13,6 +13,7 @@ import java.util.Objects;
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     private String id;
 
@@ -34,7 +35,7 @@ public class Category implements Serializable {
     @Field("link")
     private String link;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
         return id;
     }
@@ -120,28 +121,25 @@ public class Category implements Serializable {
     public void setLink(String link) {
         this.link = link;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Category)) {
             return false;
         }
-        Category category = (Category) o;
-        if (category.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), category.getId());
+        return id != null && id.equals(((Category) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Category{" +
@@ -149,7 +147,7 @@ public class Category implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", photo='" + getPhoto() + "'" +
-            ", photoContentType='" + photoContentType + "'" +
+            ", photoContentType='" + getPhotoContentType() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
             ", link='" + getLink() + "'" +
             "}";

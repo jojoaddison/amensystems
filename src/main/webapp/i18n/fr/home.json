@@ -1,29 +1,30 @@
 {
-    "amensystemApp": {
-        "home" : {
-            "home": {
-                "title": "Homes",
-                "createLabel": "Créer un nouveau Home",
-                "createOrEditLabel": "Créer ou éditer un Home"
-            },
-            "created": "Un nouveau Home a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Home avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Home avec l'identifiant {{ param }} a été supprimé",
-            "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Home {{ id }} ?"
-            },
-            "detail": {
-                "title": "Home"
-            },
-            "slides": "Slides",
-            "advert": "Advert",
-            "category": "Category",
-            "state": "State",
-            "version": "Version",
-            "createdBy": "Created By",
-            "createdDate": "Created Date",
-            "modifiedBy": "Modified By",
-            "modifiedDate": "Modified Date"
-        }
+  "amensystemApp": {
+    "home": {
+      "home": {
+        "title": "Homes",
+        "createLabel": "Créer un nouveau Home",
+        "createOrEditLabel": "Créer ou éditer un Home",
+        "notFound": "Aucun Home trouvé"
+      },
+      "created": "Un nouveau Home a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Home avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Home avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Home {{ id }} ?"
+      },
+      "detail": {
+        "title": "Home"
+      },
+      "slides": "Slides",
+      "advert": "Advert",
+      "category": "Category",
+      "state": "State",
+      "version": "Version",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "modifiedBy": "Modified By",
+      "modifiedDate": "Modified Date"
     }
+  }
 }

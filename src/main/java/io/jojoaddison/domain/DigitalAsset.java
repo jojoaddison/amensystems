@@ -3,9 +3,9 @@ package io.jojoaddison.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 /**
  * A DigitalAsset.
@@ -14,6 +14,7 @@ import java.util.Objects;
 public class DigitalAsset implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     private String id;
 
@@ -47,7 +48,7 @@ public class DigitalAsset implements Serializable {
     @Field("last_modified_by")
     private String lastModifiedBy;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
         return id;
     }
@@ -185,28 +186,25 @@ public class DigitalAsset implements Serializable {
     public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DigitalAsset)) {
             return false;
         }
-        DigitalAsset digitalAsset = (DigitalAsset) o;
-        if (digitalAsset.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), digitalAsset.getId());
+        return id != null && id.equals(((DigitalAsset) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "DigitalAsset{" +
@@ -215,7 +213,7 @@ public class DigitalAsset implements Serializable {
             ", description='" + getDescription() + "'" +
             ", url='" + getUrl() + "'" +
             ", resource='" + getResource() + "'" +
-            ", resourceContentType='" + resourceContentType + "'" +
+            ", resourceContentType='" + getResourceContentType() + "'" +
             ", type='" + getType() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", modifiedDate='" + getModifiedDate() + "'" +

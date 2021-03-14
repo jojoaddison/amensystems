@@ -1,32 +1,32 @@
 {
-    "fluentMethods": true,
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "name",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "description",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "photo",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "image"
-        },
-        {
-            "fieldName": "thumbnail",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "link",
-            "fieldType": "String"
-        }
-    ],
-    "dto": "no",
-    "service": "serviceClass",
-    "entityTableName": "category",
-    "jpaMetamodelFiltering": false,
-    "pagination": "pagination"
+  "fluentMethods": true,
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "thumbnail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "link",
+      "fieldType": "String"
+    }
+  ],
+  "dto": "no",
+  "service": "serviceClass",
+  "entityTableName": "category",
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
 }

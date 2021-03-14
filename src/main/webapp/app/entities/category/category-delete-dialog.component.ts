@@ -1,64 +1,26 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Category } from './category.model';
-import { CategoryPopupService } from './category-popup.service';
+import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from './category.service';
 
 @Component({
-    selector: 'jhi-category-delete-dialog',
-    templateUrl: './category-delete-dialog.component.html'
+  templateUrl: './category-delete-dialog.component.html',
 })
 export class CategoryDeleteDialogComponent {
+  category?: ICategory;
 
-    category: Category;
+  constructor(protected categoryService: CategoryService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
 
-    constructor(
-        private categoryService: CategoryService,
-        public activeModal: NgbActiveModal,
-        private eventManager: JhiEventManager
-    ) {
-    }
+  cancel(): void {
+    this.activeModal.dismiss();
+  }
 
-    clear() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    confirmDelete(id: string) {
-        this.categoryService.delete(id).subscribe((response) => {
-            this.eventManager.broadcast({
-                name: 'categoryListModification',
-                content: 'Deleted an category'
-            });
-            this.activeModal.dismiss(true);
-        });
-    }
-}
-
-@Component({
-    selector: 'jhi-category-delete-popup',
-    template: ''
-})
-export class CategoryDeletePopupComponent implements OnInit, OnDestroy {
-
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private categoryPopupService: CategoryPopupService
-    ) {}
-
-    ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            this.categoryPopupService
-                .open(CategoryDeleteDialogComponent as Component, params['id']);
-        });
-    }
-
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
-    }
+  confirmDelete(id: string): void {
+    this.categoryService.delete(id).subscribe(() => {
+      this.eventManager.broadcast('categoryListModification');
+      this.activeModal.close();
+    });
+  }
 }

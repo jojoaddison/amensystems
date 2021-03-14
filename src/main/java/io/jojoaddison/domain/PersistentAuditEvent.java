@@ -10,20 +10,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Persist AuditEvent managed by the Spring Boot actuator
+ * Persist AuditEvent managed by the Spring Boot actuator.
+ *
  * @see org.springframework.boot.actuate.audit.AuditEvent
  */
 @Document(collection = "jhi_persistent_audit_event")
 public class PersistentAuditEvent implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Field("event_id")
     private String id;
 
     @NotNull
     private String principal;
 
+    @Field("event_date")
     private Instant auditEventDate;
+
     @Field("event_type")
     private String auditEventType;
 
@@ -67,5 +71,31 @@ public class PersistentAuditEvent implements Serializable {
 
     public void setData(Map<String, String> data) {
         this.data = data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PersistentAuditEvent)) {
+            return false;
+        }
+        return id != null && id.equals(((PersistentAuditEvent) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "PersistentAuditEvent{" +
+            "principal='" + principal + '\'' +
+            ", auditEventDate=" + auditEventDate +
+            ", auditEventType='" + auditEventType + '\'' +
+            '}';
     }
 }

@@ -1,49 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AmensystemSharedModule } from '../../shared';
-import {
-    HomeService,
-    HomePopupService,
-    HomeComponent,
-    HomeDetailComponent,
-    HomeDialogComponent,
-    HomePopupComponent,
-    HomeDeletePopupComponent,
-    HomeDeleteDialogComponent,
-    homeRoute,
-    homePopupRoute,
-} from './';
-
-const ENTITY_STATES = [
-    ...homeRoute,
-    ...homePopupRoute,
-];
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { HomeComponent } from './home.component';
+import { HomeDetailComponent } from './home-detail.component';
+import { HomeUpdateComponent } from './home-update.component';
+import { HomeDeleteDialogComponent } from './home-delete-dialog.component';
+import { homeRoute } from './home.route';
 
 @NgModule({
-    imports: [
-        AmensystemSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
-    ],
-    declarations: [
-        HomeComponent,
-        HomeDetailComponent,
-        HomeDialogComponent,
-        HomeDeleteDialogComponent,
-        HomePopupComponent,
-        HomeDeletePopupComponent,
-    ],
-    entryComponents: [
-        HomeComponent,
-        HomeDialogComponent,
-        HomePopupComponent,
-        HomeDeleteDialogComponent,
-        HomeDeletePopupComponent,
-    ],
-    providers: [
-        HomeService,
-        HomePopupService,
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AmensystemSharedModule, RouterModule.forChild(homeRoute)],
+  declarations: [HomeComponent, HomeDetailComponent, HomeUpdateComponent, HomeDeleteDialogComponent],
+  entryComponents: [HomeDeleteDialogComponent],
 })
 export class AmensystemHomeModule {}

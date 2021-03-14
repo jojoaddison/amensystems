@@ -1,49 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AmensystemSharedModule } from '../../shared';
-import {
-    ProductService,
-    ProductPopupService,
-    ProductComponent,
-    ProductDetailComponent,
-    ProductDialogComponent,
-    ProductPopupComponent,
-    ProductDeletePopupComponent,
-    ProductDeleteDialogComponent,
-    productRoute,
-    productPopupRoute,
-} from './';
-
-const ENTITY_STATES = [
-    ...productRoute,
-    ...productPopupRoute,
-];
+import { AmensystemSharedModule } from 'app/shared/shared.module';
+import { ProductComponent } from './product.component';
+import { ProductDetailComponent } from './product-detail.component';
+import { ProductUpdateComponent } from './product-update.component';
+import { ProductDeleteDialogComponent } from './product-delete-dialog.component';
+import { productRoute } from './product.route';
 
 @NgModule({
-    imports: [
-        AmensystemSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
-    ],
-    declarations: [
-        ProductComponent,
-        ProductDetailComponent,
-        ProductDialogComponent,
-        ProductDeleteDialogComponent,
-        ProductPopupComponent,
-        ProductDeletePopupComponent,
-    ],
-    entryComponents: [
-        ProductComponent,
-        ProductDialogComponent,
-        ProductPopupComponent,
-        ProductDeleteDialogComponent,
-        ProductDeletePopupComponent,
-    ],
-    providers: [
-        ProductService,
-        ProductPopupService,
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AmensystemSharedModule, RouterModule.forChild(productRoute)],
+  declarations: [ProductComponent, ProductDetailComponent, ProductUpdateComponent, ProductDeleteDialogComponent],
+  entryComponents: [ProductDeleteDialogComponent],
 })
 export class AmensystemProductModule {}

@@ -1,57 +1,49 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import { HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { SlideShow } from './slide-show.model';
+import { ISlideShow } from 'app/shared/model/slide-show.model';
 import { SlideShowService } from './slide-show.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { SlideShowDeleteDialogComponent } from './slide-show-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-slide-show',
-    templateUrl: './slide-show.component.html'
+  selector: 'jhi-slide-show',
+  templateUrl: './slide-show.component.html',
 })
 export class SlideShowComponent implements OnInit, OnDestroy {
-slideShows: SlideShow[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+  slideShows?: ISlideShow[];
+  eventSubscriber?: Subscription;
 
-    constructor(
-        private slideShowService: SlideShowService,
-        private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
-    }
+  constructor(protected slideShowService: SlideShowService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-    loadAll() {
-        this.slideShowService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.slideShows = res.json;
-            },
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-    }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInSlideShows();
-    }
+  loadAll(): void {
+    this.slideShowService.query().subscribe((res: HttpResponse<ISlideShow[]>) => (this.slideShows = res.body || []));
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInSlideShows();
+  }
 
-    trackId(index: number, item: SlideShow) {
-        return item.id;
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
-    registerChangeInSlideShows() {
-        this.eventSubscriber = this.eventManager.subscribe('slideShowListModification', (response) => this.loadAll());
-    }
+  }
 
-    private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
-    }
+  trackId(index: number, item: ISlideShow): string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
+
+  registerChangeInSlideShows(): void {
+    this.eventSubscriber = this.eventManager.subscribe('slideShowListModification', () => this.loadAll());
+  }
+
+  delete(slideShow: ISlideShow): void {
+    const modalRef = this.modalService.open(SlideShowDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.slideShow = slideShow;
+  }
 }

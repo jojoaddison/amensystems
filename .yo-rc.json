@@ -4,13 +4,12 @@
       "packageName": "io.jojoaddison",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "4.10.2",
+    "jhipsterVersion": "6.10.5",
     "baseName": "amensystem",
     "packageName": "io.jojoaddison",
     "packageFolder": "io/jojoaddison",
     "serverPort": "8080",
     "authenticationType": "jwt",
-    "hibernateCache": "no",
     "clusteredHttpSession": false,
     "websocket": "spring-websocket",
     "databaseType": "mongodb",
@@ -24,17 +23,22 @@
     "enableSwaggerCodegen": false,
     "jwtSecretKey": "MmVkMTJiMzYzNDY0NTAxMDYyOGZlMTlmM2JlMDM0ZDEyZjRhMjYyZGMwMTY5YzE5MTM2NGZiNDVkZjY4ZGUwYTRjMzYwNmU4Y2Q4NDYwOGMxYjkxYTVkNmQ3NDllNjEwNTc0OTc0MjgyYzM5YjRmZGYzOGY5OTQ1ZDEzMDZmZDA=",
     "clientFramework": "angularX",
-    "useSass": false,
+    "useSass": true,
     "clientPackageManager": "npm",
     "applicationType": "monolith",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "languages": [
-      "en",
-      "fr",
-      "de"
-    ]
+    "languages": ["en", "fr", "de"],
+    "cacheProvider": "no",
+    "enableHibernateCache": false,
+    "embeddableLaunchScript": false,
+    "clientTheme": "none",
+    "creationTimestamp": 1615760928043,
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "blueprints": []
   }
 }

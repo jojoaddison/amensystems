@@ -1,25 +1,26 @@
 {
-    "amensystemApp": {
-        "slideShow" : {
-            "home": {
-                "title": "Slide Shows",
-                "createLabel": "Slide Show erstellen",
-                "createOrEditLabel": "Slide Show erstellen oder bearbeiten"
-            },
-            "created": "Slide Show erstellt mit ID {{ param }}",
-            "updated": "Slide Show aktualisiert mit ID {{ param }}",
-            "deleted": "Slide Show gelöscht mit ID {{ param }}",
-            "delete": {
-                "question": "Soll Slide Show {{ id }} wirklich dauerhaft gelöscht werden?"
-            },
-            "detail": {
-                "title": "Slide Show"
-            },
-            "name": "Name",
-            "slides": "Slides",
-            "createdDate": "Created Date",
-            "modifiedDate": "Modified Date",
-            "lastModifiedBy": "Last Modified By"
-        }
+  "amensystemApp": {
+    "slideShow": {
+      "home": {
+        "title": "Slide Shows",
+        "createLabel": "Slide Show erstellen",
+        "createOrEditLabel": "Slide Show erstellen oder bearbeiten",
+        "notFound": "No Slide Shows found"
+      },
+      "created": "Slide Show erstellt mit ID {{ param }}",
+      "updated": "Slide Show aktualisiert mit ID {{ param }}",
+      "deleted": "Slide Show gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Slide Show {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Slide Show"
+      },
+      "name": "Name",
+      "slides": "Slides",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "lastModifiedBy": "Last Modified By"
     }
+  }
 }

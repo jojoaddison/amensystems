@@ -1,66 +1,62 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { DigitalAsset } from './digital-asset.model';
+import { IDigitalAsset } from 'app/shared/model/digital-asset.model';
 import { DigitalAssetService } from './digital-asset.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { DigitalAssetDeleteDialogComponent } from './digital-asset-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-digital-asset',
-    templateUrl: './digital-asset.component.html'
+  selector: 'jhi-digital-asset',
+  templateUrl: './digital-asset.component.html',
 })
 export class DigitalAssetComponent implements OnInit, OnDestroy {
-digitalAssets: DigitalAsset[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+  digitalAssets?: IDigitalAsset[];
+  eventSubscriber?: Subscription;
 
-    constructor(
-        private digitalAssetService: DigitalAssetService,
-        private jhiAlertService: JhiAlertService,
-        private dataUtils: JhiDataUtils,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
-    }
+  constructor(
+    protected digitalAssetService: DigitalAssetService,
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
+  ) {}
 
-    loadAll() {
-        this.digitalAssetService.query().subscribe(
-            (res: ResponseWrapper) => {
-                this.digitalAssets = res.json;
-            },
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-    }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInDigitalAssets();
-    }
+  loadAll(): void {
+    this.digitalAssetService.query().subscribe((res: HttpResponse<IDigitalAsset[]>) => (this.digitalAssets = res.body || []));
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInDigitalAssets();
+  }
 
-    trackId(index: number, item: DigitalAsset) {
-        return item.id;
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
+  }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  trackId(index: number, item: IDigitalAsset): string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-    registerChangeInDigitalAssets() {
-        this.eventSubscriber = this.eventManager.subscribe('digitalAssetListModification', (response) => this.loadAll());
-    }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
 
-    private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
-    }
+  openFile(contentType = '', base64String: string): void {
+    return this.dataUtils.openFile(contentType, base64String);
+  }
+
+  registerChangeInDigitalAssets(): void {
+    this.eventSubscriber = this.eventManager.subscribe('digitalAssetListModification', () => this.loadAll());
+  }
+
+  delete(digitalAsset: IDigitalAsset): void {
+    const modalRef = this.modalService.open(DigitalAssetDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.digitalAsset = digitalAsset;
+  }
 }

@@ -1,61 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { JhiDataUtils } from 'ng-jhipster';
 
-import { DigitalAsset } from './digital-asset.model';
-import { DigitalAssetService } from './digital-asset.service';
+import { IDigitalAsset } from 'app/shared/model/digital-asset.model';
 
 @Component({
-    selector: 'jhi-digital-asset-detail',
-    templateUrl: './digital-asset-detail.component.html'
+  selector: 'jhi-digital-asset-detail',
+  templateUrl: './digital-asset-detail.component.html',
 })
-export class DigitalAssetDetailComponent implements OnInit, OnDestroy {
+export class DigitalAssetDetailComponent implements OnInit {
+  digitalAsset: IDigitalAsset | null = null;
 
-    digitalAsset: DigitalAsset;
-    private subscription: Subscription;
-    private eventSubscriber: Subscription;
+  constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
-    constructor(
-        private eventManager: JhiEventManager,
-        private dataUtils: JhiDataUtils,
-        private digitalAssetService: DigitalAssetService,
-        private route: ActivatedRoute
-    ) {
-    }
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ digitalAsset }) => (this.digitalAsset = digitalAsset));
+  }
 
-    ngOnInit() {
-        this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
-        });
-        this.registerChangeInDigitalAssets();
-    }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
 
-    load(id) {
-        this.digitalAssetService.find(id).subscribe((digitalAsset) => {
-            this.digitalAsset = digitalAsset;
-        });
-    }
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  openFile(contentType = '', base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-    previousState() {
-        window.history.back();
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
-    registerChangeInDigitalAssets() {
-        this.eventSubscriber = this.eventManager.subscribe(
-            'digitalAssetListModification',
-            (response) => this.load(this.digitalAsset.id)
-        );
-    }
+  previousState(): void {
+    window.history.back();
+  }
 }

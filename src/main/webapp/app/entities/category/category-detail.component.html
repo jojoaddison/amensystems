@@ -1,46 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="category">
+            <h2><span jhiTranslate="amensystemApp.category.detail.title">Category</span> {{ category.id }}</h2>
 
-<div *ngIf="category">
-    <h2><span jhiTranslate="amensystemApp.category.detail.title">Category</span> {{category.id}}</h2>
-    <hr>
-    <jhi-alert-error></jhi-alert-error>
-    <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="amensystemApp.category.name">Name</span></dt>
-        <dd>
-            <span>{{category.name}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.category.description">Description</span></dt>
-        <dd>
-            <span>{{category.description}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.category.photo">Photo</span></dt>
-        <dd>
-            <div *ngIf="category.photo">
-                <a (click)="openFile(category.photoContentType, category.photo)">
-                    <img [src]="'data:' + category.photoContentType + ';base64,' + category.photo" style="max-width: 100%;" alt="category image"/>
-                </a>
-                {{category.photoContentType}}, {{byteSize(category.photo)}}
-            </div>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.category.thumbnail">Thumbnail</span></dt>
-        <dd>
-            <span>{{category.thumbnail}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.category.link">Link</span></dt>
-        <dd>
-            <span>{{category.link}}</span>
-        </dd>
-    </dl>
+            <hr>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
+            <jhi-alert-error></jhi-alert-error>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="amensystemApp.category.name">Name</span></dt>
+                <dd>
+                    <span>{{ category.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.category.description">Description</span></dt>
+                <dd>
+                    <span>{{ category.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.category.photo">Photo</span></dt>
+                <dd>
+                    <div *ngIf="category.photo">
+                        <a (click)="openFile(category.photoContentType, category.photo)">
+                            <img [src]="'data:' + category.photoContentType + ';base64,' + category.photo" style="max-width: 100%;" alt="category image"/>
+                        </a>
+                        {{ category.photoContentType }}, {{ byteSize(category.photo) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.category.thumbnail">Thumbnail</span></dt>
+                <dd>
+                    <span>{{ category.thumbnail }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.category.link">Link</span></dt>
+                <dd>
+                    <span>{{ category.link }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/category', category.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
 </div>

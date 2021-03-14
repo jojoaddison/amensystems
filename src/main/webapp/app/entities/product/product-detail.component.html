@@ -1,58 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="product">
+            <h2><span jhiTranslate="amensystemApp.product.detail.title">Product</span> {{ product.id }}</h2>
 
-<div *ngIf="product">
-    <h2><span jhiTranslate="amensystemApp.product.detail.title">Product</span> {{product.id}}</h2>
-    <hr>
-    <jhi-alert-error></jhi-alert-error>
-    <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="amensystemApp.product.name">Name</span></dt>
-        <dd>
-            <span>{{product.name}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.product.quantity">Quantity</span></dt>
-        <dd>
-            <span>{{product.quantity}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.product.price">Price</span></dt>
-        <dd>
-            <span>{{product.price}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.product.photo">Photo</span></dt>
-        <dd>
-            <div *ngIf="product.photo">
-                <a (click)="openFile(product.photoContentType, product.photo)">
-                    <img [src]="'data:' + product.photoContentType + ';base64,' + product.photo" style="max-width: 100%;" alt="product image"/>
-                </a>
-                {{product.photoContentType}}, {{byteSize(product.photo)}}
-            </div>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.product.category">Category</span></dt>
-        <dd>
-            <span>{{product.category}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.product.createdDate">Created Date</span></dt>
-        <dd>
-            <span>{{product.createdDate | date:'medium'}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.product.modifiedDate">Modified Date</span></dt>
-        <dd>
-            <span>{{product.modifiedDate | date:'medium'}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.product.lastModifiedBy">Last Modified By</span></dt>
-        <dd>
-            <span>{{product.lastModifiedBy}}</span>
-        </dd>
-    </dl>
+            <hr>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
+            <jhi-alert-error></jhi-alert-error>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'product/'+ product.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="amensystemApp.product.name">Name</span></dt>
+                <dd>
+                    <span>{{ product.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.product.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{ product.quantity }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.product.price">Price</span></dt>
+                <dd>
+                    <span>{{ product.price }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.product.photo">Photo</span></dt>
+                <dd>
+                    <div *ngIf="product.photo">
+                        <a (click)="openFile(product.photoContentType, product.photo)">
+                            <img [src]="'data:' + product.photoContentType + ';base64,' + product.photo" style="max-width: 100%;" alt="product image"/>
+                        </a>
+                        {{ product.photoContentType }}, {{ byteSize(product.photo) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.product.category">Category</span></dt>
+                <dd>
+                    <span>{{ product.category }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.product.createdDate">Created Date</span></dt>
+                <dd>
+                    <span>{{ product.createdDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.product.modifiedDate">Modified Date</span></dt>
+                <dd>
+                    <span>{{ product.modifiedDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.product.lastModifiedBy">Last Modified By</span></dt>
+                <dd>
+                    <span>{{ product.lastModifiedBy }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product', product.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
 </div>

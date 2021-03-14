@@ -1,10 +1,10 @@
 {
-    "amensystemApp": {
-        "StateType" : {
-            "null": "",
-            "CURRENT": "CURRENT",
-            "UNPUBLISH": "UNPUBLISH",
-            "PUBLISH": "PUBLISH"
-        }
+  "amensystemApp": {
+    "StateType": {
+      "null": "",
+      "CURRENT": "CURRENT",
+      "UNPUBLISH": "UNPUBLISH",
+      "PUBLISH": "PUBLISH"
     }
+  }
 }

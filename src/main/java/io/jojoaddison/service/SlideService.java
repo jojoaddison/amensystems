@@ -4,12 +4,14 @@ import io.jojoaddison.domain.Slide;
 import io.jojoaddison.repository.SlideRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
- * Service Implementation for managing Slide.
+ * Service Implementation for managing {@link Slide}.
  */
 @Service
 public class SlideService {
@@ -25,8 +27,8 @@ public class SlideService {
     /**
      * Save a slide.
      *
-     * @param slide the entity to save
-     * @return the persisted entity
+     * @param slide the entity to save.
+     * @return the persisted entity.
      */
     public Slide save(Slide slide) {
         log.debug("Request to save Slide : {}", slide);
@@ -34,33 +36,34 @@ public class SlideService {
     }
 
     /**
-     *  Get all the slides.
+     * Get all the slides.
      *
-     *  @return the list of entities
+     * @return the list of entities.
      */
     public List<Slide> findAll() {
         log.debug("Request to get all Slides");
         return slideRepository.findAll();
     }
 
+
     /**
-     *  Get one slide by id.
+     * Get one slide by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
-    public Slide findOne(String id) {
+    public Optional<Slide> findOne(String id) {
         log.debug("Request to get Slide : {}", id);
-        return slideRepository.findOne(id);
+        return slideRepository.findById(id);
     }
 
     /**
-     *  Delete the  slide by id.
+     * Delete the slide by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(String id) {
         log.debug("Request to delete Slide : {}", id);
-        slideRepository.delete(id);
+        slideRepository.deleteById(id);
     }
 }

@@ -1,27 +1,28 @@
 {
-    "amensystemApp": {
-        "blog" : {
-            "home": {
-                "title": "Blogs",
-                "createLabel": "Blog erstellen",
-                "createOrEditLabel": "Blog erstellen oder bearbeiten"
-            },
-            "created": "Blog erstellt mit ID {{ param }}",
-            "updated": "Blog aktualisiert mit ID {{ param }}",
-            "deleted": "Blog gelöscht mit ID {{ param }}",
-            "delete": {
-                "question": "Soll Blog {{ id }} wirklich dauerhaft gelöscht werden?"
-            },
-            "detail": {
-                "title": "Blog"
-            },
-            "title": "Title",
-            "content": "Content",
-            "createdDate": "Created Date",
-            "modifiedDate": "Modified Date",
-            "createdBy": "Created By",
-            "modifiedBy": "Modified By",
-            "albumId": "Album Id"
-        }
+  "amensystemApp": {
+    "blog": {
+      "home": {
+        "title": "Blogs",
+        "createLabel": "Blog erstellen",
+        "createOrEditLabel": "Blog erstellen oder bearbeiten",
+        "notFound": "No Blogs found"
+      },
+      "created": "Blog erstellt mit ID {{ param }}",
+      "updated": "Blog aktualisiert mit ID {{ param }}",
+      "deleted": "Blog gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Blog {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Blog"
+      },
+      "title": "Title",
+      "content": "Content",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By",
+      "albumId": "Album Id"
     }
+  }
 }

@@ -1,77 +1,84 @@
 <div>
-    <h2>
+    <h2 id="page-heading">
         <span jhiTranslate="amensystemApp.category.home.title">Categories</span>
-        <button class="btn btn-primary float-right jh-create-entity create-category" [routerLink]="['/', { outlets: { popup: ['category-new'] } }]">
-            <span class="fa fa-plus"></span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-category" [routerLink]="['/category/new']">
+            <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="amensystemApp.category.home.createLabel">
-            Create new Category
+            Create a new Category
             </span>
         </button>
     </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
     <jhi-alert></jhi-alert>
-    <div class="row">
+
+    <div class="alert alert-warning" id="no-result" *ngIf="categories?.length === 0">
+        <span jhiTranslate="amensystemApp.category.home.notFound">No categories found</span>
     </div>
-    <br/>
-    <div class="table-responsive" *ngIf="categories">
-        <table class="table table-striped">
+
+    <div class="table-responsive" id="entities" *ngIf="categories && categories.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="name"><span jhiTranslate="amensystemApp.category.name">Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="description"><span jhiTranslate="amensystemApp.category.description">Description</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="photo"><span jhiTranslate="amensystemApp.category.photo">Photo</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="thumbnail"><span jhiTranslate="amensystemApp.category.thumbnail">Thumbnail</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="link"><span jhiTranslate="amensystemApp.category.link">Link</span> <span class="fa fa-sort"></span></th>
-            <th></th>
-            </tr>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="amensystemApp.category.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="amensystemApp.category.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="photo"><span jhiTranslate="amensystemApp.category.photo">Photo</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="thumbnail"><span jhiTranslate="amensystemApp.category.thumbnail">Thumbnail</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="link"><span jhiTranslate="amensystemApp.category.link">Link</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let category of categories ;trackBy: trackId">
-                <td><a [routerLink]="['../category', category.id ]">{{category.id}}</a></td>
-                <td>{{category.name}}</td>
-                <td>{{category.description}}</td>
-                <td>
-                    <a *ngIf="category.photo" (click)="openFile(category.photoContentType, category.photo)">
-                        <img [src]="'data:' + category.photoContentType + ';base64,' + category.photo" style="max-height: 30px;" alt="category image"/>
-                    </a>
-                    <span *ngIf="category.photo">{{category.photoContentType}}, {{byteSize(category.photo)}}</span>
-                </td>
-                <td>{{category.thumbnail}}</td>
-                <td>{{category.link}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../category', category.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
-                                replaceUrl="true"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/delete'} }]"
-                                replaceUrl="true"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                <tr *ngFor="let category of categories ;trackBy: trackId">
+                    <td><a [routerLink]="['/category', category.id, 'view']">{{ category.id }}</a></td>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.description }}</td>
+                    <td>
+                        <a *ngIf="category.photo" (click)="openFile(category.photoContentType, category.photo)">
+                            <img [src]="'data:' + category.photoContentType + ';base64,' + category.photo" style="max-height: 30px;" alt="category image"/>
+                        </a>
+                        <span *ngIf="category.photo">{{ category.photoContentType }}, {{ byteSize(category.photo) }}</span>
+                    </td>
+                    <td>{{ category.thumbnail }}</td>
+                    <td>{{ category.link }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/category', category.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/category', category.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(category)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-        <div *ngIf="categories && categories.length">
-            <div class="row justify-content-center">
-                <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-            </div>
-            <div class="row justify-content-center">
-                <ngb-pagination [collectionSize]="totalItems" [maxSize]="5" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
-            </div>
+
+    <div *ngIf="categories && categories.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
 </div>

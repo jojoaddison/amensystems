@@ -1,64 +1,26 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Blog } from './blog.model';
-import { BlogPopupService } from './blog-popup.service';
+import { IBlog } from 'app/shared/model/blog.model';
 import { BlogService } from './blog.service';
 
 @Component({
-    selector: 'jhi-blog-delete-dialog',
-    templateUrl: './blog-delete-dialog.component.html'
+  templateUrl: './blog-delete-dialog.component.html',
 })
 export class BlogDeleteDialogComponent {
+  blog?: IBlog;
 
-    blog: Blog;
+  constructor(protected blogService: BlogService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
 
-    constructor(
-        private blogService: BlogService,
-        public activeModal: NgbActiveModal,
-        private eventManager: JhiEventManager
-    ) {
-    }
+  cancel(): void {
+    this.activeModal.dismiss();
+  }
 
-    clear() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    confirmDelete(id: string) {
-        this.blogService.delete(id).subscribe((response) => {
-            this.eventManager.broadcast({
-                name: 'blogListModification',
-                content: 'Deleted an blog'
-            });
-            this.activeModal.dismiss(true);
-        });
-    }
-}
-
-@Component({
-    selector: 'jhi-blog-delete-popup',
-    template: ''
-})
-export class BlogDeletePopupComponent implements OnInit, OnDestroy {
-
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private blogPopupService: BlogPopupService
-    ) {}
-
-    ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            this.blogPopupService
-                .open(BlogDeleteDialogComponent as Component, params['id']);
-        });
-    }
-
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
-    }
+  confirmDelete(id: string): void {
+    this.blogService.delete(id).subscribe(() => {
+      this.eventManager.broadcast('blogListModification');
+      this.activeModal.close();
+    });
+  }
 }

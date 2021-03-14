@@ -1,8 +1,8 @@
 package io.jojoaddison.config;
 
+import io.github.jhipster.config.JHipsterConstants;
 import com.github.mongobee.Mongobee;
 import com.mongodb.MongoClient;
-import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
 import io.github.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
 import org.slf4j.Logger;
@@ -16,17 +16,17 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.convert.CustomConversions;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@Profile("!" + JHipsterConstants.SPRING_PROFILE_CLOUD)
 @EnableMongoRepositories("io.jojoaddison.repository")
+@Profile("!" + JHipsterConstants.SPRING_PROFILE_CLOUD)
 @Import(value = MongoAutoConfiguration.class)
 @EnableMongoAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfiguration {
@@ -44,22 +44,21 @@ public class DatabaseConfiguration {
     }
 
     @Bean
-    public CustomConversions customConversions() {
+    public MongoCustomConversions customConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
         converters.add(DateToZonedDateTimeConverter.INSTANCE);
         converters.add(ZonedDateTimeToDateConverter.INSTANCE);
-        return new CustomConversions(converters);
+        return new MongoCustomConversions(converters);
     }
 
     @Bean
     public Mongobee mongobee(MongoClient mongoClient, MongoTemplate mongoTemplate, MongoProperties mongoProperties) {
         log.debug("Configuring Mongobee");
         Mongobee mongobee = new Mongobee(mongoClient);
-        mongobee.setDbName(mongoProperties.getDatabase());
+        mongobee.setDbName(mongoProperties.getMongoClientDatabase());
         mongobee.setMongoTemplate(mongoTemplate);
         // package to scan for migrations
         mongobee.setChangeLogsScanPackage("io.jojoaddison.config.dbmigrations");
         mongobee.setEnabled(true);
         return mongobee;
-    }
-}
+    }}

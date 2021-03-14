@@ -1,60 +1,65 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="digitalAsset">
+            <h2><span jhiTranslate="amensystemApp.digitalAsset.detail.title">Digital Asset</span> {{ digitalAsset.id }}</h2>
 
-<div *ngIf="digitalAsset">
-    <h2><span jhiTranslate="amensystemApp.digitalAsset.detail.title">Digital Asset</span> {{digitalAsset.id}}</h2>
-    <hr>
-    <jhi-alert-error></jhi-alert-error>
-    <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.name">Name</span></dt>
-        <dd>
-            <span>{{digitalAsset.name}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.description">Description</span></dt>
-        <dd>
-            <span>{{digitalAsset.description}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.url">Url</span></dt>
-        <dd>
-            <span>{{digitalAsset.url}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.resource">Resource</span></dt>
-        <dd>
-            <div *ngIf="digitalAsset.resource">
-                <a (click)="openFile(digitalAsset.resourceContentType, digitalAsset.resource)" jhiTranslate="entity.action.open">open</a>
-                {{digitalAsset.resourceContentType}}, {{byteSize(digitalAsset.resource)}}
-            </div>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.type">Type</span></dt>
-        <dd>
-            <span>{{digitalAsset.type}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.createdDate">Created Date</span></dt>
-        <dd>
-            <span>{{digitalAsset.createdDate | date:'medium'}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.modifiedDate">Modified Date</span></dt>
-        <dd>
-            <span>{{digitalAsset.modifiedDate | date:'medium'}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.createdBy">Created By</span></dt>
-        <dd>
-            <span>{{digitalAsset.createdBy}}</span>
-        </dd>
-        <dt><span jhiTranslate="amensystemApp.digitalAsset.lastModifiedBy">Last Modified By</span></dt>
-        <dd>
-            <span>{{digitalAsset.lastModifiedBy}}</span>
-        </dd>
-    </dl>
+            <hr>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
+            <jhi-alert-error></jhi-alert-error>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'digital-asset/'+ digitalAsset.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.name">Name</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.description">Description</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.url">Url</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.url }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.resource">Resource</span></dt>
+                <dd>
+                    <div *ngIf="digitalAsset.resource">
+                        <a (click)="openFile(digitalAsset.resourceContentType, digitalAsset.resource)" jhiTranslate="entity.action.open">open</a>
+                        {{ digitalAsset.resourceContentType }}, {{ byteSize(digitalAsset.resource) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.type">Type</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.type }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.createdDate">Created Date</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.createdDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.modifiedDate">Modified Date</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.modifiedDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.createdBy">Created By</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.createdBy }}</span>
+                </dd>
+                <dt><span jhiTranslate="amensystemApp.digitalAsset.lastModifiedBy">Last Modified By</span></dt>
+                <dd>
+                    <span>{{ digitalAsset.lastModifiedBy }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/digital-asset', digitalAsset.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
 </div>
