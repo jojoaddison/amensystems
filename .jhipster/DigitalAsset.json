@@ -1,0 +1,48 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "url",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "resource",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createdDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "modifiedDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "createdBy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastModifiedBy",
+            "fieldType": "String"
+        }
+    ],
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "digital_asset",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

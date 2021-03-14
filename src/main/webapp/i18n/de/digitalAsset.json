@@ -1,0 +1,29 @@
+{
+    "amensystemApp": {
+        "digitalAsset" : {
+            "home": {
+                "title": "Digital Assets",
+                "createLabel": "Digital Asset erstellen",
+                "createOrEditLabel": "Digital Asset erstellen oder bearbeiten"
+            },
+            "created": "Digital Asset erstellt mit ID {{ param }}",
+            "updated": "Digital Asset aktualisiert mit ID {{ param }}",
+            "deleted": "Digital Asset gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Digital Asset {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Digital Asset"
+            },
+            "name": "Name",
+            "description": "Description",
+            "url": "Url",
+            "resource": "Resource",
+            "type": "Type",
+            "createdDate": "Created Date",
+            "modifiedDate": "Modified Date",
+            "createdBy": "Created By",
+            "lastModifiedBy": "Last Modified By"
+        }
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "amensystemApp": {
+        "slideShow" : {
+            "home": {
+                "title": "Slide Shows",
+                "createLabel": "Create a new Slide Show",
+                "createOrEditLabel": "Create or edit a Slide Show"
+            },
+            "created": "A new Slide Show is created with identifier {{ param }}",
+            "updated": "A Slide Show is updated with identifier {{ param }}",
+            "deleted": "A Slide Show is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Slide Show {{ id }}?"
+            },
+            "detail": {
+                "title": "Slide Show"
+            },
+            "name": "Name",
+            "slides": "Slides",
+            "createdDate": "Created Date",
+            "modifiedDate": "Modified Date",
+            "lastModifiedBy": "Last Modified By"
+        }
+    }
+}

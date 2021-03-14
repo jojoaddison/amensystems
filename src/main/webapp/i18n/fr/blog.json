@@ -1,0 +1,27 @@
+{
+    "amensystemApp": {
+        "blog" : {
+            "home": {
+                "title": "Blogs",
+                "createLabel": "Créer un nouveau Blog",
+                "createOrEditLabel": "Créer ou éditer un Blog"
+            },
+            "created": "Un nouveau Blog a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Blog avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Blog avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Blog {{ id }} ?"
+            },
+            "detail": {
+                "title": "Blog"
+            },
+            "title": "Title",
+            "content": "Content",
+            "createdDate": "Created Date",
+            "modifiedDate": "Modified Date",
+            "createdBy": "Created By",
+            "modifiedBy": "Modified By",
+            "albumId": "Album Id"
+        }
+    }
+}

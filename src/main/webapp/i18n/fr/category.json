@@ -1,0 +1,25 @@
+{
+    "amensystemApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Créer un nouveau Category",
+                "createOrEditLabel": "Créer ou éditer un Category"
+            },
+            "created": "Un nouveau Category a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Category avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Category avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Category {{ id }} ?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "photo": "Photo",
+            "thumbnail": "Thumbnail",
+            "link": "Link"
+        }
+    }
+}

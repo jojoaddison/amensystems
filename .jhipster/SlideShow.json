@@ -1,0 +1,31 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "slides",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createdDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "modifiedDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "lastModifiedBy",
+            "fieldType": "String"
+        }
+    ],
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "slide_show",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

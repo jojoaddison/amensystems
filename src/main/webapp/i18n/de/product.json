@@ -1,0 +1,28 @@
+{
+    "amensystemApp": {
+        "product" : {
+            "home": {
+                "title": "Products",
+                "createLabel": "Product erstellen",
+                "createOrEditLabel": "Product erstellen oder bearbeiten"
+            },
+            "created": "Product erstellt mit ID {{ param }}",
+            "updated": "Product aktualisiert mit ID {{ param }}",
+            "deleted": "Product gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Product {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Product"
+            },
+            "name": "Name",
+            "quantity": "Quantity",
+            "price": "Price",
+            "photo": "Photo",
+            "category": "Category",
+            "createdDate": "Created Date",
+            "modifiedDate": "Modified Date",
+            "lastModifiedBy": "Last Modified By"
+        }
+    }
+}

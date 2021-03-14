@@ -1,0 +1,29 @@
+{
+    "amensystemApp": {
+        "digitalAsset" : {
+            "home": {
+                "title": "Digital Assets",
+                "createLabel": "Create a new Digital Asset",
+                "createOrEditLabel": "Create or edit a Digital Asset"
+            },
+            "created": "A new Digital Asset is created with identifier {{ param }}",
+            "updated": "A Digital Asset is updated with identifier {{ param }}",
+            "deleted": "A Digital Asset is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Digital Asset {{ id }}?"
+            },
+            "detail": {
+                "title": "Digital Asset"
+            },
+            "name": "Name",
+            "description": "Description",
+            "url": "Url",
+            "resource": "Resource",
+            "type": "Type",
+            "createdDate": "Created Date",
+            "modifiedDate": "Modified Date",
+            "createdBy": "Created By",
+            "lastModifiedBy": "Last Modified By"
+        }
+    }
+}

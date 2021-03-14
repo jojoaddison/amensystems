@@ -1,0 +1,43 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [{
+            "fieldName": "url",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "photo",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "createdDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "modifiedDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "createdBy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modifiedBy",
+            "fieldType": "String"
+        }
+    ],
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "slide",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}
