@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
-import { LoginService } from 'app/core/login/login.service';
+import { LoginService } from '../../core/login/login.service';
 
 @Component({
   selector: 'jhi-login-modal',
@@ -14,14 +14,15 @@ export class LoginModalComponent implements AfterViewInit {
   username?: ElementRef;
 
   authenticationError = false;
+  loginForm;
 
-  loginForm = this.fb.group({
-    username: [''],
-    password: [''],
-    rememberMe: [false],
-  });
-
-  constructor(private loginService: LoginService, private router: Router, public activeModal: NgbActiveModal, private fb: FormBuilder) {}
+  constructor(private loginService: LoginService, private router: Router, public activeModal: NgbActiveModal, private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      username: [''],
+      password: [''],
+      rememberMe: [false],
+    });
+  }
 
   ngAfterViewInit(): void {
     if (this.username) {

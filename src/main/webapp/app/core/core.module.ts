@@ -11,12 +11,12 @@ import locale from '@angular/common/locales/en';
 
 import * as moment from 'moment';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
+import { NgbDateMomentAdapter } from '../shared/util/datepicker-adapter';
 
-import { AuthInterceptor } from 'app/blocks/interceptor/auth.interceptor';
-import { AuthExpiredInterceptor } from 'app/blocks/interceptor/auth-expired.interceptor';
-import { ErrorHandlerInterceptor } from 'app/blocks/interceptor/errorhandler.interceptor';
-import { NotificationInterceptor } from 'app/blocks/interceptor/notification.interceptor';
+import { AuthInterceptor } from '../blocks/interceptor/auth.interceptor';
+import { AuthExpiredInterceptor } from '../blocks/interceptor/auth-expired.interceptor';
+import { ErrorHandlerInterceptor } from '../blocks/interceptor/errorhandler.interceptor';
+import { NotificationInterceptor } from '../blocks/interceptor/notification.interceptor';
 
 import { fontAwesomeIcons } from './icons/font-awesome-icons';
 

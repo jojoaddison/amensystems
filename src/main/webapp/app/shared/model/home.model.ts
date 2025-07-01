@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { StateType } from 'app/shared/model/enumerations/state-type.model';
+import { StateType } from '../../shared/model/enumerations/state-type.model';
 
 export interface IHome {
   id?: string;

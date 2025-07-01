@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import { LoginModalComponent } from 'app/shared/login/login.component';
+import { LoginModalComponent } from '../../shared/login/login.component';
 
 @Injectable({ providedIn: 'root' })
 export class LoginModalService {

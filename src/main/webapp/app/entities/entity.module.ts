@@ -1,31 +1,3 @@
-<<<<<<< HEAD
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-import { AmensystemSlideModule } from './slide/slide.module';
-import { AmensystemNewsModule } from './news/news.module';
-import { AmensystemCategoryModule } from './category/category.module';
-import { AmensystemProductModule } from './product/product.module';
-import { AmensystemSlideShowModule } from './slide-show/slide-show.module';
-import { AmensystemBlogModule } from './blog/blog.module';
-import { AmensystemHomeModule } from './home/home.module';
-/* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
-
-@NgModule({
-    imports: [
-        AmensystemSlideModule,
-        AmensystemNewsModule,
-        AmensystemCategoryModule,
-        AmensystemProductModule,
-        AmensystemSlideShowModule,
-        AmensystemBlogModule,
-        AmensystemHomeModule,
-        /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
-    ],
-    declarations: [],
-    entryComponents: [],
-    providers: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
-=======
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -67,6 +39,5 @@ import { RouterModule } from '@angular/router';
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
->>>>>>> jhipster_upgrade
 })
 export class AmensystemEntityModule {}

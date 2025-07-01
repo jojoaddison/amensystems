@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
 
-import { AuthServerProvider } from 'app/core/auth/auth-jwt.service';
+import { AuthServerProvider } from '../auth/auth-jwt.service';
 import { TrackerActivity } from './tracker-activity.model';
 
 @Injectable({ providedIn: 'root' })
