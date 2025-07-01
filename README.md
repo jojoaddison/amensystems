@@ -8,8 +8,8 @@ Before you can build this project, you must install and configure the following 
 
 1. [Node.js][]: We use Node to run a development web server and build the project.
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
-2. [Yarn][]: We use Yarn to manage Node dependencies.
-   Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
+2. [NPM][]: We use NPM to manage Node dependencies.
+   Depending on your system, you can install NPM either from source or as a pre-packaged bundle.
 
 After installing Node, you should be able to run the following command to install development tools.
 You will only need to run this command when dependencies change in [package.json](package.json).
@@ -18,7 +18,7 @@ You will only need to run this command when dependencies change in [package.json
 npm install
 ```
 
-We use yarn scripts and [Webpack][] as our build system.
+We use npm scripts and [Webpack][] as our build system.
 
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
@@ -35,7 +35,7 @@ Npm is also used to manage CSS and JavaScript dependencies used in this applicat
 specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
 Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
 
-The `yarn run` command will list all of the scripts available to run for this project.
+The `npm run` command will list all of the scripts available to run for this project.
 
 ### PWA Support
 
@@ -228,7 +228,7 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [code quality page]: https://www.jhipster.tech/documentation-archive/v6.10.5/code-quality/
 [setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.10.5/setting-up-ci/
 [node.js]: https://nodejs.org/
-[yarn]: https://yarnpkg.org/
+[npm]: https://npm.org/
 [webpack]: https://webpack.github.io/
 [angular cli]: https://cli.angular.io/
 [browsersync]: https://www.browsersync.io/
