@@ -14,27 +14,15 @@ Before you can build this project, you must install and configure the following 
 After installing Node, you should be able to run the following command to install development tools.
 You will only need to run this command when dependencies change in [package.json](package.json).
 
-<<<<<<< HEAD
-    yarn install
-=======
 ```
 npm install
 ```
->>>>>>> jhipster_upgrade
 
 We use yarn scripts and [Webpack][] as our build system.
 
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
 
-<<<<<<< HEAD
-    ./mvnw
-    yarn start
-
-[Yarn][] is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `yarn update` and `yarn install` to manage dependencies.
-Add the `help` flag on any command to see how you can use it. For example, `yarn help update`.
-=======
 ```
 
 ./mvnw
@@ -46,7 +34,6 @@ npm start
 Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
 specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
 Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
->>>>>>> jhipster_upgrade
 
 The `yarn run` command will list all of the scripts available to run for this project.
 
@@ -72,13 +59,6 @@ Note: [Workbox](https://developers.google.com/web/tools/workbox/) powers JHipste
 
 For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
 
-<<<<<<< HEAD
-    yarn add --exact leaflet
-
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
-
-    yarn add --dev --exact @types/leaflet
-=======
 ```
 npm install --save --save-exact leaflet
 ```
@@ -88,7 +68,6 @@ To benefit from TypeScript type definitions from [DefinitelyTyped][] repository 
 ```
 npm install --save-dev --save-exact @types/leaflet
 ```
->>>>>>> jhipster_upgrade
 
 Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
 Edit [src/main/webapp/app/vendor.ts](src/main/webapp/app/vendor.ts) file:
@@ -175,13 +154,9 @@ To launch your application's tests, run:
 
 Unit tests are run by [Jest][] and written with [Jasmine][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
 
-<<<<<<< HEAD
-    yarn test
-=======
 ```
 npm test
 ```
->>>>>>> jhipster_upgrade
 
 For more information, refer to the [Running tests page][].
 
